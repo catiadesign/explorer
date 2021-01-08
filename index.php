@@ -13,11 +13,9 @@
     <body>
         <?php
             include 'scan.php';
+            echo "<script id='varLoad'> var FILES = " . json_encode($files) . "; </script>";
         ?>
         <script src="../js/xquery.js"></script>
-        <!--
-        <script src="folder_structure.js"></script>
-        -->
         <script src="explorer.js"></script>
     </body>
 </html>
