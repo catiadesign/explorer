@@ -117,12 +117,8 @@
     $files[] = ReturnArrayFilesFolders($root_path, $scan_dir2, "folder", "#00d9ff", "folder");
 
     //file_put_contents("folder_structure.js", "var FILES =" . json_encode( $files ));    
-    
-    echo "<script> var FILES = " . json_encode($files) . "; </script>";
-    
-    /*
-    header("Content-type: application/json");
-    echo json_encode( $files ); 
-    */
+    //echo "<script> var FILES = " . json_encode($files) . "; </script>";
+    //header("Content-type: application/json");
+    //echo json_encode( $files ); 
 
 ?>
