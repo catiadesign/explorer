@@ -27,6 +27,8 @@
     var BodyRightWidth = 120;
     
     var SEARCHEXP = [];
+    var FILES = FILES;
+    _X('#varLoad').Xremove();
     
     /*Update the Directory Structure 
     if (true === false) {
@@ -60,7 +62,7 @@
         }, 
     ];
 
-    /*Load Grafik
+    //Load Grafik
     (function() {
         var Radius = 70;
         _X.CreateTagElements({
@@ -134,7 +136,6 @@
             ],
         });
     })();
-    */
 
     //Create Website Base Grafik
     _X.CreateTagElements({
@@ -385,6 +386,17 @@
                                     mouseleave: function() {
                                         _X(this).classRemove('xui_hover');
                                     },
+                                    dblclick: function() {
+                                        if (_X('.exp_body_left').css('width') > 10) {
+                                            _X('.exp_body_left').css({width: 0});
+                                            _X('.exp_body_resize').css({left: 0});
+                                            _X('.exp_body_middle').css({left: BodyMiddleWidthResize});
+                                        } else {
+                                            _X('.exp_body_left').css({width: BodyLeftWidth});
+                                            _X('.exp_body_resize').css({left: BodyLeftWidth, width: BodyMiddleWidthResize});
+                                            _X('.exp_body_middle').css({left: BodyLeftWidth + BodyMiddleWidthResize + 2});
+                                        }
+                                    },                                    
                                 },
                             }, {
                                 classAdd: 'exp_body_middle, xui_content',
