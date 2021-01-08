@@ -827,7 +827,17 @@
                                 });
                                 x.win.OpenWindow();
                                 WIN.full.splice(WIN.key, 1);
-                        },                         
+                        },
+                        dblclick: function() {
+                            SEARCHEXP.length = 0;
+                            var searchPath = path.substring(0, path.indexOf(v) + v.length);
+                            var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
+                            that.CreatePath(array);
+                            that.GetFilesFolders({array: array.items});
+                            that.InfosRight();
+                            SELECTED.obj = array;
+                            _X('.folder_path').Xfind('children').getElem('last')[0].click();
+                        },                        
                     });
             });
             that.pathResize();
