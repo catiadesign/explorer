@@ -78,26 +78,29 @@
     			if (is_dir($dir . "/" . $f) && $GLOBALS['show_folders'] === true) {
     			    $files[] = ReturnArrayFilesFolders($dir, $f, "folder", "#00d9ff", "folder");
     			} elseif ($GLOBALS['show_files'] === true) {
-    			    if ($checkext["extension"] == "zip") {
+    			    if (in_array($checkext['extension'], ["zip", "rar", "7z", "tar", "gzip"])) {
     			        $files[] = ReturnArrayFilesFolders($dir, $f, "blur_linear", "#ff9600", "iframe, file");
-    			        
-    			    } elseif ($checkext["extension"] == "mp4") {
+    			    }
+    			    elseif (in_array($checkext['extension'], ["mp4", "avi", "mpeg"])) {
     			        $files[] = ReturnArrayFilesFolders($dir, $f, "ondemand_video", "#ff0000", "video, file");
-    			        
-    			    } elseif ($checkext["extension"] == "swf") {
+    			    }
+    			    elseif ($checkext["extension"] == "swf") {
     			        $files[] = ReturnArrayFilesFolders($dir, $f, "video_call", "#ff0000", "iframe, file");
-    			        
-    			    } elseif ($checkext["extension"] == "pdf") {
-    			        $files[] = ReturnArrayFilesFolders($dir, $f, "picture_as_pdf", "#ff467a", "iframe, file");
-    			        
-    			    } elseif ($checkext["extension"] == "jpg" || $checkext["extension"] == "png" || $checkext["extension"] == "gif") {
+    			    }
+    			    elseif ($checkext["extension"] == "pdf") {
+    			        $files[] = ReturnArrayFilesFolders($dir, $f, "ico/pdf_.png", "#ffffff", "iframe, file");
+    			    }
+    			    elseif (in_array($checkext['extension'], ["jpg", "png", "gif"])) {
     			        $newDir = str_replace($GLOBALS['root_path'], "", $dir . "/" . $f);
     			        $files[] = ReturnArrayFilesFolders($dir, $f, FilesPathReplaceDoppleSlash($newDir), "#ffffff", "photo, file");
-    			        
-    			    } elseif ($checkext["extension"] == "doc" || $checkext["extension"] == "xls") {
-    			        $files[] = ReturnArrayFilesFolders($dir, $f, "web", "#0000ff", "iframe, file");
-    			        
-    			    } else {
+    			    }
+    			    elseif (in_array($checkext['extension'], ["doc", "docx"])) {
+    			        $files[] = ReturnArrayFilesFolders($dir, $f, "ico/doc_.png", "#ffffff", "iframe, file");
+    			    }
+    			    elseif (in_array($checkext['extension'], ["xls"])) {
+    			        $files[] = ReturnArrayFilesFolders($dir, $f, "ico/xls_.png", "#ffffff", "iframe, file");
+    			    }
+    			    else {
     			        $files[] = ReturnArrayFilesFolders($dir, $f, "description", "#8700ff", "iframe, file");
     			    }
     			}
