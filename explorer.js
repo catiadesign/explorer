@@ -833,6 +833,7 @@
                 _X('.exp_body_middle').Xempty();
             } else {}
             if (SETTINGS.viewStyle.sel == 'icons') {
+                _X('.exp_body_middle').css({'padding-top': 0});
                 _X.CubeIcon({
                     to: _X('.exp_body_middle'),
                     array: _X.Xsearch({a: settings.array, s: 'folder'}),
@@ -882,17 +883,17 @@
                         {
                             classAdd: 'list_top',
                             css: {
-                                position: 'relative',
+                                position: 'fixed',
                                 width: '100%',
-                                height: 20, 
+                                'margin-top': -15,
+                                height: 15, 
                             },
                             items: [
                                 {
-                                    classAdd: 'list_top_1',
+                                    classAdd: 'list_top_1, xui_header, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
                                         height: '100%',
-                                        width: width,
                                         'text-align': 'center',
                                     },
                                     append: 'Title',
@@ -900,11 +901,10 @@
                                         
                                     ],
                                 }, {
-                                    classAdd: 'list_top_2',
+                                    classAdd: 'list_top_2, xui_header, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
                                         height: '100%',
-                                        width: width,
                                         'text-align': 'center',
                                     },
                                     append: 'Date',
@@ -912,11 +912,10 @@
                                         
                                     ],
                                 }, {
-                                    classAdd: 'list_top_2',
+                                    classAdd: 'list_top_2, xui_header, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
                                         height: '100%',
-                                        width: width,
                                         'text-align': 'center',
                                     },
                                     append: 'Location',
@@ -924,11 +923,10 @@
                                         
                                     ],
                                 }, {
-                                    classAdd: 'list_top_2',
+                                    classAdd: 'list_top_2, xui_header, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
                                         height: '100%',
-                                        width: width,
                                         'text-align': 'center',
                                     },
                                     append: 'Size',
@@ -964,7 +962,8 @@
                         },
                     },                
                 });
-                var width = _X('.list_top').Xfind('children').css({width: _X('.exp_body_middle').position('width', 'scroll') / 4});
+                _X('.exp_body_middle').css({'padding-top': 15});
+                var width = _X('.list_top').Xfind('children').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 10) / 4});
             }
         };
 
