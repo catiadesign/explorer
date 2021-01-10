@@ -574,6 +574,7 @@
                     margin: 3,
                     border: '1px solid transparent',
                     height: 30,
+                    cursor: 'pointer',
                 })
                 .css(s.css)
                 .Xappend(_X('<div')
@@ -593,6 +594,7 @@
                         display: 'inline-block',
                         'text-align': 'center',
                         'vertical-align': 'middle',
+                        color: '#969696',
                     })
                 )                     
                 .Xappend(_X('<div')
@@ -602,6 +604,7 @@
                         display: 'inline-block',
                         'text-align': 'left',
                         'vertical-align': 'middle',
+                        color: '#969696',
                     })
                 )
                 .Xappend(_X('<div')
@@ -611,6 +614,7 @@
                         display: 'inline-block',
                         'text-align': 'right',
                         'vertical-align': 'middle',
+                        color: '#969696',
                     })
                 )                      
                 .on(s.on)
@@ -872,6 +876,70 @@
                     },
                 });
             } else {
+                _X.CreateTagElements({
+                    t: '.exp_body_middle',
+                    a: [
+                        {
+                            classAdd: 'list_top',
+                            css: {
+                                position: 'relative',
+                                width: '100%',
+                                height: 20, 
+                            },
+                            items: [
+                                {
+                                    classAdd: 'list_top_1',
+                                    css: {
+                                        display: 'inline-block',
+                                        height: '100%',
+                                        width: width,
+                                        'text-align': 'center',
+                                    },
+                                    append: 'Title',
+                                    items: [
+                                        
+                                    ],
+                                }, {
+                                    classAdd: 'list_top_2',
+                                    css: {
+                                        display: 'inline-block',
+                                        height: '100%',
+                                        width: width,
+                                        'text-align': 'center',
+                                    },
+                                    append: 'Date',
+                                    items: [
+                                        
+                                    ],
+                                }, {
+                                    classAdd: 'list_top_2',
+                                    css: {
+                                        display: 'inline-block',
+                                        height: '100%',
+                                        width: width,
+                                        'text-align': 'center',
+                                    },
+                                    append: 'Location',
+                                    items: [
+                                        
+                                    ],
+                                }, {
+                                    classAdd: 'list_top_2',
+                                    css: {
+                                        display: 'inline-block',
+                                        height: '100%',
+                                        width: width,
+                                        'text-align': 'center',
+                                    },
+                                    append: 'Size',
+                                    items: [
+                                        
+                                    ],
+                                },                
+                            ],
+                        },
+                    ],
+                });               
                 ListMenuStyle({
                     to: _X('.exp_body_middle'),
                     array: _X.Xsearch({a: settings.array, s: 'folder'}),
@@ -896,6 +964,7 @@
                         },
                     },                
                 });
+                var width = _X('.list_top').Xfind('children').css({width: _X('.exp_body_middle').position('width', 'scroll') / 4});
             }
         };
 
