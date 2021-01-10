@@ -698,6 +698,7 @@
                     } else {}
                     if (settings.mod == SETTINGS.viewStyle) {
                         that.GetFilesFolders();
+                        _X('.folder_path').Xfind('children').classHave('xui_highlight')[0].click();
                     } else {}                    
                 },
                 mouseenter: function() {
