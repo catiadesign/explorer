@@ -563,7 +563,6 @@
             on: {},
         };
         var s = _X.JoinObj(defaults, options);
-        var colWidth = (_X('.exp_body_middle ').position('width', 'offset') - 8) / 4;
         _X.Xeach(s.array, function(k, v) {
             _X('<div')
                 .XappendTo(s.to)
@@ -582,7 +581,6 @@
                     .Xappend(_X.AddSpace(1) + v.title)
                     .classAdd('format_text')
                     .css({
-                        width: colWidth,
                         display: 'inline-block',
                         'text-align': 'left',
                         'vertical-align': 'middle',
@@ -592,7 +590,6 @@
                     .Xappend(_X.AddSpace(1) + v.date)
                     .classAdd('format_text')
                     .css({
-                        width: colWidth,
                         display: 'inline-block',
                         'text-align': 'center',
                         'vertical-align': 'middle',
@@ -602,7 +599,6 @@
                     .Xappend(_X.AddSpace(1) + v.loc)
                     .classAdd('format_text')
                     .css({
-                        width: colWidth,
                         display: 'inline-block',
                         'text-align': 'left',
                         'vertical-align': 'middle',
@@ -612,7 +608,6 @@
                     .Xappend(_X.AddSpace(1) + v.size)
                     .classAdd('format_text')
                     .css({
-                        width: colWidth,
                         display: 'inline-block',
                         'text-align': 'right',
                         'vertical-align': 'middle',
@@ -661,6 +656,7 @@
                     v.init();
                 }]);
         });
+        _X(s.to).Xfind('.xcube ').Xfind('children').css({width: (_X(s.to).position('width', 'scroll') - 8) / 4});
     }
 
     function ExplorerDisplay() {
@@ -1186,7 +1182,7 @@
             _X('.exp_header').css({height: HeaderHeight()});
             _X('.exp_header_2').Xfind('children').css({width: window.innerWidth / 6});
             if (SETTINGS.viewStyle.sel == 'list') {
-                _X('.exp_body_middle').Xfind('.xcube ').Xfind('children').css({width: (_X('.exp_body_middle').position('width', 'offset') - 8) / 4});
+                _X('.exp_body_middle').Xfind('.xcube ').Xfind('children').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 8) / 4});
             }
         },
     });
