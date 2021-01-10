@@ -16,6 +16,14 @@
         title: '3D Icon:',
         tooltip: '3D Icon Style',
     };
+
+    SETTINGS.viewStyle = {
+        def: 'list',
+        sel: 'list',
+        array: ['icons', 'list'],
+        title: 'View Style:',
+        tooltip: 'View Style',
+    };
     
     var HeaderHeight = function() {
         if (window.innerWidth > 700) {return 81}
@@ -183,6 +191,7 @@
                                     x.SettingsSelectList({to: that, mod: SETTINGS.autosearch});
                                     x.SettingsSelectList({to: that, mod: SETTINGS.searchlimit});
                                     x.SettingsSelectList({to: that, mod: SETTINGS.threeDicon});
+                                    x.SettingsSelectList({to: that, mod: SETTINGS.viewStyle});
                                 },
                             },{
                                 classAdd: 'exp_header_3',
@@ -555,7 +564,7 @@
                 .classAdd(cls.replace('.', ''))
                 .classAdd('xui_content, xui_corner_all')
                 .css({
-                    width: window.innerWidth / 5,
+                    width: window.innerWidth / 6,
                     height: 28,
                     display: 'inline',
                     border: '1px solid transparent',
@@ -573,6 +582,9 @@
                     if (settings.mod == SETTINGS.theme) {
                         _X('#stylesheet').attr({href: '../css/xui/' + selected + '.css'});
                     } else {}
+                    if (settings.mod == SETTINGS.viewStyle) {
+                        that.GetFilesFolders();
+                    } else {}                    
                 },
                 mouseenter: function() {
                     _X(cls).classAdd('xui_hover');
@@ -683,15 +695,130 @@
                         var value = _X(this).Xval();
                         SEARCHEXP.length = 0;                        
                         if (_X(cheBox).checkBool() === false) {
-                            SEARCHEXP = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: value});
+                            SEARCHEXP = _X.Xsearch({d: 'max', a: FILES, l: 'title', s: value});
                         } else {
                             var path = SELECTED.obj.loc.split('/').slice(1, -1).join('/');
                             var newArray = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: path})[0].items;
-                            SEARCHEXP = _X.Xsearch({d: 'max', a: newArray, l: 'loc', s: value});
+                            SEARCHEXP = _X.Xsearch({d: 'max', a: newArray, l: 'title', s: value});
                         }
                         that.GetFilesFolders({array: SEARCHEXP.slice(0, SETTINGS.searchlimit.sel)});
+                        that.FooterInformation();
                     } else {}
                 }
+            });
+        };
+
+        this.MenuElements = function(options) {
+            var defaults = {
+                to: '',
+                array: [],
+                pushObj: true,
+                pushItem: true,
+                menuRC: false,
+                icoSize: 30,
+                click: 'dblclick',
+                clasa: '',
+                css: {},
+                on: {},
+            };
+            var s = _X.JoinObj(defaults, options);
+            var colWidth = (_X('.exp_body_middle ').position('width', 'offset') - 8) / 4;
+            _X.Xeach(s.array, function(k, v) {
+                _X('<div')
+                    .XappendTo(s.to)
+                    .classAdd('ico_full_body, xui_corner_all')
+                    .classAdd(s.clasa)
+                    .css({
+                        'white-space': 'nowrap',
+                        overflow: 'hidden',                           
+                        margin: 3,
+                        border: '1px solid transparent',
+                        height: 30,
+                    })
+                    .css(s.css)
+                    .Xappend(_X('<div')
+                        .iconAdd({ico: v.ico, color: v.color, size: s.icoSize})
+                        .Xappend(_X.AddSpace(1) + v.title)
+                        .classAdd('format_text')
+                        .css({
+                            width: colWidth,
+                            display: 'inline-block',
+                            'text-align': 'left',
+                            'vertical-align': 'middle',
+                        })
+                    )
+                    .Xappend(_X('<div')
+                        .Xappend(_X.AddSpace(1) + v.date)
+                        .classAdd('format_text')
+                        .css({
+                            width: colWidth,
+                            display: 'inline-block',
+                            'text-align': 'center',
+                            'vertical-align': 'middle',
+                        })
+                    )                     
+                    .Xappend(_X('<div')
+                        .Xappend(_X.AddSpace(1) + v.loc)
+                        .classAdd('format_text')
+                        .css({
+                            width: colWidth,
+                            display: 'inline-block',
+                            'text-align': 'left',
+                            'vertical-align': 'middle',
+                        })
+                    )
+                    .Xappend(_X('<div')
+                        .Xappend(_X.AddSpace(1) + v.size)
+                        .classAdd('format_text')
+                        .css({
+                            width: colWidth,
+                            display: 'inline-block',
+                            'text-align': 'right',
+                            'vertical-align': 'middle',
+                        })
+                    )                      
+                    .on(s.on)
+                    .on({
+                        mouseenter: function() {
+                            _X(this).classAdd('xui_hover');
+                        },
+                        mouseleave: function() {
+                            _X(this).classRemove('xui_hover');
+                        },
+                        mousedown: function() {
+                            _X.ReturnElements({item: this, obj: v, pushItem: s.pushItem, pushObj: s.pushObj});
+                            _X('.ico_full_body').classRemove('xui_active');
+                            _X(this).classAdd('xui_active');
+                        },
+                        contextmenu: function(e) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            if (s.menuRC !== false) {
+                                var x = new _X.Window();
+                                x.init({
+                                    windowType: x.type[3],
+                                    fontSize: 13,
+                                    width: 115,
+                                    height: 'auto',
+                                    open: false,
+                                    clasa: 'remove_on_mousedown',
+                                });
+                                x.right.MenuElements({
+                                    array: s.menuRC,
+                                    pushObj: false,
+                                    pushItem: false,
+                                    icoSize: 25,
+                                    click: 'mousedown',
+                                    color: false,
+                                });
+                                x.win.OpenWindow();
+                                WIN.full.splice(WIN.key, 1);
+                            } else {}
+                        }
+                    })
+                    .on([s.click, function() {
+                        v.init();
+                    }]);
             });
         };
 
@@ -704,48 +831,75 @@
             if (settings.defaultEmpty === true) {
                 _X('.exp_body_middle').Xempty();
             } else {}
-            _X.CubeIcon({
-                to: _X('.exp_body_middle'),
-                array: _X.Xsearch({a: settings.array, s: 'folder'}),
-                size: 65,
-                css: {float: 'left'},
-                menuRC: _X.Xsearch({s: 'rc7'}),
-                tooltip: false,
-                drag: true,
-                cube: SETTINGS.threeDicon.sel,
-                rotationAngle: 20,
-                margin: 10,
-                perspective: 200,
-                dragArea: '.exp_body_middle',
-                on: {
-                    click: function() {
-                        if (SEARCHEXP.length > 0) {that.CreatePath()}
-                        that.InfosRight();
-                        that.FooterInformation();
+            if (SETTINGS.viewStyle.sel == 'icons') {
+                _X.CubeIcon({
+                    to: _X('.exp_body_middle'),
+                    array: _X.Xsearch({a: settings.array, s: 'folder'}),
+                    size: 65,
+                    css: {float: 'left'},
+                    menuRC: _X.Xsearch({s: 'rc7'}),
+                    tooltip: false,
+                    drag: true,
+                    cube: SETTINGS.threeDicon.sel,
+                    rotationAngle: 20,
+                    margin: 10,
+                    perspective: 200,
+                    dragArea: '.exp_body_middle',
+                    on: {
+                        click: function() {
+                            if (SEARCHEXP.length > 0) {that.CreatePath()}
+                            that.InfosRight();
+                            that.FooterInformation();
+                        },
                     },
-                },
-            });
-            _X.CubeIcon({
-                to: _X('.exp_body_middle'),
-                array: _X.Xsearch({a: settings.array, s: 'file'}),
-                size: 65,
-                css: {float: 'left'},
-                menuRC: _X.Xsearch({s: 'rc7'}),
-                tooltip: false,
-                drag: true,
-                cube: SETTINGS.threeDicon.sel,
-                rotationAngle: 20,
-                margin: 10,
-                perspective: 200,
-                dragArea: '.exp_body_middle',
-                on: {
-                    click: function() {
-                        if (SEARCHEXP.length > 0) {that.CreatePath()}
-                        that.InfosRight();
-                        that.FooterInformation();
+                });
+                _X.CubeIcon({
+                    to: _X('.exp_body_middle'),
+                    array: _X.Xsearch({a: settings.array, s: 'file'}),
+                    size: 65,
+                    css: {float: 'left'},
+                    menuRC: _X.Xsearch({s: 'rc7'}),
+                    tooltip: false,
+                    drag: true,
+                    cube: SETTINGS.threeDicon.sel,
+                    rotationAngle: 20,
+                    margin: 10,
+                    perspective: 200,
+                    dragArea: '.exp_body_middle',
+                    on: {
+                        click: function() {
+                            if (SEARCHEXP.length > 0) {that.CreatePath()}
+                            that.InfosRight();
+                            that.FooterInformation();
+                        },
                     },
-                },
-            });
+                });
+            } else {
+                that.MenuElements({
+                    to: _X('.exp_body_middle'),
+                    array: _X.Xsearch({a: settings.array, s: 'folder'}),
+                    menuRC: false,
+                    on: {
+                        click: function() {
+                            if (SEARCHEXP.length > 0) {that.CreatePath()}
+                            that.InfosRight();
+                            that.FooterInformation();
+                        },
+                    },                
+                });                
+                that.MenuElements({
+                    to: _X('.exp_body_middle'),
+                    array: _X.Xsearch({a: settings.array, s: 'file'}),
+                    menuRC: false,
+                    on: {
+                        click: function() {
+                            if (SEARCHEXP.length > 0) {that.CreatePath()}
+                            that.InfosRight();
+                            that.FooterInformation();
+                        },
+                    },                
+                });
+            }
         };
 
         this.pathResize = function() {
@@ -1029,7 +1183,7 @@
             var x = new ExplorerDisplay();
             x.pathResize();
             _X('.exp_header').css({height: HeaderHeight()});
-            _X('.exp_header_2').Xfind('children').css({width: window.innerWidth / 5});
+            _X('.exp_header_2').Xfind('children').css({width: window.innerWidth / 6});
         },
     });
 
