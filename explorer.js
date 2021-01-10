@@ -991,6 +991,10 @@
                         },                        
                     });
             });
+            if (SEARCHEXP.length > 0) {
+                _X('.folder_path').Xfind('children').classRemove('xui_highlight');
+                _X('.folder_path').Xfind('children').getElem('last').classAdd('xui_highlight');
+            }
             that.pathResize();
         };
     }
