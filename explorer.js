@@ -815,7 +815,7 @@
                         if (_X(cheBox).checkBool() === false) {
                             SEARCHEXP = _X.Xsearch({d: 'max', a: FILES, l: 'title', s: value});
                         } else {
-                            var path = SELECTED.obj.loc.split('/').slice(1, -1).join('/');
+                            var path = SELECTED.obj.loc.split('/').slice(1).join('/');
                             var newArray = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: path})[0].items;
                             SEARCHEXP = _X.Xsearch({d: 'max', a: newArray, l: 'title', s: value});
                         }
@@ -1056,7 +1056,7 @@
             var splitpath;
             if (obj === undefined) {path = SELECTED.obj.loc;}
             else {path = obj.loc}
-            if (path.indexOf('.') > -1 || obj === undefined) {splitpath = path.split('/').slice(1, -1);}
+            if (path.indexOf('.') > -1) {splitpath = path.split('/').slice(1, -1);}
             else {splitpath = path.split('/').slice(1);}
             _X('.folder_path').Xremove();
             _X('<div')
