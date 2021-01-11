@@ -663,6 +663,34 @@
         _X(s.to).Xfind('.xcube ').Xfind('children').css({width: (_X(s.to).position('width', 'scroll') - 8) / 4});
     }
 
+    function ResizeListHeader(e, that, elemTop1, elemTop2, elem1, elem2) {
+        if (e.which === 1) {
+            var xd = e.pageX;
+            var elem1width = _X(elemTop1).position('width', 'box');
+            var elem2left = _X(that).position('left', 'box');
+            var elem2width = _X(that).position('width', 'box');
+            var elem3width = _X(elemTop2).position('width', 'box') - 4;
+            //
+            var elem1movewidth = _X('.exp_body_middle ').Xfind(elem1).getElem('first').position('width', 'box') + 2;
+            var elem2moveleft = _X('.exp_body_middle ').Xfind(elem2).getElem('first').position('left', 'box') - 2;
+            var elem2movewidth = _X('.exp_body_middle ').Xfind(elem2).getElem('first').position('width', 'box') - 2;
+            var mousemove = function(e) {
+                if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
+                    _X(elemTop1).css({width: elem1width + (e.pageX - xd)});
+                    _X(that).css({left: elem2left + (e.pageX - xd)});
+                    _X(elemTop2).css({left: elem2left + elem2width + (xd - e.pageX), width: elem3width + (xd - e.pageX)});
+                    //
+                    _X('.exp_body_middle ').Xfind(elem1).css({width: elem1movewidth + (e.pageX - xd)});
+                    _X('.exp_body_middle ').Xfind(elem2).css({left: elem2moveleft + (xd - e.pageX), width: elem2movewidth + (xd - e.pageX)});
+                } else {}
+            };
+            var mouseup = function() {
+                _X(window).off({mouseup: mouseup, mousemove: mousemove});
+            };
+            _X(window).on({mousemove: mousemove, mouseup: mouseup});
+        } else {}                                                                
+    }
+
     function ExplorerDisplay() {
         var that = this;
         this.SettingsSelectList = function(options) {
@@ -881,7 +909,6 @@
                     t: '.exp_body_middle',
                     a: [
                         {
-                            classAdd: 'list_top',
                             css: {
                                 position: 'fixed',
                                 width: _X('.exp_body_middle').position('width', 'scroll'),
@@ -897,15 +924,13 @@
                                     },
                                     append: 'Title',
                                 }, {
-                                    classAdd: 'list_top_resize_1, xui_default, xui_corner_all',
+                                    classAdd: 'xui_default, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
-                                        top: 0,
-                                        bottom: 0,
                                         width: 3,
                                         cursor: 'pointer',
                                     },
-                                    append: '|',
+                                    append: '&nbsp;',
                                     on: {
                                         mouseenter: function() {
                                             _X(this).classAdd('xui_hover');
@@ -914,31 +939,7 @@
                                             _X(this).classRemove('xui_hover');
                                         },
                                         mousedown: function(e) {
-                                            if (e.which === 1) {
-                                                var xd = e.pageX;
-                                                var elem1width = _X('.list_top_header_1').position('width', 'box');
-                                                var elem2left = _X(this).position('left', 'box');
-                                                var elem2width = _X(this).position('width', 'box');
-                                                var elem3width = _X('.list_top_header_2').position('width', 'box') - 4;
-                                                //
-                                                var elem1movewidth = _X('.exp_body_middle ').Xfind('.xcube_title').getElem('first').position('width', 'box') + 2;
-                                                var elem2moveleft = _X('.exp_body_middle ').Xfind('.xcube_date').getElem('first').position('left', 'box') - 2;
-                                                var elem2movewidth = _X('.exp_body_middle ').Xfind('.xcube_date').getElem('first').position('width', 'box') - 2;
-                                                var mousemove = function(e) {
-                                                    if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
-                                                        _X('.list_top_header_1').css({width: elem1width + (e.pageX - xd)});
-                                                        _X(this).css({left: elem2left + (e.pageX - xd)});
-                                                        _X('.list_top_header_2').css({left: elem2left + elem2width + (xd - e.pageX), width: elem3width + (xd - e.pageX)});
-                                                        //
-                                                        _X('.exp_body_middle ').Xfind('.xcube_title').css({width: elem1movewidth + (e.pageX - xd)});
-                                                        _X('.exp_body_middle ').Xfind('.xcube_date').css({left: elem2moveleft + (xd - e.pageX), width: elem2movewidth + (xd - e.pageX)});
-                                                    } else {}
-                                                };
-                                                var mouseup = function() {
-                                                    _X(window).off({mouseup: mouseup, mousemove: mousemove});
-                                                };
-                                                _X(window).on({mousemove: mousemove, mouseup: mouseup});
-                                            } else {}                                            
+                                            ResizeListHeader(e, this, '.list_top_header_1', '.list_top_header_2', '.xcube_title', '.xcube_date');
                                         },
                                     },                                    
                                 }, {
@@ -949,12 +950,50 @@
                                     },
                                     append: 'Date',
                                 }, {
+                                    classAdd: 'xui_default, xui_corner_all',
+                                    css: {
+                                        display: 'inline-block',
+                                        width: 3,
+                                        cursor: 'pointer',
+                                    },
+                                    append: '&nbsp;',
+                                    on: {
+                                        mouseenter: function() {
+                                            _X(this).classAdd('xui_hover');
+                                        },
+                                        mouseleave: function() {
+                                            _X(this).classRemove('xui_hover');
+                                        },
+                                        mousedown: function(e) {
+                                            ResizeListHeader(e, this, '.list_top_header_2', '.list_top_header_3', '.xcube_date', '.xcube_loc');
+                                        },
+                                    },                                    
+                                }, {
                                     classAdd: 'list_top_header_3, list_top_header, xui_header, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
                                         'text-align': 'center',
                                     },
-                                    append: 'Location',
+                                    append: 'Path',
+                                }, {
+                                    classAdd: 'xui_default, xui_corner_all',
+                                    css: {
+                                        display: 'inline-block',
+                                        width: 3,
+                                        cursor: 'pointer',
+                                    },
+                                    append: '&nbsp;',
+                                    on: {
+                                        mouseenter: function() {
+                                            _X(this).classAdd('xui_hover');
+                                        },
+                                        mouseleave: function() {
+                                            _X(this).classRemove('xui_hover');
+                                        },
+                                        mousedown: function(e) {
+                                            ResizeListHeader(e, this, '.list_top_header_3', '.list_top_header_4', '.xcube_loc', '.xcube_size');
+                                        },
+                                    },                                    
                                 }, {
                                     classAdd: 'list_top_header_4, list_top_header, xui_header, xui_corner_all',
                                     css: {
@@ -992,7 +1031,7 @@
                     },                
                 });
                 _X('.exp_body_middle').css({'padding-top': 18});
-                var width = _X('.list_top').Xfind('children').classHave('list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 13) / 4});
+                _X('.list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 23) / 4});
             }
         };
 
@@ -1284,6 +1323,7 @@
             _X('.exp_header_2').Xfind('children').css({width: window.innerWidth / 6});
             if (SETTINGS.viewStyle.sel == 'list') {
                 _X('.exp_body_middle').Xfind('.xcube ').Xfind('children').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 8) / 4});
+                _X('.list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 23) / 4});
             }
         },
     });
