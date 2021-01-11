@@ -421,7 +421,7 @@
                                 },
                                 on: {
                                     mousedown: function(e) {
-                                        if (e.which === 1) {
+                                        if (e.which === 1 && SETTINGS.viewStyle.sel == 'icons') {
                                             var y = new _X.IconsMoveSelect();
                                             y.init();
                                         }
@@ -580,7 +580,7 @@
                 .Xappend(_X('<div')
                     .iconAdd({ico: v.ico, color: v.color, size: s.icoSize})
                     .Xappend(_X.AddSpace(1) + v.title)
-                    .classAdd('format_text')
+                    .classAdd('format_text, xcube_title')
                     .css({
                         display: 'inline-block',
                         'text-align': 'left',
@@ -589,7 +589,7 @@
                 )
                 .Xappend(_X('<div')
                     .Xappend(_X.AddSpace(1) + v.date)
-                    .classAdd('format_text')
+                    .classAdd('format_text, xcube_date')
                     .css({
                         display: 'inline-block',
                         'text-align': 'center',
@@ -599,7 +599,7 @@
                 )                     
                 .Xappend(_X('<div')
                     .Xappend(_X.AddSpace(1) + v.loc)
-                    .classAdd('format_text')
+                    .classAdd('format_text, xcube_loc')
                     .css({
                         display: 'inline-block',
                         'text-align': 'left',
@@ -609,7 +609,7 @@
                 )
                 .Xappend(_X('<div')
                     .Xappend(_X.AddSpace(1) + v.size)
-                    .classAdd('format_text')
+                    .classAdd('format_text, xcube_size')
                     .css({
                         display: 'inline-block',
                         'text-align': 'right',
@@ -884,55 +884,83 @@
                             classAdd: 'list_top',
                             css: {
                                 position: 'fixed',
-                                width: '100%',
+                                width: _X('.exp_body_middle').position('width', 'scroll'),
                                 'margin-top': -15,
                                 height: 15, 
                             },
                             items: [
                                 {
-                                    classAdd: 'list_top_1, xui_header, xui_corner_all',
+                                    classAdd: 'list_top_header_1, list_top_header, xui_header, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
-                                        height: '100%',
                                         'text-align': 'center',
                                     },
                                     append: 'Title',
-                                    items: [
-                                        
-                                    ],
                                 }, {
-                                    classAdd: 'list_top_2, xui_header, xui_corner_all',
+                                    classAdd: 'list_top_resize_1, xui_default, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
-                                        height: '100%',
+                                        top: 0,
+                                        bottom: 0,
+                                        width: 3,
+                                        cursor: 'pointer',
+                                    },
+                                    append: '|',
+                                    on: {
+                                        mouseenter: function() {
+                                            _X(this).classAdd('xui_hover');
+                                        },
+                                        mouseleave: function() {
+                                            _X(this).classRemove('xui_hover');
+                                        },
+                                        mousedown: function(e) {
+                                            if (e.which === 1) {
+                                                var xd = e.pageX;
+                                                var elem1width = _X('.list_top_header_1').position('width', 'box');
+                                                var elem2left = _X(this).position('left', 'box');
+                                                var elem2width = _X(this).position('width', 'box');
+                                                var elem3width = _X('.list_top_header_2').position('width', 'box');
+                                                //
+                                                var elem2moveleft = _X('.exp_body_middle ').Xfind('.xcube_date').getElem('first').position('left', 'box');
+                                                var elem2movewidth = _X('.exp_body_middle ').Xfind('.xcube_date').getElem('first').position('width', 'box');
+                                                var mousemove = function(e) {
+                                                    if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
+                                                        _X('.list_top_header_1').css({width: elem1width + (e.pageX - xd)});
+                                                        _X(this).css({left: elem2left + (e.pageX - xd)});
+                                                        _X('.list_top_header_2').css({left: elem2left + elem2width + (xd - e.pageX), width: elem3width - 4 + (xd - e.pageX)});
+                                                        //
+                                                        _X('.exp_body_middle ').Xfind('.xcube_title').css({width: elem1width + (e.pageX - xd)});
+                                                        _X('.exp_body_middle ').Xfind('.xcube_date').css({left: elem2moveleft  + (xd - e.pageX), width: elem2movewidth + (xd - e.pageX)});
+                                                    } else {}
+                                                };
+                                                var mouseup = function() {
+                                                    _X(window).off({mouseup: mouseup, mousemove: mousemove});
+                                                };
+                                                _X(window).on({mousemove: mousemove, mouseup: mouseup});
+                                            } else {}                                            
+                                        },
+                                    },                                    
+                                }, {
+                                    classAdd: 'list_top_header_2, list_top_header, xui_header, xui_corner_all',
+                                    css: {
+                                        display: 'inline-block',
                                         'text-align': 'center',
                                     },
                                     append: 'Date',
-                                    items: [
-                                        
-                                    ],
                                 }, {
-                                    classAdd: 'list_top_2, xui_header, xui_corner_all',
+                                    classAdd: 'list_top_header_3, list_top_header, xui_header, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
-                                        height: '100%',
                                         'text-align': 'center',
                                     },
                                     append: 'Location',
-                                    items: [
-                                        
-                                    ],
                                 }, {
-                                    classAdd: 'list_top_2, xui_header, xui_corner_all',
+                                    classAdd: 'list_top_header_4, list_top_header, xui_header, xui_corner_all',
                                     css: {
                                         display: 'inline-block',
-                                        height: '100%',
                                         'text-align': 'center',
                                     },
                                     append: 'Size',
-                                    items: [
-                                        
-                                    ],
                                 },                
                             ],
                         },
@@ -963,7 +991,7 @@
                     },                
                 });
                 _X('.exp_body_middle').css({'padding-top': 15});
-                var width = _X('.list_top').Xfind('children').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 10) / 4});
+                var width = _X('.list_top').Xfind('children').classHave('list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 15) / 4});
             }
         };
 
