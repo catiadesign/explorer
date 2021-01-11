@@ -24,11 +24,8 @@
         title: 'View Style:',
         tooltip: 'View Style',
     };
-    
-    var HeaderHeight = function() {
-        if (window.innerWidth > 700) {return 81}
-        else return 0;
-    };
+
+    var HeaderHeight = 81;
     var FooterHeight = 20;
     var BodyLeftWidth = 200;
     var BodyMiddleWidthResize = 7;
@@ -164,7 +161,7 @@
                         classAdd: 'xui_content, exp_header',
                         css: {
                             position: 'relative',
-                            height: HeaderHeight(),
+                            height: HeaderHeight,
                             border: '0px solid transparent',
                         },
                         items: [
@@ -345,7 +342,7 @@
                         classAdd: 'exp_body',
                         css: {
                             position: 'relative',
-                            height: 'calc(100% - ' + (HeaderHeight() + FooterHeight) + 'px)',
+                            height: 'calc(100% - ' + (HeaderHeight + FooterHeight) + 'px)',
                             border: '0px solid transparent',
                         },
                         items: [
@@ -405,6 +402,8 @@
                                             _X('.exp_body_resize').css({left: BodyLeftWidth, width: BodyMiddleWidthResize});
                                             _X('.exp_body_middle').css({left: BodyLeftWidth + BodyMiddleWidthResize + 2});
                                         }
+                                        var x = new ExplorerDisplay();
+                                        x.ListStyleResize();                                        
                                     },                                    
                                 },
                             }, {
@@ -479,6 +478,8 @@
                                                     _X(this).Xparent().Xfind('.exp_body_right_element').Xshow();
                                                     _X('.exp_body_middle').css({right: BodyRightWidth});
                                                 }
+                                                var x = new ExplorerDisplay();
+                                                x.ListStyleResize();                                                     
                                             },
                                         },
                                     }, {
@@ -663,34 +664,6 @@
         _X(s.to).Xfind('.xcube ').Xfind('children').css({width: (_X(s.to).position('width', 'scroll') - 8) / 4});
     }
 
-    function ResizeListHeader(e, that, elemTop1, elemTop2, elem1, elem2) {
-        if (e.which === 1) {
-            var xd = e.pageX;
-            var elem1width = _X(elemTop1).position('width', 'box');
-            var elem2left = _X(that).position('left', 'box');
-            var elem2width = _X(that).position('width', 'box');
-            var elem3width = _X(elemTop2).position('width', 'box') - 4;
-            //
-            var elem1movewidth = _X('.exp_body_middle ').Xfind(elem1).getElem('first').position('width', 'box') + 2;
-            var elem2moveleft = _X('.exp_body_middle ').Xfind(elem2).getElem('first').position('left', 'box') - 2;
-            var elem2movewidth = _X('.exp_body_middle ').Xfind(elem2).getElem('first').position('width', 'box') - 2;
-            var mousemove = function(e) {
-                if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
-                    _X(elemTop1).css({width: elem1width + (e.pageX - xd)});
-                    _X(that).css({left: elem2left + (e.pageX - xd)});
-                    _X(elemTop2).css({left: elem2left + elem2width + (xd - e.pageX), width: elem3width + (xd - e.pageX)});
-                    //
-                    _X('.exp_body_middle ').Xfind(elem1).css({width: elem1movewidth + (e.pageX - xd)});
-                    _X('.exp_body_middle ').Xfind(elem2).css({left: elem2moveleft + (xd - e.pageX), width: elem2movewidth + (xd - e.pageX)});
-                } else {}
-            };
-            var mouseup = function() {
-                _X(window).off({mouseup: mouseup, mousemove: mousemove});
-            };
-            _X(window).on({mousemove: mousemove, mouseup: mouseup});
-        } else {}                                                                
-    }
-
     function ExplorerDisplay() {
         var that = this;
         this.SettingsSelectList = function(options) {
@@ -851,6 +824,34 @@
             });
         };
 
+        this.ResizeListHeader = function(e, that, elemTop1, elemTop2, elem1, elem2) {
+            if (e.which === 1) {
+                var xd = e.pageX;
+                var elem1width = _X(elemTop1).position('width', 'box');
+                var elem2left = _X(that).position('left', 'box');
+                var elem2width = _X(that).position('width', 'box');
+                var elem3width = _X(elemTop2).position('width', 'box') - 4;
+                //
+                var elem1movewidth = _X('.exp_body_middle ').Xfind(elem1).getElem('first').position('width', 'box') + 2;
+                var elem2moveleft = _X('.exp_body_middle ').Xfind(elem2).getElem('first').position('left', 'box') - 2;
+                var elem2movewidth = _X('.exp_body_middle ').Xfind(elem2).getElem('first').position('width', 'box') - 2;
+                var mousemove = function(e) {
+                    if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
+                        _X(elemTop1).css({width: elem1width + (e.pageX - xd)});
+                        _X(that).css({left: elem2left + (e.pageX - xd)});
+                        _X(elemTop2).css({left: elem2left + elem2width + (xd - e.pageX), width: elem3width + (xd - e.pageX)});
+                        //
+                        _X('.exp_body_middle ').Xfind(elem1).css({width: elem1movewidth + (e.pageX - xd)});
+                        _X('.exp_body_middle ').Xfind(elem2).css({left: elem2moveleft + (xd - e.pageX), width: elem2movewidth + (xd - e.pageX)});
+                    } else {}
+                };
+                var mouseup = function() {
+                    _X(window).off({mouseup: mouseup, mousemove: mousemove});
+                };
+                _X(window).on({mousemove: mousemove, mouseup: mouseup});
+            } else {}                                                                
+        };
+
         this.GetFilesFolders = function(options) {
             var defaults = {
                 array: [],
@@ -911,7 +912,7 @@
                         {
                             css: {
                                 position: 'fixed',
-                                width: _X('.exp_body_middle').position('width', 'scroll'),
+                                width: '100%',
                                 'margin-top': -18,
                                 height: 15, 
                             },
@@ -939,7 +940,7 @@
                                             _X(this).classRemove('xui_hover');
                                         },
                                         mousedown: function(e) {
-                                            ResizeListHeader(e, this, '.list_top_header_1', '.list_top_header_2', '.xcube_title', '.xcube_date');
+                                            that.ResizeListHeader(e, this, '.list_top_header_1', '.list_top_header_2', '.xcube_title', '.xcube_date');
                                         },
                                     },                                    
                                 }, {
@@ -965,7 +966,7 @@
                                             _X(this).classRemove('xui_hover');
                                         },
                                         mousedown: function(e) {
-                                            ResizeListHeader(e, this, '.list_top_header_2', '.list_top_header_3', '.xcube_date', '.xcube_loc');
+                                            that.ResizeListHeader(e, this, '.list_top_header_2', '.list_top_header_3', '.xcube_date', '.xcube_loc');
                                         },
                                     },                                    
                                 }, {
@@ -991,7 +992,7 @@
                                             _X(this).classRemove('xui_hover');
                                         },
                                         mousedown: function(e) {
-                                            ResizeListHeader(e, this, '.list_top_header_3', '.list_top_header_4', '.xcube_loc', '.xcube_size');
+                                            that.ResizeListHeader(e, this, '.list_top_header_3', '.list_top_header_4', '.xcube_loc', '.xcube_size');
                                         },
                                     },                                    
                                 }, {
@@ -1031,8 +1032,15 @@
                     },                
                 });
                 _X('.exp_body_middle').css({'padding-top': 18});
-                _X('.list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 23) / 4});
+                that.ListStyleResize();
             }
+        };
+
+        this.ListStyleResize = function() {
+            if (SETTINGS.viewStyle.sel == 'list') {
+                _X('.exp_body_middle').Xfind('.xcube ').Xfind('children').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 8) / 4});
+                _X('.list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 23) / 4});
+            }            
         };
 
         this.pathResize = function() {
@@ -1319,12 +1327,8 @@
         resize: function() {
             var x = new ExplorerDisplay();
             x.pathResize();
-            _X('.exp_header').css({height: HeaderHeight()});
+            x.ListStyleResize();
             _X('.exp_header_2').Xfind('children').css({width: window.innerWidth / 6});
-            if (SETTINGS.viewStyle.sel == 'list') {
-                _X('.exp_body_middle').Xfind('.xcube ').Xfind('children').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 8) / 4});
-                _X('.list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 23) / 4});
-            }
         },
     });
 
