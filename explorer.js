@@ -379,6 +379,8 @@
                                                     _X('.exp_body_resize').css({left: left + (e.pageX - xd)});
                                                     _X('.exp_body_middle').css({left: left + BodyMiddleWidthResize + 2 + (e.pageX - xd)});
                                                 } else {}
+                                                var x = new ExplorerDisplay();
+                                                x.ListStyleResize();                                                  
                                             };
                                             var mouseup = function() {
                                                 _X(window).off({mouseup: mouseup, mousemove: mousemove});
