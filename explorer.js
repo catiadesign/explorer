@@ -885,7 +885,7 @@
                             css: {
                                 position: 'fixed',
                                 width: _X('.exp_body_middle').position('width', 'scroll'),
-                                'margin-top': -15,
+                                'margin-top': -18,
                                 height: 15, 
                             },
                             items: [
@@ -919,18 +919,19 @@
                                                 var elem1width = _X('.list_top_header_1').position('width', 'box');
                                                 var elem2left = _X(this).position('left', 'box');
                                                 var elem2width = _X(this).position('width', 'box');
-                                                var elem3width = _X('.list_top_header_2').position('width', 'box');
+                                                var elem3width = _X('.list_top_header_2').position('width', 'box') - 4;
                                                 //
-                                                var elem2moveleft = _X('.exp_body_middle ').Xfind('.xcube_date').getElem('first').position('left', 'box');
-                                                var elem2movewidth = _X('.exp_body_middle ').Xfind('.xcube_date').getElem('first').position('width', 'box');
+                                                var elem1movewidth = _X('.exp_body_middle ').Xfind('.xcube_title').getElem('first').position('width', 'box') + 2;
+                                                var elem2moveleft = _X('.exp_body_middle ').Xfind('.xcube_date').getElem('first').position('left', 'box') - 2;
+                                                var elem2movewidth = _X('.exp_body_middle ').Xfind('.xcube_date').getElem('first').position('width', 'box') - 2;
                                                 var mousemove = function(e) {
                                                     if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
                                                         _X('.list_top_header_1').css({width: elem1width + (e.pageX - xd)});
                                                         _X(this).css({left: elem2left + (e.pageX - xd)});
-                                                        _X('.list_top_header_2').css({left: elem2left + elem2width + (xd - e.pageX), width: elem3width - 4 + (xd - e.pageX)});
+                                                        _X('.list_top_header_2').css({left: elem2left + elem2width + (xd - e.pageX), width: elem3width + (xd - e.pageX)});
                                                         //
-                                                        _X('.exp_body_middle ').Xfind('.xcube_title').css({width: elem1width + (e.pageX - xd)});
-                                                        _X('.exp_body_middle ').Xfind('.xcube_date').css({left: elem2moveleft  + (xd - e.pageX), width: elem2movewidth + (xd - e.pageX)});
+                                                        _X('.exp_body_middle ').Xfind('.xcube_title').css({width: elem1movewidth + (e.pageX - xd)});
+                                                        _X('.exp_body_middle ').Xfind('.xcube_date').css({left: elem2moveleft + (xd - e.pageX), width: elem2movewidth + (xd - e.pageX)});
                                                     } else {}
                                                 };
                                                 var mouseup = function() {
@@ -990,8 +991,8 @@
                         },
                     },                
                 });
-                _X('.exp_body_middle').css({'padding-top': 15});
-                var width = _X('.list_top').Xfind('children').classHave('list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 15) / 4});
+                _X('.exp_body_middle').css({'padding-top': 18});
+                var width = _X('.list_top').Xfind('children').classHave('list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 13) / 4});
             }
         };
 
