@@ -762,10 +762,10 @@
             });
             //Right
             var array = {
-                'Title': obj.title,
-                'Location': obj.loc,
-                'Date': obj.date,
-                'Size': obj.size,
+                'Title:': obj.title,
+                'Path:': obj.loc,
+                'Date:': obj.date,
+                'Size:': obj.size,
             };
             _X.Xeach(array, function(k, v) {
                 if (v !== undefined) {
