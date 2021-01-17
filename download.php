@@ -49,15 +49,14 @@
         //if Folder has Files or SIZE smaller than 190MB
         $files_array = glob(PATH . '/*.*');
         if (folderSize($files_array) > 0 && folderSize($files_array) < SIZE_LIMIT) {
-            CreteArchive($files_array, FILE_NAME);
-            if (connection_aborted()) {
-                unlink(FILE_NAME);
-            }
+            $newName = FILE_NAME . rand();
+            CreteArchive($files_array, $newName);
             header("Content-Type: application/zip");
-            header("Content-Disposition: attachment; filename=" . FILE_NAME . ".zip");
-            header("Content-Length:" . filesize(FILE_NAME));
-            readfile(FILE_NAME);
-            unlink(FILE_NAME);
+            header("Content-Disposition: attachment; filename=" . $newName . ".zip");
+            header("Content-Length:" . filesize($newName));
+            readfile($newName);
+            if (connection_aborted()) {unlink($newName);}
+            else {unlink($newName);}
         //if Folder has NO Files
         } else {
             header("Content-Type: text/plain");
@@ -68,13 +67,9 @@
     
     // log downloads
     if (!LOG_DOWNLOADS) die();
-    
     $f = @fopen(LOG_FILE, 'a+');
     if ($f) {
-        $ip = $_SERVER['REMOTE_ADDR'];
-        //$info = file_get_contents("http://ipinfo.io/{$ip}");
-        //. "   Full info: " . $info
-        @fputs($f, "Date: " . date("m.d.Y g:ia"). "   IP: " . $ip . "   File: ". FILE_NAME . "   Path: " . $_GET['path'] . "\n");
+        @fwrite($f, "Date: " . date("m.d.Y g:ia"). "   IP: " . $_SERVER['REMOTE_ADDR'] . "   File: ". FILE_NAME . "   Path: " . $_GET['path'] . "\n");
         @fclose($f);
     }
     
