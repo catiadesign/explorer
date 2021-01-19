@@ -35,16 +35,6 @@
     var FILES = FILES;
     _X('#varLoad').Xremove();
     
-    /*Update the Directory Structure 
-    if (true === false) {
-        _X.XReadAjax({
-            url: 'scan.php',
-            callback: function() {}
-        });
-    }
-    */
-    //console.log(FILES);
-    
     DefaultSearchLocation = [
         {
             search: 'rc7',
@@ -436,6 +426,7 @@
                                             if (SEARCHEXP.length > 0) {
                                                 x.GetFilesFolders({array: SEARCHEXP.slice(elem, newlimit), defaultEmpty: false});
                                             }
+                                            x.FooterInformation();
                                         }                                  
                                     },
                                 },
@@ -580,9 +571,9 @@
                     cursor: 'pointer',
                 })
                 .css(s.css)
-                .Xappend(_X('<div')
+                .append(_X('<div')
                     .iconAdd({ico: v.ico, color: v.color, size: s.icoSize})
-                    .Xappend(_X.AddSpace(1) + v.title)
+                    .append(_X.AddSpace(1) + v.title)
                     .classAdd('format_text, xcube_title')
                     .css({
                         display: 'inline-block',
@@ -590,8 +581,8 @@
                         'vertical-align': 'middle',
                     })
                 )
-                .Xappend(_X('<div')
-                    .Xappend(_X.AddSpace(1) + v.date)
+                .append(_X('<div')
+                    .append(_X.AddSpace(1) + v.date)
                     .classAdd('format_text, xcube_date')
                     .css({
                         display: 'inline-block',
@@ -600,8 +591,8 @@
                         color: '#969696',
                     })
                 )                     
-                .Xappend(_X('<div')
-                    .Xappend(_X.AddSpace(1) + v.loc)
+                .append(_X('<div')
+                    .append(_X.AddSpace(1) + v.loc)
                     .classAdd('format_text, xcube_loc')
                     .css({
                         display: 'inline-block',
@@ -610,8 +601,8 @@
                         color: '#969696',
                     })
                 )
-                .Xappend(_X('<div')
-                    .Xappend(_X.AddSpace(1) + v.size)
+                .append(_X('<div')
+                    .append(_X.AddSpace(1) + v.size)
                     .classAdd('format_text, xcube_size')
                     .css({
                         display: 'inline-block',
@@ -747,7 +738,7 @@
                     _X('<div')
                         .XappendTo('.exp_body_right_element_top')
                         .css({color: 'red'})
-                        .Xappend(k);
+                        .append(k);
                     _X('<div')
                         .XappendTo('.exp_body_right_element_top')
                         .css({
@@ -758,14 +749,14 @@
                             'margin-left': 10,
                             'max-width': 100,
                         })
-                        .Xappend(v);
+                        .append(v);
                 }
             });
         };
         
         this.FooterInformation = function() {
             var arrayFooter = {
-                'Items: ': _X.Xsearch({d: 'max', a: FILES, l: 'title', s: ''}).length - 1,
+                'Items: ': _X.Xsearch({d: 'max', a: FILES, l: 'title', s: ''}).length,
                 'Displayed: ': _X('.exp_body_middle').Xfind('.xcube').length,
                 'Search result: ': SEARCHEXP.length,
             };
@@ -778,8 +769,8 @@
                             display: 'inline',
                             'padding-left': 10,
                         })
-                        .Xappend(k)
-                        .Xappend(v);
+                        .append(k)
+                        .append(v);
                 }
             });
         };
@@ -1079,7 +1070,7 @@
                         overflow: 'hidden',
                     })
                     .iconAdd({ico: 'folder', color: '#d6d6d6', size: 20})
-                    .Xappend(' ' + v + '/')
+                    .append(' ' + v + '/')
                     .on({
                         mouseenter: function() {
                             _X(this).classAdd('xui_hover');
@@ -1206,10 +1197,10 @@
                                                             e.stopImmediatePropagation();
                                                             if (_X(this).Xparent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).length > 0) {
                                                                 _X(this).Xparent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).Xshow(SETTINGS.effect.sel);
-                                                                _X(this).Xfind('i').Xempty().Xappend('remove');
+                                                                _X(this).Xfind('i').Xempty().append('remove');
                                                             } else {
                                                                 _X(this).Xparent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', '']).Xhide(SETTINGS.effect.sel);
-                                                                _X(this).Xfind('i').Xempty().Xappend('add');
+                                                                _X(this).Xfind('i').Xempty().append('add');
                                                             }
                                                         },
                                                     });
@@ -1343,7 +1334,7 @@
             _X.Xeach(temp, function(k, v) {
                 console.log(v);
                 _X(v).XappendTo('.exp_body_right_element_bottom');
-                //_X('.exp_body_right_element_bottom').Xappend(v);
+                //_X('.exp_body_right_element_bottom').append(v);
             });
             */
         },
