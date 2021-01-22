@@ -71,16 +71,15 @@
 
     //file extension
     $fext = strtolower(substr(strrchr(FILE_NAME, "."), 1));
-    //
     $files_array = glob(PATH . '/*.*');
 
     //Files Download
     if (strpos(PATH, '.') && file_exists(PATH)) {
+        header("Content-Type: application/octet-stream");
+        header("Content-Disposition: attachment; filename=" . FILE_NAME);
+        header("Content-Length:" . filesize(PATH));          
         if (EXT_CHECK) {
             if (array_key_exists($fext, $allowed_ext)) {
-                header("Content-Type: application/octet-stream");
-                header("Content-Disposition: attachment; filename=" . FILE_NAME);
-                header("Content-Length:" . filesize(PATH));
                 readfile(PATH);
             } else {
                 header("Content-Type: text/plain");
@@ -88,9 +87,6 @@
                 readfile("ReadMe.txt");          
             }
         } else {
-            header("Content-Type: application/octet-stream");
-            header("Content-Disposition: attachment; filename=" . FILE_NAME);
-            header("Content-Length:" . filesize(PATH));
             readfile(PATH);            
         }
     }
