@@ -725,6 +725,7 @@
                 margin: 10,
                 perspective: 200,
                 dragArea: '.exp_body_right_element_top',
+                //css: {animation: 'axisRotate 15s infinite linear',},
             });
             //Right
             var array = {
@@ -748,6 +749,7 @@
                             'font-size': 12,
                             'margin-left': 10,
                             'max-width': 100,
+                            //'user-select': 'text',
                         })
                         .append(v);
                 }
@@ -783,7 +785,7 @@
                 type: 'checkbox',
                 width: 24,
                 tooltip: true,
-                tooltipData: 'Search only in current Path',
+                tooltipData: 'Search in Selected Path or Element',
             });              
             _X('.exp_header_3_right')
                 .XInput({
