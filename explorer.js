@@ -54,7 +54,31 @@
                 _X(id)[0].click();
                 _X(id).Xremove();
             },
-        }, 
+        }, {
+            search: 'rc7',
+            title: 'View Code',
+            ico: 'chrome_reader_mode',
+            loc: '',
+            init: function() {
+                var obj = SELECTED.obj;
+                var x = new _X.Window();
+                x.init({
+                    scroll: 'hidden',
+                });                
+                _X('<iframe')
+                    .XappendTo(x.right)
+                    .attr({src: '/ace/index.php?path=' + obj.loc})
+                    .css({width: '100%', height: '100%'});
+            },
+        }, {
+            search: 'rc7',
+            title: 'Open',
+            ico: 'open_in_new',
+            init: function() {
+                SELECTED.obj.init();
+            }, 
+            
+        },
     ];
 
     //Load Grafik
