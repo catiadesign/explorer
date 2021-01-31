@@ -25,13 +25,9 @@
             $sql_query = "SELECT * FROM users WHERE username='" . $uname. "' AND password='" . $password . "'limit 1";
             $result = mysqli_query($con, $sql_query);
             $row = mysqli_fetch_array($result);
-            $count = $row[0];
-            if ($count > 0) {
+            if ($row['username'] === $uname && $row['password'] === $password) {
                 $_SESSION['uname'] = $uname;
-                // Check user login or not
-                if (isset($_SESSION['uname'])) {
-                    header('Location: index.php');
-                }
+                header('Location: index.php');
            }
         } else {
             echo 'The username or password are incorrect!';
@@ -135,13 +131,24 @@
                                                     'box-sizing': 'border-box',
                                                 },                            
                                             }, {
-                                                elem: '<br',
+                                                elem: '<hr',
                                             }, {
                                                 elem: '<input',
                                                 attr: {
                                                     type: 'submit',
                                                     value: 'Submit',
                                                     name: 'btn_submit',
+                                                },
+                                                css: {
+                                                    width: '100%',
+                                                    'box-sizing': 'border-box',
+                                                },
+                                            }, {
+                                                elem: '<input',
+                                                attr: {
+                                                    type: 'submit',
+                                                    value: 'Close',
+                                                    name: 'btn_close',
                                                 },
                                                 css: {
                                                     width: '100%',
