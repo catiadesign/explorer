@@ -161,106 +161,6 @@
         });
     })();
 
-    function LoginForm() {
-        _X.CreateTagElements({
-            t: 'body',
-            a: [
-                {
-                    classAdd: 'loginForm, xui_header, xui_corner_all',
-                    css: {
-                        position: 'absolute',
-                        width: 250,
-                        left: window.innerWidth / 2 - 250 / 2,
-                        top: window.innerHeight / 2 - 250 / 2,
-                        'z-index': 200,
-                    },
-                    items: [
-                        {
-                            classAdd: 'xui_content, xui_corner_all',
-                            css: {
-                                position: 'relative',
-                                margin: 5,
-                            },
-                            items: [
-                                {
-                                    elem: '<h1',
-                                    append: 'Login'
-                                }, {                    
-                                    elem: '<form',
-                                    attr: {
-                                        method: 'post',
-                                    },
-                                    items: [
-                                        {
-                                            elem: '<label',
-                                            attr: {
-                                                for: 'txt_uname',
-                                            },
-                                            append: 'Username:',
-                                        }, {
-                                            elem: '<br',
-                                        }, {
-                                            elem: '<input',
-                                            attr: {
-                                                type: 'text',
-                                                maxlength: 100,
-                                                name: 'txt_uname',
-                                                id: 'txt_uname',
-                                                placeholder: 'Username!',
-                                            },
-                                            css: {
-                                                width: '100%',
-                                                'box-sizing': 'border-box',
-                                            },
-                                        }, {
-                                            elem: '<br',
-                                        }, {
-                                            elem: '<label',
-                                            attr: {
-                                                for: 'txt_pwd',
-                                            },
-                                            append: 'Password:',                            
-                                        }, {
-                                            elem: '<br',
-                                        }, {
-                                            elem: '<input',
-                                            attr: {
-                                                type: 'text',
-                                                maxlength: 100,
-                                                name: 'txt_pwd',
-                                                id: 'txt_pwd',
-                                                placeholder: 'Password!',
-                                            },
-                                            css: {
-                                                width: '100%',
-                                                'box-sizing': 'border-box',
-                                            },                            
-                                        }, {
-                                            elem: '<br',
-                                        }, {
-                                            elem: '<input',
-                                            attr: {
-                                                type: 'submit',
-                                                value: 'Submit',
-                                                name: 'but_submit',
-                                            },
-                                            css: {
-                                                width: '100%',
-                                                'box-sizing': 'border-box',
-                                            },
-                                        }, {
-                                            elem: '<hr',
-                                        },
-                                    ],
-                                },
-                            ],
-                        },                                                                        
-                    ],
-                },
-            ],
-        });                                             
-    }
-    
     function LogoutForm(that) {
         _X.CreateTagElements({
             t: that,
@@ -269,8 +169,7 @@
                     classAdd: 'logoutForm',
                     items: [
                         {
-                            elem: '<h3',
-                            append: 'Hello ' + sessionID,
+                            append: 'Hello ' + sessionID + ' ',
                             css: {
                                 display: 'inline',  
                             },
@@ -284,17 +183,28 @@
                             },                            
                             items: [
                                 {
-                                    elem: '<input',
+                                    elem: '<button',
+                                    classAdd: 'xui_corner_all, xui_content',
+                                    append: 'Logout',                                    
                                     attr: {
                                         type: 'submit',
-                                        value: 'Logout',
                                         name: 'but_logout',
                                     },
                                     css: {
-                                        width: 50,
+                                        padding: 1,
+                                        margin: 1,
                                         'box-sizing': 'border-box',
                                         display: 'inline',  
-                                    },                                
+                                        'text-align': 'center',
+                                    },
+                                    on: {
+                                        mouseenter: function() {
+                                            _X(this).classAdd('xui_hover').css({color: 'red'});
+                                        },
+                                        mouseleave: function() {
+                                            _X(this).classRemove('xui_hover').css({color: ''});
+                                        },
+                                    },                                      
                                 }
                             ],
                         },
@@ -346,7 +256,14 @@
                                                     .XButton({text: 'Login', width: 'auto'})
                                                     .on({
                                                         click: function() {
-                                                            LoginForm();            
+                                                            var id = _X.ClassVirtual();
+                                                            _X('<a')
+                                                                .XappendTo('body')
+                                                                .classAdd(id.replace('.', ''))
+                                                                .attr({
+                                                                    href: 'login.php',
+                                                                });
+                                                            _X(id)[0].click();
                                                         },
                                                     });
                                             } else {
