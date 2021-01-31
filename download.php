@@ -12,9 +12,6 @@
     header("Pragma: no-cache");
     header("Content-Transfer-Encoding: binary");
 
-    ignore_user_abort(true);
-    ob_implicit_flush();
-
     $allowed_ext = array (
       // archives
       'zip' => 'application/zip',
@@ -46,7 +43,9 @@
       'avi' => 'video/x-msvideo'
     );
 
-
+    ignore_user_abort(true);
+    ob_implicit_flush();
+    
     function folderSize($dir) {
         $size = 0;
         foreach ($dir as $file) {
