@@ -15,21 +15,37 @@
     
     $uname = mysqli_real_escape_string($con, $_POST['txt_uname']);
     $fullname = mysqli_real_escape_string($con, $_POST['txt_fullname']);
+    $email = mysqli_real_escape_string($con, $_POST['txt_email']);
     $password = mysqli_real_escape_string($con, $_POST['txt_pwd']);
     
+    $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql_query = "SELECT * FROM users WHERE username='" . $uname. "'";
+    $sql_query = "SELECT * FROM users WHERE email='" . $email . "'";
     $result = mysqli_query($con, $sql_query);
     $row = mysqli_fetch_array($result);
 
-    if ($row['username'] === $uname) {
-        echo 'false';
-    } else {
-        $sql = "INSERT INTO users (username, name, password) VALUES ('" . $uname . "', '" . $fullname . "', '" . $hash . "')";
+    if ($uname == "" || $fullname == "" || $email == "" || $password == "") {
+        echo 'Check for empty felds!<br />';
+    }
+    
+    if (!preg_match($email_exp, $email)) {
+        echo 'Email adress not valid!<br />';
+    } 
+    
+    /*
+    if ($row['username'] == $uname && $uname != "") {
+        echo 'Username already exist!<br />';
+    }
+    */
+    if ($row['email'] == $email &&  $email != "") {
+        echo 'Email already exist!<br />';
+    }
+    if ($row['username'] != $uname && $row['email'] != $email && preg_match($email_exp, $email)) {
+        $sql = "INSERT INTO users (username, fullname, email, password) VALUES ('" . $uname . "', '" . $fullname. "', '" . $email . "' , '" . $hash . "')";
         if (mysqli_query($con, $sql)) {
-            $_SESSION['uname'] = $fullname;
-            echo 'true';
+            $_SESSION['uname'] = $email;
+            echo 'ok';
         }
         mysqli_close($con);
     }
