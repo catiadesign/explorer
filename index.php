@@ -1,10 +1,14 @@
 <?php
-    session_start();
+
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_destroy();
+    } else {
+        session_start();
+    }
 
     if (isset($_POST['but_logout'])) {
         session_destroy();
         header('Location: index.php');
-        die();
     } 
 ?>
 <!doctype html>
@@ -33,12 +37,8 @@
         <?php
             include 'scan.php';
             echo "<script id='varLoad'> var FILES = " . json_encode($files) . "; </script>";
+            echo "<script id='sessionID'> var sessionID = '" . $_SESSION['uname'] . "'; </script>";
         ?>
-        <div class='sessionID'>
-            <?php
-                echo $_SESSION['uname'];
-            ?>
-        </div>        
         <script src="/js/xquery.js"></script>
         <script src="explorer.js"></script>
     </body>
