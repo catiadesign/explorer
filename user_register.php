@@ -25,28 +25,26 @@
     $result = mysqli_query($con, $sql_query);
     $row = mysqli_fetch_array($result);
 
-    if ($uname == "" || $fullname == "" || $email == "" || $password == "") {
-        echo 'Check for empty fields!<br />';
-    }
-    
-    if (!preg_match($email_exp, $email)) {
-        echo 'Email address not valid!<br />';
-    } 
-    
-    if (in_array($uname, ["root", "su", "x"])) {
-        echo 'Username not allowed!<br />';
-    }
-    
-    if ($row['email'] == $email &&  $email != "") {
-        echo 'Email already exist!<br />';
-    }
-    if ($row['username'] != $uname && $row['email'] != $email && preg_match($email_exp, $email)) {
+    if ($row['email'] != $email && preg_match($email_exp, $email) && $uname != "" && $fullname != "" && $email != "" && $password != "") {
         $sql = "INSERT INTO users (username, fullname, email, password) VALUES ('" . $uname . "', '" . $fullname. "', '" . $email . "' , '" . $hash . "')";
         if (mysqli_query($con, $sql)) {
             $_SESSION['uname'] = $email;
             echo 'ok';
         }
         mysqli_close($con);
+    } else {
+        if ($uname == "" || $fullname == "" || $email == "" || $password == "") {
+            echo 'Check for empty fields!<br />';
+        }
+        
+        if (in_array($uname, ["root", "su", "x"])) {
+            echo 'Username not allowed!<br />';
+        }
+        
+        if (!preg_match($email_exp, $email) || $row['email'] == $email) {
+            echo 'Email not valid!<br />';
+        }
     }
+
     
 ?>
