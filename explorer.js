@@ -213,6 +213,147 @@
         });        
     }
 
+    function RegisterForm() {
+        _X('.login_form').Xremove();
+        _X.CreateTagElements({
+            t: _X('.login_window').Xfind('.body_right'),
+            a: [
+                {
+                    classAdd: 'xui_header, xui_corner_all',
+                    css: {
+                        padding: 15,
+                    },                                                                        
+                    items: [
+                        {
+                            classAdd: 'xui_corner_all',
+                            css: {
+                                position: 'relative',
+                            },
+                            items: [
+                                {
+                                    elem: '<h1',
+                                    append: 'Registration'
+                                }, {                    
+                                    elem: '<form',
+                                    attr: {
+                                        method: 'post',
+                                    },
+                                    items: [
+                                        //Username
+                                        {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_uname',
+                                            },
+                                            append: 'Username:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'text',
+                                                maxlength: 100,
+                                                name: 'txt_uname',
+                                                id: 'txt_uname',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },
+                                        //Full name
+                                        }, {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_fullname',
+                                            },
+                                            append: 'Full Name:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'text',
+                                                maxlength: 100,
+                                                name: 'txt_fullname',
+                                                id: 'txt_fullname',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            }, 
+                                        //Password
+                                        }, {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_pwd',
+                                            },
+                                            append: 'Password:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'password',
+                                                maxlength: 100,
+                                                name: 'txt_pwd',
+                                                id: 'txt_pwd',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },                            
+                                        }, {
+                                            elem: '<hr',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'submit',
+                                                value: 'Submit',
+                                                name: 'btn_submit',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },
+                                            on: {
+                                                click: function(e) {
+                                                    e.preventDefault();
+                                                    var data = new FormData();
+                                                    data.append('txt_uname', document.getElementById("txt_uname").value);
+                                                    data.append('txt_fullname', document.getElementById("txt_fullname").value);
+                                                    data.append('txt_pwd', document.getElementById("txt_pwd").value);
+                                                    _X.XReadAjax({
+                                                        method: 'POST',
+                                                        url: 'user_register.php',
+                                                        callback: function() {
+                                                            var r = this.response;
+                                                            //console.log(r);
+                                                            _X('.error_message').Xempty();
+                                                            if (r !== undefined) {
+                                                                if (r == 'true') {
+                                                                    _X('.error_message').append('User Successful Created!'); 
+                                                                    location.reload(true);
+                                                                } else {
+                                                                    _X('.error_message').append('Username already exist!'); 
+                                                                }
+                                                            }                                                            
+                                                        },
+                                                        send: data,
+                                                    });
+                                                },
+                                            },
+                                        }, {
+                                            elem: '<hr',
+                                        }, {
+                                            classAdd: 'error_message',
+                                            css: {
+                                                'text-align': 'center',
+                                            },
+                                        }
+                                    ],
+                                },
+                            ],
+                        },                                                                        
+                    ],
+                },
+            ],
+        });                
+    }
+
     function LoginForm() {
         var x = new _X.Window();
         SELECTED.obj = {title: 'Login', ico: 'mood'};
@@ -220,12 +361,13 @@
             windowType: x.type[2],
             width: 300,
             height: 'auto',
+            clasa: 'login_window',
         });                                                            
         _X.CreateTagElements({
             t: x.right,
             a: [
                 {
-                    classAdd: 'xui_header, xui_corner_all',
+                    classAdd: 'login_form, xui_header, xui_corner_all',
                     css: {
                         padding: 15,
                     },                                                                        
@@ -253,8 +395,6 @@
                                             },
                                             append: 'Username:',
                                         }, {
-                                            elem: '<br',
-                                        }, {
                                             elem: '<input',
                                             attr: {
                                                 type: 'text',
@@ -268,15 +408,11 @@
                                                 'box-sizing': 'border-box',
                                             },
                                         }, {
-                                            elem: '<br',
-                                        }, {
                                             elem: '<label',
                                             attr: {
                                                 for: 'txt_pwd',
                                             },
-                                            append: 'Password:',                            
-                                        }, {
-                                            elem: '<br',
+                                            append: 'Password:',
                                         }, {
                                             elem: '<input',
                                             attr: {
@@ -311,7 +447,7 @@
                                                     data.append('txt_pwd', document.getElementById("txt_pwd").value);
                                                     _X.XReadAjax({
                                                         method: 'POST',
-                                                        url: 'database_check.php',
+                                                        url: 'user_login.php',
                                                         callback: function() {
                                                             var r = this.response;
                                                             //console.log(r);
@@ -327,6 +463,24 @@
                                                         },
                                                         send: data,
                                                     });
+                                                },
+                                            },
+                                        }, {
+                                            elem: '<hr',
+                                        }, {
+                                            append: "Don't have an account? ",
+                                            css: {
+                                                display: 'inline',
+                                            },
+                                        }, {
+                                            elem: '<a',
+                                            attr: {
+                                                href: '#',
+                                            },
+                                            append: 'Register Now!',
+                                            on: {
+                                                click: function() {
+                                                    RegisterForm();
                                                 },
                                             },
                                         }, {
@@ -404,7 +558,9 @@
                                                             _X(this).classRemove('xui_hover').css({color: ''});
                                                         },
                                                         click: function() {
-                                                            LoginForm();
+                                                            if (_X('.thiswindow').classBool('login_window') === false) {
+                                                                LoginForm();
+                                                            }
                                                         },
                                                     });
                                             } else {
