@@ -33,12 +33,11 @@
     
     var SEARCHEXP = [];
     var FILES = FILES;
+    var sessionID = sessionID;
     
-    var sessionID = _X('.sessionID').txt();
-    _X('.sessionID').Xremove();
     //console.log(sessionID);
     
-    _X('#varLoad').Xremove();
+    _X('#varLoad, #sessionID').Xremove();
     
     DefaultSearchLocation = [
         {
@@ -166,10 +165,9 @@
             t: that,
             a: [
                 {
-                    classAdd: 'logoutForm',
                     items: [
                         {
-                            append: 'Hello ' + sessionID + ' ',
+                            append: 'Hi ' + sessionID + ' ',
                             css: {
                                 display: 'inline',  
                             },
@@ -196,6 +194,7 @@
                                         'box-sizing': 'border-box',
                                         display: 'inline',  
                                         'text-align': 'center',
+                                        cursor: 'pointer',
                                     },
                                     on: {
                                         mouseenter: function() {
@@ -216,6 +215,7 @@
 
     function LoginForm() {
         var x = new _X.Window();
+        SELECTED.obj = {title: 'Login', ico: 'mood'};
         x.init({
             windowType: x.type[2],
             width: 300,
@@ -225,7 +225,7 @@
             t: x.right,
             a: [
                 {
-                    classAdd: 'loginForm, xui_header, xui_corner_all',
+                    classAdd: 'xui_header, xui_corner_all',
                     css: {
                         padding: 15,
                     },                                                                        
@@ -312,10 +312,21 @@
                                                     _X.XReadAjax({
                                                         method: 'POST',
                                                         url: 'database_check.php',
-                                                        callback: ajaxcall,
+                                                        callback: function() {
+                                                            var r = this.response;
+                                                            //console.log(r);
+                                                            _X('.error_message').Xempty();
+                                                            if (r !== undefined) {
+                                                                if (r == 'true') {
+                                                                    _X('.error_message').append('Login Successed!'); 
+                                                                    location.reload(true);
+                                                                } else {
+                                                                    _X('.error_message').append('The username or password are incorrect!'); 
+                                                                }
+                                                            }                                                            
+                                                        },
                                                         send: data,
                                                     });
-                                                    ajaxcall();
                                                 },
                                             },
                                         }, {
@@ -335,20 +346,7 @@
             ],
         });        
     }    
-    
 
-    
-    function ajaxcall() {
-        var r = this.response;
-        _X('.error_message').Xempty();
-        if (r == 'true') {
-            _X('.error_message').append('Login Successed!'); 
-            location.reload(true);
-        } else {
-            _X('.error_message').append('The username or password are incorrect!'); 
-        }
-    }
-    
     //Create Website Base Grafik
     _X.CreateTagElements({
         t: 'body',
@@ -382,10 +380,10 @@
                                 items: [
                                     {
                                         css: {
-                                            width: 150,
+                                            width: 200,
                                         },
                                         init: function(that) {
-                                            if (sessionID === undefined) {
+                                            if (sessionID === undefined || sessionID === '') {
                                                 _X('<div')
                                                     .XappendTo(that)
                                                     .classAdd('xui_corner_all, xui_content')
@@ -394,7 +392,8 @@
                                                         margin: 1,
                                                         'box-sizing': 'border-box',
                                                         //display: 'inline',  
-                                                        'text-align': 'center',                                                        
+                                                        'text-align': 'center',
+                                                        cursor: 'pointer',
                                                     })
                                                     .append('Login')
                                                     .on({
