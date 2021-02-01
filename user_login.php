@@ -13,17 +13,17 @@
         die("Connection failed: " . mysqli_connect_error());
     }
    
-    $uname = mysqli_real_escape_string($con, $_POST['txt_uname']);
+    $email = mysqli_real_escape_string($con, $_POST['txt_email']);
     $password = mysqli_real_escape_string($con, $_POST['txt_pwd']);
     
-    $sql_query = "SELECT * FROM users WHERE username='" . $uname. "'";
+    $sql_query = "SELECT * FROM users WHERE email='" . $email. "'";
     $result = mysqli_query($con, $sql_query);
     $row = mysqli_fetch_array($result);
     
     $verify = password_verify($password, $row['password']);
     
-    if ($row['username'] === $uname && $verify) {
-        $_SESSION['uname'] = $row['name'];
+    if ($row['email'] === $email && $verify) {
+        $_SESSION['uname'] = $row['email'];
         echo 'true';
     } else {
         echo 'false';
