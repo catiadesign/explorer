@@ -276,7 +276,26 @@
                                             css: {
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
-                                            }, 
+                                            },
+                                        //Email
+                                        }, {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_email',
+                                            },
+                                            append: 'Email:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'text',
+                                                maxlength: 100,
+                                                name: 'txt_email',
+                                                id: 'txt_email',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },                                             
                                         //Password
                                         }, {
                                             elem: '<label',
@@ -315,6 +334,7 @@
                                                     var data = new FormData();
                                                     data.append('txt_uname', document.getElementById("txt_uname").value);
                                                     data.append('txt_fullname', document.getElementById("txt_fullname").value);
+                                                    data.append('txt_email', document.getElementById("txt_email").value);
                                                     data.append('txt_pwd', document.getElementById("txt_pwd").value);
                                                     _X.XReadAjax({
                                                         method: 'POST',
@@ -324,11 +344,11 @@
                                                             //console.log(r);
                                                             _X('.error_message').Xempty();
                                                             if (r !== undefined) {
-                                                                if (r == 'true') {
+                                                                if (r == 'ok') {
                                                                     _X('.error_message').append('User Successful Created!'); 
                                                                     location.reload(true);
                                                                 } else {
-                                                                    _X('.error_message').append('Username already exist!'); 
+                                                                    _X('.error_message').append(r); 
                                                                 }
                                                             }                                                            
                                                         },
@@ -391,17 +411,17 @@
                                         {
                                             elem: '<label',
                                             attr: {
-                                                for: 'txt_uname',
+                                                for: 'txt_email',
                                             },
-                                            append: 'Username:',
+                                            append: 'Email:',
                                         }, {
                                             elem: '<input',
                                             attr: {
                                                 type: 'text',
                                                 maxlength: 100,
-                                                name: 'txt_uname',
-                                                id: 'txt_uname',
-                                                //placeholder: 'Username!',
+                                                name: 'txt_email',
+                                                id: 'txt_email',
+                                                //placeholder: 'Email!',
                                             },
                                             css: {
                                                 width: '100%',
@@ -443,7 +463,7 @@
                                                 click: function(e) {
                                                     e.preventDefault();
                                                     var data = new FormData();
-                                                    data.append('txt_uname', document.getElementById("txt_uname").value);
+                                                    data.append('txt_email', document.getElementById("txt_email").value);
                                                     data.append('txt_pwd', document.getElementById("txt_pwd").value);
                                                     _X.XReadAjax({
                                                         method: 'POST',
@@ -534,7 +554,7 @@
                                 items: [
                                     {
                                         css: {
-                                            width: 200,
+                                            width: 250,
                                         },
                                         init: function(that) {
                                             if (sessionID === undefined || sessionID === '') {
