@@ -11,13 +11,10 @@
 
     if (!$con) {
         die("Connection failed: " . mysqli_connect_error());
-    } else {}  
+    }
    
     $uname = mysqli_real_escape_string($con, $_POST['txt_uname']);
     $password = mysqli_real_escape_string($con, $_POST['txt_pwd']);
-    
-    //$hash = password_hash($password, PASSWORD_DEFAULT);     
-    //$verify_1 = password_verify($password, $hash); 
     
     $sql_query = "SELECT * FROM users WHERE username='" . $uname. "'";
     $result = mysqli_query($con, $sql_query);
