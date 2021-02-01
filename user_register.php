@@ -26,18 +26,17 @@
     $row = mysqli_fetch_array($result);
 
     if ($uname == "" || $fullname == "" || $email == "" || $password == "") {
-        echo 'Check for empty felds!<br />';
+        echo 'Check for empty fields!<br />';
     }
     
     if (!preg_match($email_exp, $email)) {
-        echo 'Email adress not valid!<br />';
+        echo 'Email address not valid!<br />';
     } 
     
-    /*
-    if ($row['username'] == $uname && $uname != "") {
-        echo 'Username already exist!<br />';
+    if (in_array($uname, ["root", "su", "x"])) {
+        echo 'Username not allowed!<br />';
     }
-    */
+    
     if ($row['email'] == $email &&  $email != "") {
         echo 'Email already exist!<br />';
     }
