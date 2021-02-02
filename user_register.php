@@ -1,22 +1,15 @@
 <?php
 
     session_start();
-
-    define('USER', 'catia_login');
-    define('PASSWORD', '123456');
-    define('HOST', 'localhost');
-    define('DATABASE', 'catia_login');
     
-    $con = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
-
-    if (!$con) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+    include 'db.php';
     
     $uname = mysqli_real_escape_string($con, $_POST['txt_uname']);
     $fullname = mysqli_real_escape_string($con, $_POST['txt_fullname']);
     $email = mysqli_real_escape_string($con, $_POST['txt_email']);
     $password = mysqli_real_escape_string($con, $_POST['txt_pwd']);
+    
+    $active = 0;
     
     $invalidusername = ["root", "su", "x"];
     $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
@@ -27,24 +20,40 @@
     $row = mysqli_fetch_array($result);
 
     if ($row['email'] != $email && preg_match($email_exp, $email) && !in_array($uname, $invalidusername) && $uname != "" && $fullname != "" && $email != "" && $password != "") {
-        $sql = "INSERT INTO users (username, fullname, email, password) VALUES ('" . $uname . "', '" . $fullname. "', '" . $email . "' , '" . $hash . "')";
+        $sql = "INSERT INTO users (active, username, fullname, email, password) VALUES ('" . $active . "', '" . $uname . "', '" . $fullname. "', '" . $email . "' , '" . $hash . "')";
         if (mysqli_query($con, $sql)) {
-            $_SESSION['uname'] = $email;
+            //$_SESSION['uname'] = $email;
+            
+            //Send Activation Email
+            $email_to = $email;
+            $email_subject = "CATIA design - User Account Activation";
+        
+            $email_from = 'no-replay@catiadesign.org';
+            $comments = "www.catiadesign.org/explorer/user_account_activation.php?code=" . $hash;
+    
+            $email_message .= "Form details below.\n\n";
+            $email_message .= "Email from: " . $email_from . "\n\n";
+            $email_message .= "Activation Link: " . $comments . "\n\n";
+            $email_message .= 'X-Mailer: PHP/' . phpversion();
+            
+            $headers = 'From: '. $email_from . "\r\n" . 'Reply-To: '. $email_from . "\r\n";
+            @mail($email_to, $email_subject, $email_message, $headers);
+            
             echo 'ok';
         }
         mysqli_close($con);
-    } else {
-        if ($uname == "" || $fullname == "" || $email == "" || $password == "") {
-            echo 'Check for empty fields!<br />';
-        }
-        
-        if (in_array($uname, $invalidusername)) {
-            echo 'Username not allowed!<br />';
-        }
-        
-        if (!preg_match($email_exp, $email) || $row['email'] == $email) {
-            echo 'Email not valid!<br />';
-        }
+    }
+    
+    if ($uname == "" || $fullname == "" || $email == "" || $password == "") {
+        echo 'Check for empty fields!<br />';
+    }
+    
+    if (in_array($uname, $invalidusername)) {
+        echo 'Username not allowed!<br />';
+    }
+    
+    if (!preg_match($email_exp, $email) || $row['email'] == $email) {
+        echo 'Email not valid or already exist!<br />';
     }
 
     
