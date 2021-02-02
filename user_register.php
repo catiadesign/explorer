@@ -21,27 +21,23 @@
 
     if ($row['email'] != $email && preg_match($email_exp, $email) && !in_array($uname, $invalidusername) && $uname != "" && $fullname != "" && $email != "" && $password != "") {
         $sql = "INSERT INTO users (active, username, fullname, email, password) VALUES ('" . $active . "', '" . $uname . "', '" . $fullname. "', '" . $email . "' , '" . $hash . "')";
-        if (mysqli_query($con, $sql)) {
-            //$_SESSION['uname'] = $email;
-            
-            //Send Activation Email
-            $email_to = $email;
-            $email_subject = "CATIA design - User Account Activation";
-        
-            $email_from = 'no-replay@catiadesign.org';
-            $comments = "www.catiadesign.org/explorer/user_account_activation.php?code=" . $hash;
-    
-            $email_message .= "Form details below.\n\n";
-            $email_message .= "Email from: " . $email_from . "\n\n";
-            $email_message .= "Activation Link: " . $comments . "\n\n";
-            $email_message .= 'X-Mailer: PHP/' . phpversion();
-            
-            $headers = 'From: '. $email_from . "\r\n" . 'Reply-To: '. $email_from . "\r\n";
-            @mail($email_to, $email_subject, $email_message, $headers);
-            
-            echo 'ok';
-        }
+        mysqli_query($con, $sql);
         mysqli_close($con);
+
+        //Send Activation Email
+        $email_to = $email;
+        $email_subject = "CATIA design - User Account Activation";
+    
+        $email_from = 'no-replay@catiadesign.org';
+        $comments = "www.catiadesign.org/explorer/user_account_activation.php?code=" . $hash;
+
+        $email_message .= "Activation Email\n\n";
+        $email_message .= "Email from: " . $email_from . "\n\n";
+        $email_message .= "Activation Link: " . $comments . "\n\n";
+        $email_message .= 'X-Mailer: PHP/' . phpversion();
+        
+        $headers = 'From: '. $email_from . "\r\n" . 'Reply-To: '. $email_from . "\r\n";
+        @mail($email_to, $email_subject, $email_message, $headers);
     }
     
     if ($uname == "" || $fullname == "" || $email == "" || $password == "") {
