@@ -47,7 +47,7 @@
             init: function() {
                 var obj = SELECTED.obj;
                 var id = _X.ClassVirtual();
-                var str = 'download.php?path=' + obj.loc;
+                var str = 'files_download.php?path=' + obj.loc;
                 _X('<a')
                     .XappendTo('body')
                     .classAdd(id.replace('.', ''))
@@ -330,6 +330,28 @@
                                             },
                                             on: {
                                                 click: function(e) {
+                                                    /*
+                                                    _X('.error_message').Xempty();
+                                                    e.preventDefault();
+                                                    var username = _X('#txt_uname').Xval();
+                                                    var fullname = _X('#txt_fullname').Xval();
+                                                    var email = _X('#txt_email').Xval();
+                                                    var pwd = _X('#txt_pwd').Xval();
+                                                    _X.XReadAjax({
+                                                        method: 'GET',
+                                                        url: 'user_register.php?username=' + username + '&fullname=' + fullname + '&email=' + email + '&pwd=' + pwd,
+                                                        callback: function() {
+                                                            var r = this.responseText;
+                                                            //console.log(r);
+                                                            if (r.indexOf('!') > -1) {
+                                                                _X('.error_message').append(r);
+                                                            } else {
+                                                                _X('.error_message').append('User Successful Created!'); 
+                                                                location.reload(true);
+                                                            }                                                            
+                                                        },
+                                                    });                                                    
+                                                    */
                                                     e.preventDefault();
                                                     var data = new FormData();
                                                     data.append('txt_uname', document.getElementById("txt_uname").value);
@@ -343,7 +365,7 @@
                                                             var r = this.response;
                                                             //console.log(r);
                                                             _X('.error_message').Xempty();
-                                                            if (r.indexOf('!') > -1) {
+                                                            if (r.length > 0) {
                                                                 _X('.error_message').append(r);
                                                             } else {                                                            
                                                                 _X('.error_message').append('User Successful Created!'); 
@@ -470,7 +492,7 @@
                                                             var r = this.response;
                                                             //console.log(r);
                                                             _X('.error_message').Xempty();
-                                                            if (r.indexOf('!') > -1) {
+                                                            if (r.length > 0) {
                                                                 _X('.error_message').append(r);
                                                             } else {
                                                                 _X('.error_message').append('Login Successed!'); 
