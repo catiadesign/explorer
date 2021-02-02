@@ -21,22 +21,17 @@
     $row = mysqli_fetch_array($result);
 
     $error_message = '';
-
-    if ($password != $password2) {
-        $error_message .= 'Password not the same!<br />';
-    }
+    if ($password != $password2) {$error_message .= 'Password not the same!<br />';}
     
-    if (empty($uname) || empty($fullname) || empty($email) || empty($password) || empty($password2)) {
-        $error_message .= 'Check for empty fields!<br />';
-    }
+    if (strlen($password) < 6) {$error_message .= 'Minimum 6 characters for password!<br />';}
     
-    if (in_array($uname, $invalidusername)) {
-        $error_message .= 'Username not allowed!<br />';
-    }
+    if (empty($uname) || empty($fullname) || empty($email) || empty($password) || empty($password2)) {$error_message .= 'Check for empty fields!<br />';}
     
-    if (!preg_match($email_exp, $email) || $row['email'] == $email) {
-        $error_message .= 'Email not valid or already exist!<br />';
-    }
+    if (in_array($uname, $invalidusername)) {$error_message .= 'Username not allowed!<br />';}
+    
+    if (!preg_match($email_exp, $email)) {$error_message .= 'Email not valid!<br />';}
+    
+    if ($row['email'] == $email) {$error_message .= 'Email already exist!<br />';}
 
     if (strlen($error_message) > 0) {
         echo $error_message;
