@@ -165,58 +165,51 @@
             t: that,
             a: [
                 {
-                    items: [
-                        {
-                            append: 'Hi ' + sessionID + ' ',
-                            css: {
-                                display: 'inline',  
-                            },
-                        }, {                    
-                            elem: '<form',
-                            attr: {
-                                method: 'post',
-                            },
-                            css: {
-                                display: 'inline',  
-                            },                            
-                            items: [
-                                {
-                                    elem: '<button',
-                                    classAdd: 'xui_corner_all, xui_content',
-                                    append: 'Logout',                                    
-                                    attr: {
-                                        type: 'submit',
-                                        name: 'but_logout',
-                                    },
-                                    css: {
-                                        padding: 1,
-                                        margin: 1,
-                                        'box-sizing': 'border-box',
-                                        display: 'inline',  
-                                        'text-align': 'center',
-                                        cursor: 'pointer',
-                                    },
-                                    on: {
-                                        mouseenter: function() {
-                                            _X(this).classAdd('xui_hover').css({color: 'red'});
-                                        },
-                                        mouseleave: function() {
-                                            _X(this).classRemove('xui_hover').css({color: ''});
-                                        },
-                                    },                                      
-                                }
-                            ],
+                    append: 'Hi ' + sessionID + ' ',
+                    css: {
+                        padding: 1,
+                        margin: 1,
+                        float: 'left',  
+                    },
+                }, {                    
+                    classAdd: 'xui_corner_all, xui_content',
+                    append: 'Logout',
+                    css: {
+                        width: 100,
+                        padding: 1,
+                        margin: 1,
+                        'box-sizing': 'border-box',
+                        float: 'left',  
+                        'text-align': 'center',
+                        cursor: 'pointer',
+                    },
+                    on: {
+                        mouseenter: function() {
+                            _X(this).classAdd('xui_hover').css({color: 'red'});
                         },
-                    ],
+                        mouseleave: function() {
+                            _X(this).classRemove('xui_hover').css({color: ''});
+                        },
+                        click: function() {
+                            window.location = 'user_logout.php';
+                        },
+                    },
                 },
             ],
         });        
     }
 
-    function RegisterForm() {
-        _X('.login_form').Xremove();
+    function SettingsForm(that) {
+        var x = new _X.Window();
+        SELECTED.obj = {title: 'User Settings', ico: 'mood'};
+        x.init({
+            windowType: x.type[2],
+            width: 300,
+            height: 'auto',
+            clasa: 'settings_window',
+        });           
         _X.CreateTagElements({
-            t: _X('.login_window').Xfind('.body_right'),
+            t: _X('.settings_window').Xfind('.body_right'),
             a: [
                 {
                     classAdd: 'xui_header, xui_corner_all',
@@ -232,7 +225,7 @@
                             items: [
                                 {
                                     elem: '<h1',
-                                    append: 'Registration'
+                                    append: 'User Settings'
                                 }, {                    
                                     elem: '<form',
                                     attr: {
@@ -314,7 +307,27 @@
                                             css: {
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
-                                            },                            
+                                            },
+                                        //Password 2
+                                        }, {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_pwd2',
+                                            },
+                                            append: 'Retype Password:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'password',
+                                                maxlength: 100,
+                                                name: 'txt_pwd2',
+                                                id: 'txt_pwd2',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },                                            
+                                        //Submit Button
                                         }, {
                                             elem: '<hr',
                                         }, {
@@ -330,20 +343,198 @@
                                             },
                                             on: {
                                                 click: function(e) {
-                                                    /*
                                                     _X('.error_message').Xempty();
                                                     e.preventDefault();
-                                                    var username = _X('#txt_uname').Xval();
-                                                    var fullname = _X('#txt_fullname').Xval();
-                                                    var email = _X('#txt_email').Xval();
-                                                    var pwd = _X('#txt_pwd').Xval();
+                                                    var username = _X('#txt_uname')[0].value;
+                                                    var fullname = _X('#txt_fullname')[0].value;
+                                                    var email = _X('#txt_email')[0].value;
+                                                    var pwd = _X('#txt_pwd')[0].value;
+                                                    var pwd2 = _X('#txt_pwd2')[0].value;
                                                     _X.XReadAjax({
                                                         method: 'GET',
-                                                        url: 'user_register.php?username=' + username + '&fullname=' + fullname + '&email=' + email + '&pwd=' + pwd,
+                                                        url: 'user_register.php?username=' + username + '&fullname=' + fullname + '&email=' + email + '&pwd=' + pwd + '&pwd2=' + pwd2,
                                                         callback: function() {
                                                             var r = this.responseText;
                                                             //console.log(r);
-                                                            if (r.indexOf('!') > -1) {
+                                                            if (r.length > 0) {
+                                                                _X('.error_message').append(r);
+                                                            } else {
+                                                                _X('.error_message').append('User Successful Created!'); 
+                                                                location.reload(true);
+                                                            }                                                            
+                                                        },
+                                                    });
+                                                },
+                                            },
+                                        }, {
+                                            elem: '<hr',
+                                        }, {
+                                            classAdd: 'error_message',
+                                            css: {
+                                                'text-align': 'center',
+                                            },
+                                        }
+                                    ],
+                                },
+                            ],
+                        },                                                                        
+                    ],
+                },
+            ],
+        });                        
+    }    
+
+    function RegisterForm() {
+        _X('.login_form').Xremove();
+        _X.CreateTagElements({
+            t: _X('.login_window').Xfind('.body_right'),
+            a: [
+                {
+                    classAdd: 'xui_header, xui_corner_all',
+                    css: {
+                        padding: 15,
+                    },                                                                        
+                    items: [
+                        {
+                            classAdd: 'xui_corner_all',
+                            css: {
+                                position: 'relative',
+                            },
+                            items: [
+                                {
+                                    elem: '<h1',
+                                    append: 'User Registration'
+                                }, {                    
+                                    elem: '<form',
+                                    attr: {
+                                        method: 'post',
+                                    },
+                                    items: [
+                                        //Username
+                                        {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_uname',
+                                            },
+                                            append: 'Username:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'text',
+                                                maxlength: 100,
+                                                name: 'txt_uname',
+                                                id: 'txt_uname',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },
+                                        //Full name
+                                        }, {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_fullname',
+                                            },
+                                            append: 'Full Name:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'text',
+                                                maxlength: 100,
+                                                name: 'txt_fullname',
+                                                id: 'txt_fullname',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },
+                                        //Email
+                                        }, {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_email',
+                                            },
+                                            append: 'Email:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'text',
+                                                maxlength: 100,
+                                                name: 'txt_email',
+                                                id: 'txt_email',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },                                             
+                                        //Password
+                                        }, {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_pwd',
+                                            },
+                                            append: 'Password:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'password',
+                                                maxlength: 100,
+                                                name: 'txt_pwd',
+                                                id: 'txt_pwd',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },
+                                        //Password 2
+                                        }, {
+                                            elem: '<label',
+                                            attr: {
+                                                for: 'txt_pwd2',
+                                            },
+                                            append: 'Retype Password:',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'password',
+                                                maxlength: 100,
+                                                name: 'txt_pwd2',
+                                                id: 'txt_pwd2',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },                                            
+                                        //Submit Button
+                                        }, {
+                                            elem: '<hr',
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'submit',
+                                                value: 'Submit',
+                                                name: 'btn_submit',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },
+                                            on: {
+                                                click: function(e) {
+                                                    _X('.error_message').Xempty();
+                                                    e.preventDefault();
+                                                    var username = _X('#txt_uname')[0].value;
+                                                    var fullname = _X('#txt_fullname')[0].value;
+                                                    var email = _X('#txt_email')[0].value;
+                                                    var pwd = _X('#txt_pwd')[0].value;
+                                                    var pwd2 = _X('#txt_pwd2')[0].value;
+                                                    _X.XReadAjax({
+                                                        method: 'GET',
+                                                        url: 'user_register.php?username=' + username + '&fullname=' + fullname + '&email=' + email + '&pwd=' + pwd + '&pwd2=' + pwd2,
+                                                        callback: function() {
+                                                            var r = this.responseText;
+                                                            //console.log(r);
+                                                            if (r.length > 0) {
                                                                 _X('.error_message').append(r);
                                                             } else {
                                                                 _X('.error_message').append('User Successful Created!'); 
@@ -351,7 +542,7 @@
                                                             }                                                            
                                                         },
                                                     });                                                    
-                                                    */
+                                                    /*
                                                     e.preventDefault();
                                                     var data = new FormData();
                                                     data.append('txt_uname', document.getElementById("txt_uname").value);
@@ -374,6 +565,7 @@
                                                         },
                                                         send: data,
                                                     });
+                                                    */
                                                 },
                                             },
                                         }, {
@@ -571,44 +763,64 @@
                                     height: 25,
                                     overflow: 'hidden',
                                 },
-                                items: [
-                                    {
-                                        css: {
-                                            width: 250,
-                                        },
-                                        init: function(that) {
-                                            if (sessionID === undefined || sessionID === '') {
-                                                _X('<div')
-                                                    .XappendTo(that)
-                                                    .classAdd('xui_corner_all, xui_content')
-                                                    .css({
-                                                        padding: 1,
-                                                        margin: 1,
-                                                        'box-sizing': 'border-box',
-                                                        //display: 'inline',  
-                                                        'text-align': 'center',
-                                                        cursor: 'pointer',
-                                                    })
-                                                    .append('Login')
-                                                    .on({
-                                                        mouseenter: function() {
-                                                            _X(this).classAdd('xui_hover').css({color: 'red'});
-                                                        },
-                                                        mouseleave: function() {
-                                                            _X(this).classRemove('xui_hover').css({color: ''});
-                                                        },
-                                                        click: function() {
-                                                            if (_X('.thiswindow').classBool('login_window') === false) {
-                                                                LoginForm();
-                                                            }
-                                                        },
-                                                    });
-                                            } else {
-                                                LogoutForm(that);
-                                            }
-                                        },
-                                    },
-                                ],
+                                init: function(that) {
+                                    if (sessionID === undefined || sessionID === '') {
+                                        _X('<div')
+                                            .XappendTo(that)
+                                            .classAdd('xui_corner_all, xui_content')
+                                            .css({
+                                                width: 100,
+                                                padding: 1,
+                                                margin: 1,
+                                                'box-sizing': 'border-box',
+                                                //display: 'inline',  
+                                                'text-align': 'center',
+                                                cursor: 'pointer',
+                                            })
+                                            .append('Login')
+                                            .on({
+                                                mouseenter: function() {
+                                                    _X(this).classAdd('xui_hover').css({color: 'red'});
+                                                },
+                                                mouseleave: function() {
+                                                    _X(this).classRemove('xui_hover').css({color: ''});
+                                                },
+                                                click: function() {
+                                                    if (_X('.thiswindow').classBool('login_window') === false) {
+                                                        LoginForm();
+                                                    }
+                                                },
+                                            });
+                                    } else {
+                                        LogoutForm(that);
+                                        _X('<div')
+                                            .XappendTo(that)
+                                            .classAdd('xui_corner_all, xui_content')
+                                            .css({
+                                                width: 100,
+                                                padding: 1,
+                                                margin: 1,
+                                                'box-sizing': 'border-box',
+                                                float: 'left',  
+                                                'text-align': 'center',
+                                                cursor: 'pointer',
+                                            })
+                                            .append('Settings')
+                                            .on({
+                                                mouseenter: function() {
+                                                    _X(this).classAdd('xui_hover').css({color: 'red'});
+                                                },
+                                                mouseleave: function() {
+                                                    _X(this).classRemove('xui_hover').css({color: ''});
+                                                },
+                                                click: function() {
+                                                    if (_X('.thiswindow').classBool('settings_window') === false) {
+                                                        SettingsForm();
+                                                    }
+                                                },
+                                            });
+                                    }
+                                },
                             }, {
                                 classAdd: 'exp_header_2',
                                 css: {
