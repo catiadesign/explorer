@@ -35,7 +35,7 @@
     </head>
     <body>
         <?php
-            include 'scan.php';
+            include 'files_scan.php';
             echo "<script id='varLoad'> var FILES = " . json_encode($files) . "; </script>";
             echo "<script id='sessionID'> var sessionID = '" . $_SESSION['uname'] . "'; </script>";
         ?>
