@@ -2,16 +2,7 @@
 
     session_start();
 
-    define('USER', 'catia_login');
-    define('PASSWORD', '123456');
-    define('HOST', 'localhost');
-    define('DATABASE', 'catia_login');
-    
-    $con = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
-
-    if (!$con) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+    include 'db.php';
    
     $email = mysqli_real_escape_string($con, $_POST['txt_email']);
     $password = mysqli_real_escape_string($con, $_POST['txt_pwd']);
@@ -22,11 +13,21 @@
     
     $verify = password_verify($password, $row['password']);
     
-    if ($row['email'] === $email && $verify) {
+    if ($row['email'] == $email && $verify && $row['active'] == 1) {
         $_SESSION['uname'] = $row['email'];
-        echo 'true';
-    } else {
-        echo 'false';
+        echo 'ok';
+    }
+    
+    if ($row['email'] != $email || $email == '') {
+        echo 'Email not valid!<br />';
+    }
+    
+    if (!$verify || $password == '') {
+        echo 'Password not valid!<br />';
+    }
+
+    if ($row['email'] == $email && $verify && $row['active'] != 1) {
+        echo 'User not activated!<br />';
     }
     
 ?>
