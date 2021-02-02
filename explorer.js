@@ -473,11 +473,11 @@
                                                             //console.log(r);
                                                             _X('.error_message').Xempty();
                                                             if (r !== undefined) {
-                                                                if (r == 'true') {
+                                                                if (r == 'ok') {
                                                                     _X('.error_message').append('Login Successed!'); 
                                                                     location.reload(true);
                                                                 } else {
-                                                                    _X('.error_message').append('The username or password are incorrect!'); 
+                                                                    _X('.error_message').append(r); 
                                                                 }
                                                             }                                                            
                                                         },
