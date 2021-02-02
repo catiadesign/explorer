@@ -15,7 +15,7 @@
     
     if ($row['email'] == $email && $verify && $row['active'] == 1) {
         $_SESSION['uname'] = $row['email'];
-        echo 'ok';
+        echo $row['password'];
     }
     
     if ($row['email'] != $email || $email == '') {
