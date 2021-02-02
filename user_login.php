@@ -14,15 +14,11 @@
     $verify = password_verify($password, $row['password']);
 
     $error_message = '';
-    if ($row['email'] != $email || empty($email)) {
-        $error_message .= 'Email not valid!<br />';
-    }
-    if (!$verify || empty($password)) {
-        $error_message .= 'Password not valid!<br />';
-    }
-    if ($row['email'] == $email && $verify && $row['active'] != 1) {
-        $error_message .= 'User not activated!<br />';
-    }
+    if ($row['email'] != $email || empty($email)) {$error_message .= 'Email not valid!<br />';}
+    
+    if (!$verify || empty($password)) {$error_message .= 'Password not valid!<br />';}
+    
+    if ($row['email'] == $email && $verify && $row['active'] != 1) {$error_message .= 'User not activated!<br />';}
     
     if (strlen($error_message) > 0) {
         echo $error_message;
