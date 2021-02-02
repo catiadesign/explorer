@@ -4,10 +4,11 @@
     
     include 'db.php';
     
-    $uname = mysqli_real_escape_string($con, $_POST['txt_uname']);
-    $fullname = mysqli_real_escape_string($con, $_POST['txt_fullname']);
-    $email = mysqli_real_escape_string($con, $_POST['txt_email']);
-    $password = mysqli_real_escape_string($con, $_POST['txt_pwd']);
+    $uname = mysqli_real_escape_string($con, $_GET['username']);
+    $fullname = mysqli_real_escape_string($con, $_GET['fullname']);
+    $email = mysqli_real_escape_string($con, $_GET['email']);
+    $password = mysqli_real_escape_string($con, $_GET['pwd']);
+    $password2 = mysqli_real_escape_string($con, $_GET['pwd2']);
     
     $active = 0;
     
@@ -20,8 +21,12 @@
     $row = mysqli_fetch_array($result);
 
     $error_message = '';
+
+    if ($password != $password2) {
+        $error_message .= 'Password not the same!<br />';
+    }
     
-    if (empty($uname) || empty($fullname) || empty($email) || empty($password)) {
+    if (empty($uname) || empty($fullname) || empty($email) || empty($password) || empty($password2)) {
         $error_message .= 'Check for empty fields!<br />';
     }
     
@@ -36,7 +41,7 @@
     if (strlen($error_message) > 0) {
         echo $error_message;
     } else {
-        $sql = "INSERT INTO users (active, username, fullname, email, password) VALUES ('" . $active . "', '" . $uname . "', '" . $fullname. "', '" . $email . "' , '" . $hash . "')";
+        $sql = "INSERT INTO users (active, username, fullname, email, enterdate, password) VALUES ('" . $active . "', '" . $uname . "', '" . $fullname. "', '" . $email . "' , NOW() , '" . $hash . "')";
         mysqli_query($con, $sql);
         mysqli_close($con);
 
