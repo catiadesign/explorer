@@ -12,22 +12,27 @@
     $row = mysqli_fetch_array($result);
     
     $verify = password_verify($password, $row['password']);
+
+    $error_message = '';
     
-    if ($row['email'] == $email && $verify && $row['active'] == 1) {
-        $_SESSION['uname'] = $row['email'];
-        echo $row['password'];
+    if ($row['email'] != $email || empty($email)) {
+        $error_message .= 'Email not valid!<br />';
     }
     
-    if ($row['email'] != $email || $email == '') {
-        echo 'Email not valid!<br />';
-    }
-    
-    if (!$verify || $password == '') {
-        echo 'Password not valid!<br />';
+    if (!$verify || empty($password)) {
+        $error_message .= 'Password not valid!<br />';
     }
 
     if ($row['email'] == $email && $verify && $row['active'] != 1) {
-        echo 'User not activated!<br />';
+        $error_message .= 'User not activated!<br />';
     }
+
+    if (strlen($error_message) > 0) {
+        echo $error_message;
+    } else {
+        $_SESSION['uname'] = $row['email'];
+    }
+    
+
     
 ?>
