@@ -343,13 +343,11 @@
                                                             var r = this.response;
                                                             //console.log(r);
                                                             _X('.error_message').Xempty();
-                                                            if (r !== undefined) {
-                                                                if (r == 'ok') {
-                                                                    _X('.error_message').append('User Successful Created!'); 
-                                                                    location.reload(true);
-                                                                } else {
-                                                                    _X('.error_message').append(r); 
-                                                                }
+                                                            if (r.indexOf('!') > -1) {
+                                                                _X('.error_message').append(r);
+                                                            } else {                                                            
+                                                                _X('.error_message').append('User Successful Created!'); 
+                                                                location.reload(true);
                                                             }                                                            
                                                         },
                                                         send: data,
@@ -472,14 +470,14 @@
                                                             var r = this.response;
                                                             //console.log(r);
                                                             _X('.error_message').Xempty();
-                                                            if (r !== undefined) {
-                                                                if (r == 'ok') {
-                                                                    _X('.error_message').append('Login Successed!'); 
-                                                                    location.reload(true);
-                                                                } else {
-                                                                    _X('.error_message').append(r); 
-                                                                }
-                                                            }                                                            
+                                                            if (r.indexOf('!') > -1) {
+                                                                _X('.error_message').append(r);
+                                                            } else {
+                                                                _X('.error_message').append('Login Successed!'); 
+                                                                //window.location = 'index.php?login=' + r;
+                                                                //location.reload(true);
+                                                                window.location = 'index.php';
+                                                            }
                                                         },
                                                         send: data,
                                                     });
