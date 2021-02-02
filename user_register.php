@@ -19,7 +19,23 @@
     $result = mysqli_query($con, $sql_query);
     $row = mysqli_fetch_array($result);
 
-    if ($row['email'] != $email && preg_match($email_exp, $email) && !in_array($uname, $invalidusername) && $uname != "" && $fullname != "" && $email != "" && $password != "") {
+    $error_message = '';
+    
+    if (empty($uname) || empty($fullname) || empty($email) || empty($password)) {
+        $error_message .= 'Check for empty fields!<br />';
+    }
+    
+    if (in_array($uname, $invalidusername)) {
+        $error_message .= 'Username not allowed!<br />';
+    }
+    
+    if (!preg_match($email_exp, $email) || $row['email'] == $email) {
+        $error_message .= 'Email not valid or already exist!<br />';
+    }
+
+    if (strlen($error_message) > 0) {
+        echo $error_message;
+    } else {
         $sql = "INSERT INTO users (active, username, fullname, email, password) VALUES ('" . $active . "', '" . $uname . "', '" . $fullname. "', '" . $email . "' , '" . $hash . "')";
         mysqli_query($con, $sql);
         mysqli_close($con);
@@ -39,18 +55,5 @@
         $headers = 'From: '. $email_from . "\r\n" . 'Reply-To: '. $email_from . "\r\n";
         @mail($email_to, $email_subject, $email_message, $headers);
     }
-    
-    if ($uname == "" || $fullname == "" || $email == "" || $password == "") {
-        echo 'Check for empty fields!<br />';
-    }
-    
-    if (in_array($uname, $invalidusername)) {
-        echo 'Username not allowed!<br />';
-    }
-    
-    if (!preg_match($email_exp, $email) || $row['email'] == $email) {
-        echo 'Email not valid or already exist!<br />';
-    }
-
     
 ?>
