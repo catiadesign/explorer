@@ -2,7 +2,7 @@
 
     session_start();
 
-    include 'db.php';
+    require_once('db.php'); 
    
     $code = $_GET['code'];
     
@@ -13,7 +13,6 @@
     if ($row['password'] == $code && $row['active'] != 1) {
         $sqlupdate = "UPDATE users SET active = 1 WHERE password ='" . $code . "'";
         mysqli_query($con, $sqlupdate);
-        mysqli_close($con);
         $_SESSION['uname'] = $row['email'];
         header('Location: index.php');
     } else {
