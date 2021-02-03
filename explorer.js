@@ -230,6 +230,7 @@
                                     elem: '<form',
                                     attr: {
                                         method: 'post',
+                                        name: 'settings_form',
                                     },
                                     items: [
                                         //Username
@@ -289,53 +290,53 @@
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
                                             },
-                                        //Password
+                                        //Old Password
                                         }, {
                                             elem: '<label',
                                             attr: {
-                                                for: 'txt_pwd',
+                                                for: 'txt_old_pwd',
                                             },
-                                            append: 'Password:',
+                                            append: 'Old Password:',
                                         }, {
                                             elem: '<input',
                                             attr: {
                                                 type: 'password',
                                                 maxlength: 100,
-                                                name: 'txt_pwd',
-                                                id: 'txt_pwd',
+                                                name: 'txt_old_pwd',
+                                                id: 'txt_old_pwd',
                                             },
                                             css: {
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
                                             },
-                                        //Password 2
+                                        //New Password
                                         }, {
                                             elem: '<label',
                                             attr: {
-                                                for: 'txt_pwd2',
+                                                for: 'txt_new_pwd',
                                             },
-                                            append: 'Retype Password:',
+                                            append: 'New Password:',
                                         }, {
                                             elem: '<input',
                                             attr: {
                                                 type: 'password',
                                                 maxlength: 100,
-                                                name: 'txt_pwd2',
-                                                id: 'txt_pwd2',
+                                                name: 'txt_new_pwd',
+                                                id: 'txt_new_pwd',
                                             },
                                             css: {
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
                                             },
-                                        //Submit Button
+                                        //Update Button
                                         }, {
                                             elem: '<hr',
                                         }, {
                                             elem: '<input',
                                             attr: {
                                                 type: 'submit',
-                                                value: 'Submit',
-                                                name: 'btn_submit',
+                                                value: 'Update',
+                                                name: 'btn_update',
                                             },
                                             css: {
                                                 width: '100%',
@@ -343,29 +344,63 @@
                                             },
                                             on: {
                                                 click: function(e) {
-                                                    _X('.error_message').Xempty();
                                                     e.preventDefault();
-                                                    var username = _X('#txt_uname')[0].value;
-                                                    var fullname = _X('#txt_fullname')[0].value;
-                                                    var email = _X('#txt_email')[0].value;
-                                                    var pwd = _X('#txt_pwd')[0].value;
-                                                    var pwd2 = _X('#txt_pwd2')[0].value;
+                                                    _X('.error_message').Xempty();
+                                                    var form = document.forms.namedItem('settings_form');
+                                                    var data = new FormData(form);
                                                     _X.XReadAjax({
-                                                        method: 'GET',
-                                                        url: 'user_register.php?username=' + username + '&fullname=' + fullname + '&email=' + email + '&pwd=' + pwd + '&pwd2=' + pwd2,
+                                                        method: 'POST',
+                                                        url: 'user_register.php',
                                                         callback: function() {
-                                                            var r = this.responseText;
+                                                            var r = this.response;
                                                             //console.log(r);
                                                             if (r.length > 0) {
                                                                 _X('.error_message').append(r);
                                                             } else {
-                                                                _X('.error_message').append('User Successful Created!'); 
+                                                                _X('.error_message').append('Update Successful!'); 
                                                                 location.reload(true);
                                                             }
                                                         },
+                                                        send: data,
                                                     });
                                                 },
                                             },
+                                        }, {
+                                            elem: '<hr',                                            
+                                        }, {
+                                            elem: '<input',
+                                            attr: {
+                                                type: 'submit',
+                                                value: 'Delete Account',
+                                                name: 'btn_delete',
+                                            },
+                                            css: {
+                                                width: '100%',
+                                                'box-sizing': 'border-box',
+                                            },
+                                            on: {
+                                                click: function(e) {
+                                                    e.preventDefault();
+                                                    _X('.error_message').Xempty();
+                                                    var form = document.forms.namedItem('settings_form');
+                                                    var data = new FormData(form);
+                                                    _X.XReadAjax({
+                                                        method: 'POST',
+                                                        url: 'user_delete.php',
+                                                        callback: function() {
+                                                            var r = this.response;
+                                                            //console.log(r);
+                                                            if (r.length > 0) {
+                                                                _X('.error_message').append(r);
+                                                            } else {
+                                                                //location.reload(true);
+                                                                window.location = 'user_delete.php';
+                                                            }
+                                                        },
+                                                        send: data,
+                                                    });
+                                                },
+                                            },                                            
                                         }, {
                                             elem: '<hr',
                                         }, {
@@ -408,6 +443,7 @@
                                     elem: '<form',
                                     attr: {
                                         method: 'post',
+                                        name: 'register_form',
                                     },
                                     items: [
                                         //Username
@@ -523,39 +559,14 @@
                                                 click: function(e) {
                                                     e.preventDefault();
                                                     _X('.error_message').Xempty();
-                                                    var username = _X('#txt_uname')[0].value;
-                                                    var fullname = _X('#txt_fullname')[0].value;
-                                                    var email = _X('#txt_email')[0].value;
-                                                    var pwd = _X('#txt_pwd')[0].value;
-                                                    var pwd2 = _X('#txt_pwd2')[0].value;
-                                                    _X.XReadAjax({
-                                                        method: 'GET',
-                                                        url: 'user_register.php?username=' + username + '&fullname=' + fullname + '&email=' + email + '&pwd=' + pwd + '&pwd2=' + pwd2,
-                                                        callback: function() {
-                                                            var r = this.responseText;
-                                                            //console.log(r);
-                                                            if (r.length > 0) {
-                                                                _X('.error_message').append(r);
-                                                            } else {
-                                                                _X('.error_message').append('User Successful Created!'); 
-                                                                location.reload(true);
-                                                            }
-                                                        },
-                                                    });
-                                                    /*
-                                                    e.preventDefault();
-                                                    var data = new FormData();
-                                                    data.append('txt_uname', document.getElementById("txt_uname").value);
-                                                    data.append('txt_fullname', document.getElementById("txt_fullname").value);
-                                                    data.append('txt_email', document.getElementById("txt_email").value);
-                                                    data.append('txt_pwd', document.getElementById("txt_pwd").value);
+                                                    var form = document.forms.namedItem('register_form');
+                                                    var data = new FormData(form);
                                                     _X.XReadAjax({
                                                         method: 'POST',
                                                         url: 'user_register.php',
                                                         callback: function() {
                                                             var r = this.response;
                                                             //console.log(r);
-                                                            _X('.error_message').Xempty();
                                                             if (r.length > 0) {
                                                                 _X('.error_message').append(r);
                                                             } else {
@@ -565,7 +576,6 @@
                                                         },
                                                         send: data,
                                                     });
-                                                    */
                                                 },
                                             },
                                         }, {
@@ -617,6 +627,7 @@
                                     elem: '<form',
                                     attr: {
                                         method: 'post',
+                                        name: 'login_form',
                                         //onsubmit: 'return ajaxcall()',
                                     },
                                     items: [
@@ -675,9 +686,8 @@
                                                 click: function(e) {
                                                     e.preventDefault();
                                                     _X('.error_message').Xempty();
-                                                    var data = new FormData();
-                                                    data.append('txt_email', document.getElementById("txt_email").value);
-                                                    data.append('txt_pwd', document.getElementById("txt_pwd").value);
+                                                    var form = document.forms.namedItem("login_form");
+                                                    var data = new FormData(form);
                                                     _X.XReadAjax({
                                                         method: 'POST',
                                                         url: 'user_login.php',
@@ -773,7 +783,6 @@
                                                 padding: 1,
                                                 margin: 1,
                                                 'box-sizing': 'border-box',
-                                                //display: 'inline',  
                                                 'text-align': 'center',
                                                 cursor: 'pointer',
                                             })
@@ -815,7 +824,7 @@
                                                 },
                                                 click: function() {
                                                     if (_X('.thiswindow').classBool('settings_window') === false) {
-                                                        //SettingsForm();
+                                                        SettingsForm();
                                                     }
                                                 },
                                             });
