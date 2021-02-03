@@ -4,11 +4,11 @@
     
     include 'db.php';
     
-    $uname = mysqli_real_escape_string($con, $_GET['username']);
-    $fullname = mysqli_real_escape_string($con, $_GET['fullname']);
-    $email = mysqli_real_escape_string($con, $_GET['email']);
-    $password = mysqli_real_escape_string($con, $_GET['pwd']);
-    $password2 = mysqli_real_escape_string($con, $_GET['pwd2']);
+    $uname = mysqli_real_escape_string($con, $_POST['txt_uname']);
+    $fullname = mysqli_real_escape_string($con, $_POST['txt_fullname']);
+    $email = mysqli_real_escape_string($con, $_POST['txt_email']);
+    $password = mysqli_real_escape_string($con, $_POST['txt_pwd']);
+    $password2 = mysqli_real_escape_string($con, $_POST['txt_pwd2']);
     
     $active = 0;
     
