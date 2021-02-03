@@ -68,7 +68,7 @@
                 var x = new _X.Window();
                 x.init({
                     scroll: 'hidden',
-                });                
+                });
                 _X('<iframe')
                     .XappendTo(x.right)
                     .attr({src: '/ace/index.php?path=' + obj.loc})
@@ -171,7 +171,7 @@
                         margin: 1,
                         float: 'left',  
                     },
-                }, {                    
+                }, {
                     classAdd: 'xui_corner_all, xui_content',
                     append: 'Logout',
                     css: {
@@ -196,7 +196,7 @@
                     },
                 },
             ],
-        });        
+        });
     }
 
     function SettingsForm(that) {
@@ -207,7 +207,7 @@
             width: 300,
             height: 'auto',
             clasa: 'settings_window',
-        });           
+        });
         _X.CreateTagElements({
             t: _X('.settings_window').Xfind('.body_right'),
             a: [
@@ -215,7 +215,7 @@
                     classAdd: 'xui_header, xui_corner_all',
                     css: {
                         padding: 15,
-                    },                                                                        
+                    },
                     items: [
                         {
                             classAdd: 'xui_corner_all',
@@ -226,7 +226,7 @@
                                 {
                                     elem: '<h1',
                                     append: 'User Settings'
-                                }, {                    
+                                }, {
                                     elem: '<form',
                                     attr: {
                                         method: 'post',
@@ -288,7 +288,7 @@
                                             css: {
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
-                                            },                                             
+                                            },
                                         //Password
                                         }, {
                                             elem: '<label',
@@ -326,7 +326,7 @@
                                             css: {
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
-                                            },                                            
+                                            },
                                         //Submit Button
                                         }, {
                                             elem: '<hr',
@@ -361,7 +361,7 @@
                                                             } else {
                                                                 _X('.error_message').append('User Successful Created!'); 
                                                                 location.reload(true);
-                                                            }                                                            
+                                                            }
                                                         },
                                                     });
                                                 },
@@ -377,12 +377,12 @@
                                     ],
                                 },
                             ],
-                        },                                                                        
+                        },
                     ],
                 },
             ],
-        });                        
-    }    
+        });
+    }
 
     function RegisterForm() {
         _X('.login_form').Xremove();
@@ -393,7 +393,7 @@
                     classAdd: 'xui_header, xui_corner_all',
                     css: {
                         padding: 15,
-                    },                                                                        
+                    },
                     items: [
                         {
                             classAdd: 'xui_corner_all',
@@ -404,7 +404,7 @@
                                 {
                                     elem: '<h1',
                                     append: 'User Registration'
-                                }, {                    
+                                }, {
                                     elem: '<form',
                                     attr: {
                                         method: 'post',
@@ -466,7 +466,7 @@
                                             css: {
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
-                                            },                                             
+                                            },
                                         //Password
                                         }, {
                                             elem: '<label',
@@ -504,7 +504,7 @@
                                             css: {
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
-                                            },                                            
+                                            },
                                         //Submit Button
                                         }, {
                                             elem: '<hr',
@@ -521,8 +521,8 @@
                                             },
                                             on: {
                                                 click: function(e) {
-                                                    _X('.error_message').Xempty();
                                                     e.preventDefault();
+                                                    _X('.error_message').Xempty();
                                                     var username = _X('#txt_uname')[0].value;
                                                     var fullname = _X('#txt_fullname')[0].value;
                                                     var email = _X('#txt_email')[0].value;
@@ -539,9 +539,9 @@
                                                             } else {
                                                                 _X('.error_message').append('User Successful Created!'); 
                                                                 location.reload(true);
-                                                            }                                                            
+                                                            }
                                                         },
-                                                    });                                                    
+                                                    });
                                                     /*
                                                     e.preventDefault();
                                                     var data = new FormData();
@@ -558,10 +558,10 @@
                                                             _X('.error_message').Xempty();
                                                             if (r.length > 0) {
                                                                 _X('.error_message').append(r);
-                                                            } else {                                                            
+                                                            } else {
                                                                 _X('.error_message').append('User Successful Created!'); 
                                                                 location.reload(true);
-                                                            }                                                            
+                                                            }
                                                         },
                                                         send: data,
                                                     });
@@ -579,11 +579,11 @@
                                     ],
                                 },
                             ],
-                        },                                                                        
+                        },
                     ],
                 },
             ],
-        });                
+        });
     }
 
     function LoginForm() {
@@ -594,7 +594,7 @@
             width: 300,
             height: 'auto',
             clasa: 'login_window',
-        });                                                            
+        });
         _X.CreateTagElements({
             t: x.right,
             a: [
@@ -602,7 +602,7 @@
                     classAdd: 'login_form, xui_header, xui_corner_all',
                     css: {
                         padding: 15,
-                    },                                                                        
+                    },
                     items: [
                         {
                             classAdd: 'xui_corner_all',
@@ -613,7 +613,7 @@
                                 {
                                     elem: '<h1',
                                     append: 'Login'
-                                }, {                    
+                                }, {
                                     elem: '<form',
                                     attr: {
                                         method: 'post',
@@ -657,7 +657,7 @@
                                             css: {
                                                 width: '100%',
                                                 'box-sizing': 'border-box',
-                                            },                            
+                                            },
                                         }, {
                                             elem: '<hr',
                                         }, {
@@ -674,6 +674,7 @@
                                             on: {
                                                 click: function(e) {
                                                     e.preventDefault();
+                                                    _X('.error_message').Xempty();
                                                     var data = new FormData();
                                                     data.append('txt_email', document.getElementById("txt_email").value);
                                                     data.append('txt_pwd', document.getElementById("txt_pwd").value);
@@ -683,7 +684,6 @@
                                                         callback: function() {
                                                             var r = this.response;
                                                             //console.log(r);
-                                                            _X('.error_message').Xempty();
                                                             if (r.length > 0) {
                                                                 _X('.error_message').append(r);
                                                             } else {
@@ -726,12 +726,12 @@
                                     ],
                                 },
                             ],
-                        },                                                                        
+                        },
                     ],
                 },
             ],
-        });        
-    }    
+        });
+    }
 
     //Create Website Base Grafik
     _X.CreateTagElements({
@@ -815,7 +815,7 @@
                                                 },
                                                 click: function() {
                                                     if (_X('.thiswindow').classBool('settings_window') === false) {
-                                                        SettingsForm();
+                                                        //SettingsForm();
                                                     }
                                                 },
                                             });
@@ -980,7 +980,7 @@
                                         init: function() {
                                             var x = new ExplorerDisplay();
                                             x.SearchFilesFolders();
-                                        },                                        
+                                        },
                                     },
                                 ],
                             },
@@ -1027,7 +1027,7 @@
                                                     _X('.exp_body_middle').css({left: left + BodyMiddleWidthResize + 2 + (e.pageX - xd)});
                                                 } else {}
                                                 var x = new ExplorerDisplay();
-                                                x.ListStyleResize();                                                  
+                                                x.ListStyleResize();
                                             };
                                             var mouseup = function() {
                                                 _X(window).off({mouseup: mouseup, mousemove: mousemove});
@@ -1052,8 +1052,8 @@
                                             _X('.exp_body_middle').css({left: BodyLeftWidth + BodyMiddleWidthResize + 2});
                                         }
                                         var x = new ExplorerDisplay();
-                                        x.ListStyleResize();                                        
-                                    },                                    
+                                        x.ListStyleResize();
+                                    },
                                 },
                             }, {
                                 classAdd: 'exp_body_middle, xui_content',
@@ -1084,7 +1084,7 @@
                                                 x.GetFilesFolders({array: SEARCHEXP.slice(elem, newlimit), defaultEmpty: false});
                                             }
                                             x.FooterInformation();
-                                        }                                  
+                                        }
                                     },
                                 },
                             }, {
@@ -1129,7 +1129,7 @@
                                                     _X('.exp_body_middle').css({right: BodyRightWidth});
                                                 }
                                                 var x = new ExplorerDisplay();
-                                                x.ListStyleResize();                                                     
+                                                x.ListStyleResize();
                                             },
                                         },
                                     }, {
@@ -1160,7 +1160,7 @@
                                                     height: 200,
                                                     bottom: 0,
                                                 },
-                                            },                                            
+                                            },
                                         ],
                                     },
                                 ],
@@ -1221,7 +1221,7 @@
                 .classAdd(s.clasa)
                 .css({
                     'white-space': 'nowrap',
-                    overflow: 'hidden',                           
+                    overflow: 'hidden',
                     margin: 3,
                     border: '1px solid transparent',
                     height: 30,
@@ -1247,7 +1247,7 @@
                         'vertical-align': 'middle',
                         color: '#969696',
                     })
-                )                     
+                )
                 .append(_X('<div')
                     .append(_X.AddSpace(1) + v.loc)
                     .classAdd('format_text, xcube_loc')
@@ -1267,7 +1267,7 @@
                         'vertical-align': 'middle',
                         color: '#969696',
                     })
-                )                      
+                )
                 .on(s.on)
                 .on({
                     mouseenter: function() {
@@ -1334,7 +1334,7 @@
                     display: 'inline',
                     border: '1px solid transparent',
                     'box-shadow': '-1px 1px 2px #333',
-                });                
+                });
             _X.Xeach(settings.mod.array, function(k, v) {
                 _X('<option')
                     .XappendTo(cls)
@@ -1350,7 +1350,7 @@
                     if (settings.mod == SETTINGS.viewStyle) {
                         that.GetFilesFolders();
                         _X('.folder_path').Xfind('children').classHave('xui_highlight')[0].click();
-                    } else {}                    
+                    } else {}
                 },
                 mouseenter: function() {
                     _X(cls).classAdd('xui_hover');
@@ -1443,7 +1443,7 @@
                 width: 24,
                 tooltip: true,
                 tooltipData: 'Search in Selected Path or Element',
-            });              
+            });
             _X('.exp_header_3_right')
                 .XInput({
                     id: inp,
@@ -1461,7 +1461,7 @@
                     e.stopImmediatePropagation();
                     if (e.keyCode == 13 || SETTINGS.autosearch.sel == 'true') {
                         var value = _X(this).Xval();
-                        SEARCHEXP.length = 0;                        
+                        SEARCHEXP.length = 0;
                         if (_X(cheBox).checkBool() === false) {
                             SEARCHEXP = _X.Xsearch({d: 'max', a: FILES, l: 'title', s: value});
                         } else {
@@ -1501,7 +1501,7 @@
                     _X(window).off({mouseup: mouseup, mousemove: mousemove});
                 };
                 _X(window).on({mousemove: mousemove, mouseup: mouseup});
-            } else {}                                                                
+            } else {}
         };
 
         this.GetFilesFolders = function(options) {
@@ -1594,7 +1594,7 @@
                                         mousedown: function(e) {
                                             that.ResizeListHeader(e, this, '.list_top_header_1', '.list_top_header_2', '.xcube_title', '.xcube_date');
                                         },
-                                    },                                    
+                                    },
                                 }, {
                                     classAdd: 'list_top_header_2, list_top_header, xui_header, xui_corner_all',
                                     css: {
@@ -1620,7 +1620,7 @@
                                         mousedown: function(e) {
                                             that.ResizeListHeader(e, this, '.list_top_header_2', '.list_top_header_3', '.xcube_date', '.xcube_loc');
                                         },
-                                    },                                    
+                                    },
                                 }, {
                                     classAdd: 'list_top_header_3, list_top_header, xui_header, xui_corner_all',
                                     css: {
@@ -1646,7 +1646,7 @@
                                         mousedown: function(e) {
                                             that.ResizeListHeader(e, this, '.list_top_header_3', '.list_top_header_4', '.xcube_loc', '.xcube_size');
                                         },
-                                    },                                    
+                                    },
                                 }, {
                                     classAdd: 'list_top_header_4, list_top_header, xui_header, xui_corner_all',
                                     css: {
@@ -1654,11 +1654,11 @@
                                         'text-align': 'center',
                                     },
                                     append: 'Size',
-                                },                
+                                },
                             ],
                         },
                     ],
-                });               
+                });
                 ListMenuStyle({
                     to: _X('.exp_body_middle'),
                     array: _X.Xsearch({a: settings.array, s: 'folder'}),
@@ -1669,8 +1669,8 @@
                             that.InfosRight();
                             that.FooterInformation();
                         },
-                    },                
-                });                
+                    },
+                });
                 ListMenuStyle({
                     to: _X('.exp_body_middle'),
                     array: _X.Xsearch({a: settings.array, s: 'file'}),
@@ -1681,7 +1681,7 @@
                             that.InfosRight();
                             that.FooterInformation();
                         },
-                    },                
+                    },
                 });
                 _X('.exp_body_middle').css({'padding-top': 18});
                 that.ListStyleResize();
@@ -1692,7 +1692,7 @@
             if (SETTINGS.viewStyle.sel == 'list') {
                 _X('.exp_body_middle').Xfind('.xcube ').Xfind('children').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 8) / 4});
                 _X('.list_top_header').css({width: (_X('.exp_body_middle').position('width', 'scroll') - 23) / 4});
-            }            
+            }
         };
 
         this.pathResize = function() {
@@ -1784,7 +1784,7 @@
                             that.InfosRight();
                             SELECTED.obj = array;
                             _X('.folder_path').Xfind('children').getElem('last')[0].click();
-                        },                        
+                        },
                     });
             });
             if (SEARCHEXP.length > 0) {
@@ -1893,7 +1893,7 @@
                                             mousedown: function() {
                                                 v.init();
                                                 _X('.tree_name').classRemove('xui_highlight');
-                                                _X(this).classAdd('xui_highlight');                                                
+                                                _X(this).classAdd('xui_highlight');
                                             },
                                             click: function(e) {
                                                 SEARCHEXP.length = 0;
@@ -1924,7 +1924,7 @@
                                                     });
                                                     x.win.OpenWindow();
                                                     WIN.full.splice(WIN.key, 1);
-                                            },                                             
+                                            },
                                             dblclick: function(e) {
                                                 e.preventDefault();
                                                 e.stopImmediatePropagation();
