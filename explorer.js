@@ -88,6 +88,65 @@
     //Load Grafik
     (function() {
         var Radius = 70;
+        _X('<div')
+            .XappendTo('body')
+            .classAdd('body_load')
+            .css({
+                position: 'absolute',
+                'z-index': 2000,
+                left: window.innerWidth / 2 - Radius / 2,
+                top: window.innerHeight / 2 - Radius / 2,
+                width: Radius,
+                height: Radius,
+                'border-radius': '50%',
+                animation: 'website_circle_load 2s linear infinite',                
+            })
+            .x_new('<div')
+                .css({
+                    position: 'absolute',
+                    left: Radius / 2,
+                    top: Radius / 2,
+                    width: Radius / 3,
+                    height: Radius / 3,
+                    animation: 'website_circle_load 1s linear infinite',
+                    'background-image': 'linear-gradient(red, yellow)',
+                    'border-radius': '50%',                    
+                })
+            .parent()    
+            .x_new('<div')
+                .css({
+                    position: 'absolute',
+                    left: Radius / 2,
+                    top: Radius / 2,
+                    width: Radius / 3,
+                    height: Radius / Radius,
+                    animation: 'website_circle_load 1s linear infinite',                  
+                })
+                .x_new('<div')
+                    .css({
+                        width: Radius / 3,
+                        height: Radius / 3,
+                        'background-image': 'linear-gradient(red, yellow)',
+                        'border-radius': '50%',                
+                    })
+            .parent(2)
+            .x_new('<div')
+                .css({
+                    position: 'absolute',
+                    left: Radius / 2,
+                    top: Radius / 2,
+                    width: Radius / Radius,
+                    height: Radius / 3,
+                    animation: 'website_circle_load 1s linear infinite',                 
+                })
+                .x_new('<div')
+                    .css({
+                        width: Radius / 3,
+                        height: Radius / 3,
+                        'background-image': 'linear-gradient(red, yellow)',
+                        'border-radius': '50%',              
+                    });
+        /*            
         _X.CreateTagElements({
             t: 'body',
             a: [
@@ -158,6 +217,7 @@
                 },
             ],
         });
+        */
     })();
 
     function LogoutForm(that) {
@@ -438,7 +498,7 @@
                             items: [
                                 {
                                     elem: '<h1',
-                                    append: 'User Registration'
+                                    append: 'User Registration',
                                 }, {
                                     elem: '<form',
                                     attr: {
@@ -605,6 +665,17 @@
             height: 'auto',
             clasa: 'login_window',
         });
+        /*
+        var r = new XMLHttpRequest();
+        r.open('GET', 'user_login.php', true);
+        r.responseType = 'text';
+        r.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                x.right[0].innerHTML = r.response;
+            }
+        }; 
+        r.send(null);        
+        */
         _X.CreateTagElements({
             t: x.right,
             a: [
@@ -871,7 +942,7 @@
                                                     init: function() {
                                                         var temp = _X('.tree_name')
                                                             .classHave('xui_highlight')
-                                                            .Xparent('.tree_body')
+                                                            .parent('.tree_body')
                                                             .Xfind('children')
                                                             .Xfind('.tree_collapse');
                                                         _X.Xeach(temp, function(k, v) {
@@ -888,7 +959,7 @@
                                                     init: function() {
                                                         var temp = _X('.tree_name')
                                                             .classHave('xui_highlight')
-                                                            .Xparent('.tree_body')
+                                                            .parent('.tree_body')
                                                             .Xfind('children')
                                                             .classHave('tree_body')
                                                             .Xfind('children')
@@ -908,7 +979,7 @@
                                                     init: function() {
                                                         var temp = _X('.tree_name')
                                                             .classHave('xui_highlight')
-                                                            .Xparent('.tree_body')
+                                                            .parent('.tree_body')
                                                             .Xfind('children')
                                                             .Xfind('.tree_collapse');
                                                         _X.Xeach(temp, function(k, v) {
@@ -923,10 +994,10 @@
                                                     tooltip: 'Expand First Level',
                                                     ico: 'keyboard_arrow_down',
                                                     init: function() {
-                                                        if (_X('.tree_name').classHave('xui_highlight').Xparent('.tree_body').Xfind('children').classHave('tree_body').cssBool(['display', 'none']) === true) {
+                                                        if (_X('.tree_name').classHave('xui_highlight').parent('.tree_body').Xfind('children').classHave('tree_body').cssBool(['display', 'none']) === true) {
                                                             var temp = _X('.tree_name')
                                                                 .classHave('xui_highlight')
-                                                                .Xparent('.tree_body')
+                                                                .parent('.tree_body')
                                                                 .Xfind('children')
                                                                 .classHave('tree_body')
                                                                 .Xfind('children')
@@ -937,7 +1008,7 @@
                                                                     v.click();
                                                                 }
                                                             });
-                                                            _X('.tree_name').classHave('xui_highlight').Xparent().Xfind('.tree_collapse')[0].click();
+                                                            _X('.tree_name').classHave('xui_highlight').parent().Xfind('.tree_collapse')[0].click();
                                                         }
                                                     }
                                                 },
@@ -1130,11 +1201,11 @@
                                             click: function() {
                                                 if (_X('.exp_body_right').css('width') > 10) {
                                                     _X('.exp_body_right').css({width: 10});
-                                                    _X(this).Xparent().Xfind('.exp_body_right_element').Xhide();
+                                                    _X(this).parent().Xfind('.exp_body_right_element').Xhide();
                                                     _X('.exp_body_middle').css({right: 10});
                                                 } else {
                                                     _X('.exp_body_right').css({width: BodyRightWidth});
-                                                    _X(this).Xparent().Xfind('.exp_body_right_element').Xshow();
+                                                    _X(this).parent().Xfind('.exp_body_right_element').Xshow();
                                                     _X('.exp_body_middle').css({right: BodyRightWidth});
                                                 }
                                                 var x = new ExplorerDisplay();
@@ -1863,17 +1934,17 @@
                                                         click: function(e) {
                                                             e.preventDefault();
                                                             e.stopImmediatePropagation();
-                                                            if (_X(this).Xparent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).length > 0) {
-                                                                _X(this).Xparent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).Xshow(SETTINGS.effect.sel);
+                                                            if (_X(this).parent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).length > 0) {
+                                                                _X(this).parent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).Xshow(SETTINGS.effect.sel);
                                                                 _X(this).Xfind('i').Xempty().append('remove');
                                                             } else {
-                                                                _X(this).Xparent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', '']).Xhide(SETTINGS.effect.sel);
+                                                                _X(this).parent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', '']).Xhide(SETTINGS.effect.sel);
                                                                 _X(this).Xfind('i').Xempty().append('add');
                                                             }
                                                         },
                                                     });
                                             } else {
-                                                _X(that).Xparent().css({'margin-left': 32});
+                                                _X(that).parent().css({'margin-left': 32});
                                             }
                                         },
                                     }, {
@@ -1937,14 +2008,14 @@
                                             dblclick: function(e) {
                                                 e.preventDefault();
                                                 e.stopImmediatePropagation();
-                                                if (_X(this).Xparent().Xfind('.tree_collapse')[0] !== undefined) {
-                                                    _X(this).Xparent().Xfind('.tree_collapse')[0].click();
+                                                if (_X(this).parent().Xfind('.tree_collapse')[0] !== undefined) {
+                                                    _X(this).parent().Xfind('.tree_collapse')[0].click();
                                                 }
                                             },
                                         },
                                         //Initialize again the function to create the tree
                                         init: function(that) {
-                                            ScanElementsCreateTree(v.items, that.Xparent('.tree_body'));
+                                            ScanElementsCreateTree(v.items, that.parent('.tree_body'));
                                         },
                                     },
                                 ],
