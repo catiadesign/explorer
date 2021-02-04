@@ -101,51 +101,60 @@
                 'border-radius': '50%',
                 animation: 'website_circle_load 2s linear infinite',                
             })
-            .x_new('<div')
-                .css({
-                    position: 'absolute',
-                    left: Radius / 2,
-                    top: Radius / 2,
-                    width: Radius / 3,
-                    height: Radius / 3,
-                    animation: 'website_circle_load 1s linear infinite',
-                    'background-image': 'linear-gradient(red, yellow)',
-                    'border-radius': '50%',                    
-                })
-            .parent()    
-            .x_new('<div')
-                .css({
-                    position: 'absolute',
-                    left: Radius / 2,
-                    top: Radius / 2,
-                    width: Radius / 3,
-                    height: Radius / Radius,
-                    animation: 'website_circle_load 1s linear infinite',                  
-                })
-                .x_new('<div')
+            .init(function(that) {
+                _X('<div')
+                    .XappendTo(that)
                     .css({
+                        position: 'absolute',
+                        left: Radius / 2,
+                        top: Radius / 2,
                         width: Radius / 3,
                         height: Radius / 3,
+                        animation: 'website_circle_load 1s linear infinite',
                         'background-image': 'linear-gradient(red, yellow)',
-                        'border-radius': '50%',                
-                    })
-            .parent(2)
-            .x_new('<div')
-                .css({
-                    position: 'absolute',
-                    left: Radius / 2,
-                    top: Radius / 2,
-                    width: Radius / Radius,
-                    height: Radius / 3,
-                    animation: 'website_circle_load 1s linear infinite',                 
-                })
-                .x_new('<div')
-                    .css({
-                        width: Radius / 3,
-                        height: Radius / 3,
-                        'background-image': 'linear-gradient(red, yellow)',
-                        'border-radius': '50%',              
+                        'border-radius': '50%',                    
                     });
+                _X('<div')
+                    .XappendTo(that)    
+                    .css({
+                        position: 'absolute',
+                        left: Radius / 2,
+                        top: Radius / 2,
+                        width: Radius / 3,
+                        height: Radius / Radius,
+                        animation: 'website_circle_load 1s linear infinite',                  
+                    })
+                    .init(function(that) {
+                        _X('<div')
+                            .XappendTo(that)
+                            .css({
+                                width: Radius / 3,
+                                height: Radius / 3,
+                                'background-image': 'linear-gradient(red, yellow)',
+                                'border-radius': '50%',                
+                            });
+                    });
+                _X('<div')
+                    .XappendTo(that)
+                    .css({
+                        position: 'absolute',
+                        left: Radius / 2,
+                        top: Radius / 2,
+                        width: Radius / Radius,
+                        height: Radius / 3,
+                        animation: 'website_circle_load 1s linear infinite',                 
+                    })
+                    .init(function(that) {
+                        _X('<div')
+                            .XappendTo(that)
+                            .css({
+                                width: Radius / 3,
+                                height: Radius / 3,
+                                'background-image': 'linear-gradient(red, yellow)',
+                                'border-radius': '50%',              
+                            });
+                    });
+            });
         /*            
         _X.CreateTagElements({
             t: 'body',
