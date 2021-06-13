@@ -2,7 +2,7 @@
 
     WIN.globalDIV = 'body';
     WIN.taskbar = '.exp_footer_right';
-    WIN.body = '.desktop_website';
+    WIN.body = '.exp_body';
     WIN.icons = '.exp_body_middle ';
     WIN.adsense = '../pages/adsense_vertical_120x600.html';
 
@@ -49,7 +49,7 @@
                 var id = _X.ClassVirtual();
                 var str = 'files_download.php?path=' + obj.loc;
                 _X('<a')
-                    .XappendTo('body')
+                    .appendTo('body')
                     .classAdd(id.replace('.', ''))
                     .attr({
                         href: str,
@@ -70,7 +70,7 @@
                     scroll: 'hidden',
                 });
                 _X('<iframe')
-                    .XappendTo(x.right)
+                    .appendTo(x.right)
                     .attr({src: '/ace/index.php?path=' + obj.loc})
                     .css({width: '100%', height: '100%'});
             },
@@ -89,7 +89,7 @@
     (function() {
         var Radius = 70;
         _X('<div')
-            .XappendTo('body')
+            .appendTo('body')
             .classAdd('body_load')
             .css({
                 position: 'absolute',
@@ -103,7 +103,7 @@
             })
             .init(function(that) {
                 _X('<div')
-                    .XappendTo(that)
+                    .appendTo(that)
                     .css({
                         position: 'absolute',
                         left: Radius / 2,
@@ -115,7 +115,7 @@
                         'border-radius': '50%',                    
                     });
                 _X('<div')
-                    .XappendTo(that)    
+                    .appendTo(that)    
                     .css({
                         position: 'absolute',
                         left: Radius / 2,
@@ -126,7 +126,7 @@
                     })
                     .init(function(that) {
                         _X('<div')
-                            .XappendTo(that)
+                            .appendTo(that)
                             .css({
                                 width: Radius / 3,
                                 height: Radius / 3,
@@ -135,7 +135,7 @@
                             });
                     });
                 _X('<div')
-                    .XappendTo(that)
+                    .appendTo(that)
                     .css({
                         position: 'absolute',
                         left: Radius / 2,
@@ -146,7 +146,7 @@
                     })
                     .init(function(that) {
                         _X('<div')
-                            .XappendTo(that)
+                            .appendTo(that)
                             .css({
                                 width: Radius / 3,
                                 height: Radius / 3,
@@ -155,78 +155,6 @@
                             });
                     });
             });
-        /*            
-        _X.CreateTagElements({
-            t: 'body',
-            a: [
-                {
-                    classAdd: 'body_load',
-                    css: {
-                        position: 'absolute',
-                        'z-index': 2000,
-                        left: window.innerWidth / 2 - Radius / 2,
-                        top: window.innerHeight / 2 - Radius / 2,
-                        width: Radius,
-                        height: Radius,
-                        'border-radius': '50%',
-                        animation: 'website_circle_load 2s linear infinite',
-                    },
-                    items: [
-                        {
-                            css: {
-                                position: 'absolute',
-                                left: Radius / 2,
-                                top: Radius / 2,
-                                width: Radius / 3,
-                                height: Radius / 3,
-                                animation: 'website_circle_load 1s linear infinite',
-                                'background-image': 'linear-gradient(red, yellow)',
-                                'border-radius': '50%',
-                            },
-                        }, {
-                            css: {
-                                position: 'absolute',
-                                left: Radius / 2,
-                                top: Radius / 2,
-                                width: Radius / 3,
-                                height: Radius / Radius,
-                                animation: 'website_circle_load 1s linear infinite',
-                            },
-                            items: [
-                                {
-                                    css: {
-                                        width: Radius / 3,
-                                        height: Radius / 3,
-                                        'background-image': 'linear-gradient(red, yellow)',
-                                        'border-radius': '50%',
-                                    },
-                                },
-                            ],
-                        }, {
-                            css: {
-                                position: 'absolute',
-                                left: Radius / 2,
-                                top: Radius / 2,
-                                width: Radius / Radius,
-                                height: Radius / 3,
-                                animation: 'website_circle_load 1s linear infinite',
-                            },
-                            items: [
-                                {
-                                    css: {
-                                        width: Radius / 3,
-                                        height: Radius / 3,
-                                        'background-image': 'linear-gradient(red, yellow)',
-                                        'border-radius': '50%',
-                                    },
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        });
-        */
     })();
 
     function LogoutForm(that) {
@@ -856,7 +784,7 @@
                                 init: function(that) {
                                     if (sessionID === undefined || sessionID === '') {
                                         _X('<div')
-                                            .XappendTo(that)
+                                            .appendTo(that)
                                             .classAdd('xui_corner_all, xui_content')
                                             .css({
                                                 width: 100,
@@ -883,7 +811,7 @@
                                     } else {
                                         LogoutForm(that);
                                         _X('<div')
-                                            .XappendTo(that)
+                                            .appendTo(that)
                                             .classAdd('xui_corner_all, xui_content')
                                             .css({
                                                 width: 100,
@@ -1024,7 +952,7 @@
                                             };
                                             _X.Xeach(temp, function(k, v) {
                                                 _X('<div')
-                                                    .XappendTo(that)
+                                                    .appendTo(that)
                                                     .classAdd('xui_corner_all')
                                                     .css({
                                                         position: 'absolute',
@@ -1305,7 +1233,7 @@
         var s = _X.JoinObj(defaults, options);
         _X.Xeach(s.array, function(k, v) {
             _X('<div')
-                .XappendTo(s.to)
+                .appendTo(s.to)
                 .classAdd('xcube, xui_corner_all')
                 .classAdd(s.clasa)
                 .css({
@@ -1317,46 +1245,52 @@
                     cursor: 'pointer',
                 })
                 .css(s.css)
-                .append(_X('<div')
-                    .iconAdd({ico: v.ico, color: v.color, size: s.icoSize})
-                    .append(_X.AddSpace(1) + v.title)
-                    .classAdd('format_text, xcube_title')
-                    .css({
-                        display: 'inline-block',
-                        'text-align': 'left',
-                        'vertical-align': 'middle',
-                    })
-                )
-                .append(_X('<div')
-                    .append(_X.AddSpace(1) + v.date)
-                    .classAdd('format_text, xcube_date')
-                    .css({
-                        display: 'inline-block',
-                        'text-align': 'center',
-                        'vertical-align': 'middle',
-                        color: '#969696',
-                    })
-                )
-                .append(_X('<div')
-                    .append(_X.AddSpace(1) + v.loc)
-                    .classAdd('format_text, xcube_loc')
-                    .css({
-                        display: 'inline-block',
-                        'text-align': 'left',
-                        'vertical-align': 'middle',
-                        color: '#969696',
-                    })
-                )
-                .append(_X('<div')
-                    .append(_X.AddSpace(1) + v.size)
-                    .classAdd('format_text, xcube_size')
-                    .css({
-                        display: 'inline-block',
-                        'text-align': 'right',
-                        'vertical-align': 'middle',
-                        color: '#969696',
-                    })
-                )
+                .init(function(that) {
+                    //Icon & Title
+                    _X('<div')
+                        .appendTo(that)
+                        .iconAdd({ico: v.ico, color: v.color, size: s.icoSize})
+                        .append(_X.AddSpace(1) + v.title)
+                        .classAdd('format_text, xcube_title')
+                        .css({
+                            display: 'inline-block',
+                            'text-align': 'left',
+                            'vertical-align': 'middle',
+                        });
+                    //Date
+                    _X('<div')
+                        .appendTo(that)
+                        .append(_X.AddSpace(1) + v.date)
+                        .classAdd('format_text, xcube_date')
+                        .css({
+                            display: 'inline-block',
+                            'text-align': 'center',
+                            'vertical-align': 'middle',
+                            color: '#969696',
+                        });
+                    //Location
+                    _X('<div')
+                        .appendTo(that)
+                        .append(_X.AddSpace(1) + v.loc)
+                        .classAdd('format_text, xcube_loc')
+                        .css({
+                            display: 'inline-block',
+                            'text-align': 'left',
+                            'vertical-align': 'middle',
+                            color: '#969696',
+                        });
+                    //Size
+                    _X('<div')
+                        .appendTo(that)
+                        .append(_X.AddSpace(1) + v.size)
+                        .classAdd('format_text, xcube_size')
+                        .css({
+                            display: 'inline-block',
+                            'text-align': 'right',
+                            'vertical-align': 'middle',
+                            color: '#969696',
+                        });
+                })
                 .on(s.on)
                 .on({
                     mouseenter: function() {
@@ -1414,7 +1348,7 @@
             var settings = _X.JoinObj(defaults, options);
             var cls = _X.ClassVirtual();
             _X('<select')
-                .XappendTo(_X(settings.to))
+                .appendTo(_X(settings.to))
                 .classAdd(cls.replace('.', ''))
                 .classAdd('xui_content, xui_corner_all')
                 .css({
@@ -1426,7 +1360,7 @@
                 });
             _X.Xeach(settings.mod.array, function(k, v) {
                 _X('<option')
-                    .XappendTo(cls)
+                    .appendTo(cls)
                     .txt(v);
             });
             _X(cls).on({
@@ -1483,11 +1417,11 @@
             _X.Xeach(array, function(k, v) {
                 if (v !== undefined) {
                     _X('<div')
-                        .XappendTo('.exp_body_right_element_top')
+                        .appendTo('.exp_body_right_element_top')
                         .css({color: 'red'})
                         .append(k);
                     _X('<div')
-                        .XappendTo('.exp_body_right_element_top')
+                        .appendTo('.exp_body_right_element_top')
                         .css({
                             'overflow-wrap': 'break-word',
                             'word-wrap': 'break-word',
@@ -1512,7 +1446,7 @@
             _X.Xeach(arrayFooter, function(k, v) {
                 if (v !== 0) {
                     _X('<div')
-                        .XappendTo('.exp_footer_left')
+                        .appendTo('.exp_footer_left')
                         .css({
                             display: 'inline',
                             'padding-left': 10,
@@ -1799,7 +1733,7 @@
             else {splitpath = path.split('/').slice(1);}
             _X('.folder_path').Xremove();
             _X('<div')
-                .XappendTo('.exp_header_3_middle')
+                .appendTo('.exp_header_3_middle')
                 .classAdd('folder_path')
                 .css({
                     width: '100%',
@@ -1807,7 +1741,7 @@
                 });
             _X.Xeach(splitpath, function(k, v) {
                 _X('<div')
-                    .XappendTo('.folder_path')
+                    .appendTo('.folder_path')
                     .classAdd('xui_corner_all, format_text')
                     .css({
                         float: 'left',
@@ -1891,148 +1825,143 @@
             var MarginLeft = function(v) {
                 return v == 1 ? -15 : 25;
             };
-            _X.CreateTagElements({
-                t: appendTo,
-                a: [
-                    {
-                        classAdd: 'tree_body',
-                        css: {
-                            'margin-left': MarginLeft(FolderToArray.length),
-                            padding: 1,
-                            'border-left': '1px dotted',
-                            'white-space': 'nowrap',
-                            overflow: 'hidden',
-                        },
-                        items: [
-                            {
-                                classAdd: 'tree_info',
-                                css: {
-                                    display: 'inline-block',
-                                    'margin-left': 16,
-                                    width: 'auto',
-                                    height: 'auto',
-                                },
-                                items: [
-                                    {
-                                        classAdd: 'xui_corner_all',
-                                        css: {
-                                            display: 'inline',
-                                            cursor: 'pointer',
-                                            border: '1px solid transparent',
-                                            padding: 1,
-                                        },
-                                        init: function(that) {
-                                            if (v.folderCount > 0) {
-                                                _X(that)
-                                                    .classAdd('tree_collapse')
-                                                    .iconAdd({
-                                                        ico: 'remove',
-                                                        size: 16,
-                                                        color: '#000000',
-                                                        css: {
-                                                            'padding-bottom': 2,
-                                                        },
-                                                    })
-                                                    .on({
-                                                        mouseenter: function() {
-                                                            _X(this).classAdd('xui_hover');
-                                                        },
-                                                        mouseleave: function() {
-                                                            _X(this).classRemove('xui_hover');
-                                                        },
-                                                        click: function(e) {
-                                                            e.preventDefault();
-                                                            e.stopImmediatePropagation();
-                                                            if (_X(this).parent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).length > 0) {
-                                                                _X(this).parent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).Xshow(SETTINGS.effect.sel);
-                                                                _X(this).Xfind('i').Xempty().append('remove');
-                                                            } else {
-                                                                _X(this).parent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', '']).Xhide(SETTINGS.effect.sel);
-                                                                _X(this).Xfind('i').Xempty().append('add');
-                                                            }
-                                                        },
-                                                    });
-                                            } else {
-                                                _X(that).parent().css({'margin-left': 32});
-                                            }
-                                        },
-                                    }, {
-                                        classAdd: 'xui_corner_all, tree_name',
-                                        css: {
-                                            display: 'inline',
-                                            cursor: 'pointer',
-                                            border: '1px solid transparent',
-                                            padding: 2,
-                                        },
-                                        iconAdd: {
-                                            ico: v.ico,
-                                            color: v.color,
-                                            css: {
-                                                'padding-bottom': 2,
-                                            }
-                                        },
-                                        append: ' ' + FolderToArray[FolderToArray.length - 1],
-                                        on: {
-                                            mouseenter: function() {
-                                                _X(this).classAdd('xui_hover');
-                                            },
-                                            mouseleave: function() {
-                                                _X(this).classRemove('xui_hover');
-                                            },
-                                            mousedown: function() {
-                                                v.init();
-                                                _X('.tree_name').classRemove('xui_highlight');
-                                                _X(this).classAdd('xui_highlight');
-                                            },
-                                            click: function(e) {
-                                                SEARCHEXP.length = 0;
-                                                _X('.tree_name').classRemove('xui_highlight');
-                                                _X(this).classAdd('xui_highlight');
-                                                v.init();
-                                            },
-                                            contextmenu: function(e) {
-                                                v.init();
-                                                e.preventDefault();
-                                                e.stopImmediatePropagation();
-                                                    var x = new _X.Window();
-                                                    x.init({
-                                                        windowType: x.type[3],
-                                                        fontSize: 13,
-                                                        width: 115,
-                                                        height: 'auto',
-                                                        open: false,
-                                                        clasa: 'remove_on_mousedown',
-                                                    });
-                                                    x.right.MenuElements({
-                                                        array: _X.Xsearch({s: 'rc7'}),
-                                                        pushObj: false,
-                                                        pushItem: false,
-                                                        icoSize: 25,
-                                                        click: 'mousedown',
-                                                        color: false,
-                                                    });
-                                                    x.win.OpenWindow();
-                                                    WIN.full.splice(WIN.key, 1);
-                                            },
-                                            dblclick: function(e) {
-                                                e.preventDefault();
-                                                e.stopImmediatePropagation();
-                                                if (_X(this).parent().Xfind('.tree_collapse')[0] !== undefined) {
-                                                    _X(this).parent().Xfind('.tree_collapse')[0].click();
-                                                }
-                                            },
-                                        },
-                                        //Initialize again the function to create the tree
-                                        init: function(that) {
-                                            ScanElementsCreateTree(v.items, that.parent('.tree_body'));
-                                        },
+            _X('<div')
+                .appendTo(appendTo)
+                .classAdd('tree_body')
+                .css({
+                    'margin-left': MarginLeft(FolderToArray.length),
+                    padding: 1,
+                    'border-left': '1px dotted',
+                    'white-space': 'nowrap',
+                    overflow: 'hidden',
+                })
+                .init(function(that) {
+                    _X('<div')
+                        .appendTo(that)
+                        .classAdd('tree_info')
+                        .css({
+                            display: 'inline-block',
+                            'margin-left': 16,
+                            width: 'auto',
+                            height: 'auto',
+                        })
+                        .init(function(that) {
+                            _X('<div')
+                                .appendTo(that)
+                                .classAdd('xui_corner_all')
+                                .css({
+                                    display: 'inline',
+                                    cursor: 'pointer',
+                                    border: '1px solid transparent',
+                                    padding: 1,
+                                })
+                                .init(function(that) {
+                                    if (v.folderCount > 0) {
+                                        _X(that)
+                                            .classAdd('tree_collapse')
+                                            .iconAdd({
+                                                ico: 'remove',
+                                                size: 16,
+                                                color: '#000000',
+                                                css: {
+                                                    'padding-bottom': 2,
+                                                },
+                                            })
+                                            .on({
+                                                mouseenter: function() {
+                                                    _X(this).classAdd('xui_hover');
+                                                },
+                                                mouseleave: function() {
+                                                    _X(this).classRemove('xui_hover');
+                                                },
+                                                click: function(e) {
+                                                    e.preventDefault();
+                                                    e.stopImmediatePropagation();
+                                                    if (_X(this).parent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).length > 0) {
+                                                        _X(this).parent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', 'none']).Xshow(SETTINGS.effect.sel);
+                                                        _X(this).Xfind('i').Xempty().append('remove');
+                                                    } else {
+                                                        _X(this).parent('.tree_body').Xfind('children').classHave('tree_body').cssHave(['display', '']).Xhide(SETTINGS.effect.sel);
+                                                        _X(this).Xfind('i').Xempty().append('add');
+                                                    }
+                                                },
+                                            });
+                                    } else {
+                                        _X(that).parent().css({'margin-left': 32});
+                                    }                                    
+                                });
+                            _X('<div')
+                                .appendTo(that)
+                                .classAdd('xui_corner_all, tree_name')
+                                .css({
+                                    display: 'inline',
+                                    cursor: 'pointer',
+                                    border: '1px solid transparent',
+                                    padding: 2,
+                                })
+                                .iconAdd({
+                                    ico: v.ico,
+                                    color: v.color,
+                                    css: {
+                                        'padding-bottom': 2,
+                                    }
+                                })
+                                .append(' ' + FolderToArray[FolderToArray.length - 1])
+                                .on({
+                                    mouseenter: function() {
+                                        _X(this).classAdd('xui_hover');
                                     },
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            });
+                                    mouseleave: function() {
+                                        _X(this).classRemove('xui_hover');
+                                    },
+                                    mousedown: function() {
+                                        v.init();
+                                        _X('.tree_name').classRemove('xui_highlight');
+                                        _X(this).classAdd('xui_highlight');
+                                    },
+                                    click: function(e) {
+                                        SEARCHEXP.length = 0;
+                                        _X('.tree_name').classRemove('xui_highlight');
+                                        _X(this).classAdd('xui_highlight');
+                                        v.init();
+                                    },
+                                    contextmenu: function(e) {
+                                        v.init();
+                                        e.preventDefault();
+                                        e.stopImmediatePropagation();
+                                            var x = new _X.Window();
+                                            x.init({
+                                                windowType: x.type[3],
+                                                fontSize: 13,
+                                                width: 115,
+                                                height: 'auto',
+                                                open: false,
+                                                clasa: 'remove_on_mousedown',
+                                            });
+                                            x.right.MenuElements({
+                                                array: _X.Xsearch({s: 'rc7'}),
+                                                pushObj: false,
+                                                pushItem: false,
+                                                icoSize: 25,
+                                                click: 'mousedown',
+                                                color: false,
+                                            });
+                                            x.win.OpenWindow();
+                                            WIN.full.splice(WIN.key, 1);
+                                    },
+                                    dblclick: function(e) {
+                                        e.preventDefault();
+                                        e.stopImmediatePropagation();
+                                        if (_X(this).parent().Xfind('.tree_collapse')[0] !== undefined) {
+                                            _X(this).parent().Xfind('.tree_collapse')[0].click();
+                                        }
+                                    },                                    
+                                })
+                                .init(function(that) {
+                                    ScanElementsCreateTree(v.items, that.parent('.tree_body'));
+                                });
+                        });                    
+                });
         }
         function ScanElementsCreateTree(array, appendto) {
             _X.Xeach(array, function(k, v) {
@@ -2081,7 +2010,7 @@
             _X('.exp_body_right_element_bottom').Xempty();
             _X.Xeach(temp, function(k, v) {
                 console.log(v);
-                _X(v).XappendTo('.exp_body_right_element_bottom');
+                _X(v).appendTo('.exp_body_right_element_bottom');
                 //_X('.exp_body_right_element_bottom').append(v);
             });
             */
