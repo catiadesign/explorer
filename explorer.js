@@ -1390,71 +1390,76 @@
         this.InfosRight = function() {
             var obj = SELECTED.obj;
             if (obj.title === undefined) {obj = FILES[0];}
-            _X('.exp_body_right_element_top').Xempty();
-            _X.CubeIcon({
-                to: _X('.exp_body_right_element_top'),
-                array: _X(obj),
-                size: 100,
-                menuRC: false,
-                title: false,
-                tooltip: false,
-                drag: true,
-                cube: true,
-                icoControls: true,
-                rotationAngle: [-30, -20],
-                margin: 10,
-                perspective: 200,
-                dragArea: '.exp_body_right_element_top',
-                //css: {animation: 'axisRotate 15s infinite linear',},
-            });
-            //Right
-            var array = {
-                'Title:': obj.title,
-                'Path:': obj.loc,
-                'Date:': obj.date,
-                'Size:': obj.size,
-            };
-            _X.Xeach(array, function(k, v) {
-                if (v !== undefined) {
-                    _X('<div')
-                        .appendTo('.exp_body_right_element_top')
-                        .css({color: 'red'})
-                        .append(k);
-                    _X('<div')
-                        .appendTo('.exp_body_right_element_top')
-                        .css({
-                            'overflow-wrap': 'break-word',
-                            'word-wrap': 'break-word',
-                            hyphens: 'auto',
-                            'font-size': 12,
-                            'margin-left': 10,
-                            'max-width': 100,
-                            //'user-select': 'text',
-                        })
-                        .append(v);
-                }
-            });
+            _X('.exp_body_right_element_top')
+                .Xempty()
+                .init(function(that) {
+                    _X.CubeIcon({
+                        to: _X(that),
+                        array: _X(obj),
+                        size: 100,
+                        menuRC: false,
+                        title: false,
+                        tooltip: false,
+                        drag: true,
+                        cube: true,
+                        icoControls: true,
+                        rotationAngle: [-30, -20],
+                        margin: 10,
+                        perspective: 200,
+                        dragArea: that,
+                        //css: {animation: 'axisRotate 15s infinite linear',},
+                    });                    
+                    var a = {
+                        'Title:': obj.title,
+                        'Path:': obj.loc,
+                        'Date:': obj.date,
+                        'Size:': obj.size,
+                    };
+                    _X.Xeach(a, function(k, v) {
+                        if (v !== undefined) {                            
+                            _X('<div')
+                                .appendTo(that)
+                                .css({color: 'red'})
+                                .append(k);
+                            _X('<div')
+                                .appendTo(that)
+                                .css({
+                                    'overflow-wrap': 'break-word',
+                                    'word-wrap': 'break-word',
+                                    hyphens: 'auto',
+                                    'font-size': 12,
+                                    'margin-left': 10,
+                                    'max-width': 100,
+                                    'user-select': 'text',
+                                })
+                                .append(v);   
+                        }
+                    });                                        
+                });
         };
         
         this.FooterInformation = function() {
-            var arrayFooter = {
-                'Items: ': _X.Xsearch({d: 'max', a: FILES, l: 'title', s: ''}).length,
-                'Displayed: ': _X('.exp_body_middle').Xfind('.xcube').length,
-                'Search result: ': SEARCHEXP.length,
-            };
-            _X('.exp_footer_left').Xempty();
-            _X.Xeach(arrayFooter, function(k, v) {
-                if (v !== 0) {
-                    _X('<div')
-                        .appendTo('.exp_footer_left')
-                        .css({
-                            display: 'inline',
-                            'padding-left': 10,
-                        })
-                        .append(k)
-                        .append(v);
-                }
-            });
+            _X('.exp_footer_left')
+                .Xempty()
+                .init(function(that) {
+                    var a = {
+                        'Items: ': _X.Xsearch({d: 'max', a: FILES, l: 'title', s: ''}).length,
+                        'Displayed: ': _X('.exp_body_middle').Xfind('.xcube').length,
+                        'Search result: ': SEARCHEXP.length,
+                    };                    
+                    _X.Xeach(a, function(k, v) {
+                        if (v !== 0) {
+                            _X('<div')
+                                .appendTo(that)
+                                .css({
+                                    display: 'inline',
+                                    'padding-left': 10,
+                                })
+                                .append(k)
+                                .append(v);
+                        }
+                    });                    
+                });
         };
 
         this.SearchFilesFolders = function() {
