@@ -2,7 +2,7 @@
 
     WIN.globalDIV = 'body';
     WIN.taskbar = '.exp_footer_right';
-    WIN.body = '.exp_body';
+    WIN.body = '.desktop_website';
     WIN.icons = '.exp_body_middle ';
     WIN.adsense = '../pages/adsense_vertical_120x600.html';
 
@@ -1236,6 +1236,7 @@
                 .appendTo(s.to)
                 .classAdd('xcube, xui_corner_all')
                 .classAdd(s.clasa)
+                .css(s.css)
                 .css({
                     'white-space': 'nowrap',
                     overflow: 'hidden',
@@ -1244,7 +1245,48 @@
                     height: 30,
                     cursor: 'pointer',
                 })
-                .css(s.css)
+                .on(s.on)
+                .on([s.click, function() {
+                    v.init();
+                }])                
+                .on({
+                    mouseenter: function() {
+                        _X(this).classAdd('xui_hover');
+                    },
+                    mouseleave: function() {
+                        _X(this).classRemove('xui_hover');
+                    },
+                    mousedown: function() {
+                        _X.ReturnElements({item: this, obj: v, pushItem: s.pushItem, pushObj: s.pushObj});
+                        _X('.xcube').classRemove('xui_active');
+                        _X(this).classAdd('xui_active');
+                    },
+                    contextmenu: function(e) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        if (s.menuRC !== false) {
+                            var x = new _X.Window();
+                            x.init({
+                                windowType: x.type[3],
+                                fontSize: 13,
+                                width: 115,
+                                height: 'auto',
+                                open: false,
+                                clasa: 'remove_on_mousedown',
+                            });
+                            x.right.MenuElements({
+                                array: s.menuRC,
+                                pushObj: false,
+                                pushItem: false,
+                                icoSize: 25,
+                                click: 'mousedown',
+                                color: false,
+                            });
+                            x.win.OpenWindow();
+                            WIN.full.splice(WIN.key, 1);
+                        } else {}
+                    }
+                })
                 .init(function(that) {
                     //Icon & Title
                     _X('<div')
@@ -1290,49 +1332,7 @@
                             'vertical-align': 'middle',
                             color: '#969696',
                         });
-                })
-                .on(s.on)
-                .on({
-                    mouseenter: function() {
-                        _X(this).classAdd('xui_hover');
-                    },
-                    mouseleave: function() {
-                        _X(this).classRemove('xui_hover');
-                    },
-                    mousedown: function() {
-                        _X.ReturnElements({item: this, obj: v, pushItem: s.pushItem, pushObj: s.pushObj});
-                        _X('.xcube').classRemove('xui_active');
-                        _X(this).classAdd('xui_active');
-                    },
-                    contextmenu: function(e) {
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
-                        if (s.menuRC !== false) {
-                            var x = new _X.Window();
-                            x.init({
-                                windowType: x.type[3],
-                                fontSize: 13,
-                                width: 115,
-                                height: 'auto',
-                                open: false,
-                                clasa: 'remove_on_mousedown',
-                            });
-                            x.right.MenuElements({
-                                array: s.menuRC,
-                                pushObj: false,
-                                pushItem: false,
-                                icoSize: 25,
-                                click: 'mousedown',
-                                color: false,
-                            });
-                            x.win.OpenWindow();
-                            WIN.full.splice(WIN.key, 1);
-                        } else {}
-                    }
-                })
-                .on([s.click, function() {
-                    v.init();
-                }]);
+                });                
         });
         _X(s.to).Xfind('.xcube ').Xfind('children').css({width: (_X(s.to).position('width', 'scroll') - 8) / 4});
     }
@@ -1869,10 +1869,14 @@
                                             })
                                             .on({
                                                 mouseenter: function() {
-                                                    _X(this).classAdd('xui_hover');
+                                                    _X(this)
+                                                        .classAdd('xui_hover')
+                                                        .css({'box-shadow': 'rgb(51, 51, 51) 1px 1px 2px'});
                                                 },
                                                 mouseleave: function() {
-                                                    _X(this).classRemove('xui_hover');
+                                                    _X(this)
+                                                        .classRemove('xui_hover')
+                                                        .css({'box-shadow': ''});
                                                 },
                                                 click: function(e) {
                                                     e.preventDefault();
@@ -1909,10 +1913,14 @@
                                 .append(' ' + FolderToArray[FolderToArray.length - 1])
                                 .on({
                                     mouseenter: function() {
-                                        _X(this).classAdd('xui_hover');
+                                        _X(this)
+                                            .classAdd('xui_hover')
+                                            .css({'box-shadow': 'rgb(51, 51, 51) 1px 1px 2px'});
                                     },
                                     mouseleave: function() {
-                                        _X(this).classRemove('xui_hover');
+                                        _X(this)
+                                            .classRemove('xui_hover')
+                                            .css({'box-shadow': ''});
                                     },
                                     mousedown: function() {
                                         v.init();
