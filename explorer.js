@@ -1465,71 +1465,47 @@
         this.SearchFilesFolders = function() {
             var inp = _X.ClassVirtual();
             var cheBox = _X.ClassVirtual();
-            _X('.exp_header_3_right').XInput({
-                id: cheBox,
-                type: 'checkbox',
-                width: 24,
-                tooltip: true,
-                tooltipData: 'Search in Selected Path or Element',
-            });
             _X('.exp_header_3_right')
-                .XInput({
-                    id: inp,
-                    type: 'search',
-                    name: 'Search Box',
-                    width: 'calc(100% - 34px)',
-                    height: 24,
-                    css: {
-                        'border-radius': 5,
-                        border: '1px solid #333',
-                    },
+                .init(function(self) {
+                    _X(self)
+                        .XInput({
+                            id: cheBox,
+                            type: 'checkbox',
+                            width: 24,
+                            tooltip: true,
+                            tooltipData: 'Search in Selected Path or Element',
+                        });
+                    _X(self)
+                        .XInput({
+                            id: inp,
+                            type: 'search',
+                            name: 'Search Box',
+                            width: 'calc(100% - 34px)',
+                            height: 24,
+                            css: {
+                                'border-radius': 5,
+                                border: '1px solid #333',
+                            },
+                            on: {
+                                keyup: function(e) {
+                                    e.stopImmediatePropagation();
+                                    if (e.keyCode == 13 || SETTINGS.autosearch.sel == 'true') {
+                                        var value = _X(this).Xval();
+                                        SEARCHEXP.length = 0;
+                                        if (_X(cheBox).checkBool() === false) {
+                                            SEARCHEXP = _X.Xsearch({d: 'max', a: FILES, l: 'title', s: value});
+                                        } else {
+                                            var path = SELECTED.obj.loc.split('/').slice(1).join('/');
+                                            var newArray = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: path})[0].items;
+                                            SEARCHEXP = _X.Xsearch({d: 'max', a: newArray, l: 'title', s: value});
+                                        }
+                                        that.GetFilesFolders({array: SEARCHEXP.slice(0, SETTINGS.searchlimit.sel)});
+                                        that.FooterInformation();
+                                    } else {}
+                                }                                
+                            },
+                        });                        
                 });
-            _X(inp).on({
-                keyup: function(e) {
-                    e.stopImmediatePropagation();
-                    if (e.keyCode == 13 || SETTINGS.autosearch.sel == 'true') {
-                        var value = _X(this).Xval();
-                        SEARCHEXP.length = 0;
-                        if (_X(cheBox).checkBool() === false) {
-                            SEARCHEXP = _X.Xsearch({d: 'max', a: FILES, l: 'title', s: value});
-                        } else {
-                            var path = SELECTED.obj.loc.split('/').slice(1).join('/');
-                            var newArray = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: path})[0].items;
-                            SEARCHEXP = _X.Xsearch({d: 'max', a: newArray, l: 'title', s: value});
-                        }
-                        that.GetFilesFolders({array: SEARCHEXP.slice(0, SETTINGS.searchlimit.sel)});
-                        that.FooterInformation();
-                    } else {}
-                }
-            });
-        };
-
-        this.ResizeListHeader = function(e, that, elemTop1, elemTop2, elem1, elem2) {
-            if (e.which === 1) {
-                var xd = e.pageX;
-                var elem1width = _X(elemTop1).position('width', 'box');
-                var elem2left = _X(that).position('left', 'box');
-                var elem2width = _X(that).position('width', 'box');
-                var elem3width = _X(elemTop2).position('width', 'box') - 4;
-                //
-                var elem1movewidth = _X('.exp_body_middle ').Xfind(elem1).getElem('first').position('width', 'box') + 2;
-                var elem2moveleft = _X('.exp_body_middle ').Xfind(elem2).getElem('first').position('left', 'box') - 2;
-                var elem2movewidth = _X('.exp_body_middle ').Xfind(elem2).getElem('first').position('width', 'box') - 2;
-                var mousemove = function(e) {
-                    if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
-                        _X(elemTop1).css({width: elem1width + (e.pageX - xd)});
-                        _X(that).css({left: elem2left + (e.pageX - xd)});
-                        _X(elemTop2).css({left: elem2left + elem2width + (xd - e.pageX), width: elem3width + (xd - e.pageX)});
-                        //
-                        _X('.exp_body_middle ').Xfind(elem1).css({width: elem1movewidth + (e.pageX - xd)});
-                        _X('.exp_body_middle ').Xfind(elem2).css({left: elem2moveleft + (xd - e.pageX), width: elem2movewidth + (xd - e.pageX)});
-                    } else {}
-                };
-                var mouseup = function() {
-                    _X(window).off({mouseup: mouseup, mousemove: mousemove});
-                };
-                _X(window).on({mousemove: mousemove, mouseup: mouseup});
-            } else {}
         };
 
         this.GetFilesFolders = function(options) {
@@ -1586,33 +1562,41 @@
                     },
                 });
             } else {
-                _X.CreateTagElements({
-                    t: '.exp_body_middle',
-                    a: [
-                        {
-                            css: {
-                                position: 'fixed',
-                                width: '100%',
-                                'margin-top': -18,
-                                height: 15, 
-                            },
-                            items: [
-                                {
-                                    classAdd: 'list_top_header_1, list_top_header, xui_header, xui_corner_all',
-                                    css: {
+                _X('<div')
+                    .appendTo('.exp_body_middle')
+                    .css({
+                        position: 'fixed',
+                        width: '100%',
+                        'margin-top': -18,
+                        height: 15, 
+                    })
+                    .init(function(that) {
+                        var a = [
+                            {name: 'Title', header1: '1', header2: '2', elem1: 'title', elem2: 'date'},
+                            {name: 'Date', header1: '2', header2: '3', elem1: 'date', elem2: 'loc'},
+                            {name: 'Path', header1: '3', header2: '4', elem1: 'loc', elem2: 'size'},
+                            {name: 'Size', header1: '4', header2: '', elem1: 'size', elem2: ''},
+                        ];
+                        _X.Xeach(a, function(k, v) {
+                            _X('<div')
+                                .appendTo(that)
+                                .classAdd('list_top_header_' + v.header1 + ', list_top_header, xui_header, xui_corner_all')
+                                .css({
+                                    display: 'inline-block',
+                                    'text-align': 'center',
+                                })
+                                .append(v.name);
+                            if (v.header2.length > 0) {
+                                _X('<div')
+                                    .appendTo(that)
+                                    .classAdd('xui_default, xui_corner_all')
+                                    .css({
                                         display: 'inline-block',
                                         'text-align': 'center',
-                                    },
-                                    append: 'Title',
-                                }, {
-                                    classAdd: 'xui_default, xui_corner_all',
-                                    css: {
-                                        display: 'inline-block',
-                                        width: 3,
                                         cursor: 'pointer',
-                                    },
-                                    append: '&nbsp;',
-                                    on: {
+                                    })
+                                    .append('&nbsp')
+                                    .on({
                                         mouseenter: function() {
                                             _X(this).classAdd('xui_hover');
                                         },
@@ -1620,73 +1604,55 @@
                                             _X(this).classRemove('xui_hover');
                                         },
                                         mousedown: function(e) {
-                                            that.ResizeListHeader(e, this, '.list_top_header_1', '.list_top_header_2', '.xcube_title', '.xcube_date');
+                                            if (e.which === 1) {
+                                                var xd = e.pageX;
+                                                var elem1width = _X('.list_top_header_' + v.header1).position('width', 'box');
+                                                var elem2left = _X(this).position('left', 'box');
+                                                var elem2width = _X(this).position('width', 'box');
+                                                var elem3width = _X('.list_top_header_' + v.header2).position('width', 'box') - 4;
+                                                //
+                                                var elem1movewidth = _X('.exp_body_middle ').Xfind('.xcube_' + v.elem1).getElem('first').position('width', 'box') + 2;
+                                                var elem2moveleft = _X('.exp_body_middle ').Xfind('.xcube_' + v.elem2).getElem('first').position('left', 'box') - 2;
+                                                var elem2movewidth = _X('.exp_body_middle ').Xfind('.xcube_' + v.elem2).getElem('first').position('width', 'box') - 2;
+                                                var mousemove = function(e) {
+                                                    if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
+                                                        _X('.list_top_header_' + v.header1)
+                                                            .css({
+                                                                width: elem1width + (e.pageX - xd)
+                                                            });
+                                                        _X(this).css({left: elem2left + (e.pageX - xd)});
+                                                        _X('.list_top_header_' + v.header2)
+                                                            .css({
+                                                                left: elem2left + elem2width + (xd - e.pageX),
+                                                                width: elem3width + (xd - e.pageX)
+                                                            });
+                                                        //
+                                                        _X('.exp_body_middle')
+                                                            .init(function(that) {
+                                                                _X(that)
+                                                                    .Xfind('.xcube_' + v.elem1)
+                                                                    .css({
+                                                                        width: elem1movewidth + (e.pageX - xd)
+                                                                    });
+                                                                _X(that)
+                                                                    .Xfind('.xcube_' + v.elem2)
+                                                                    .css({
+                                                                        left: elem2moveleft + (xd - e.pageX),
+                                                                        width: elem2movewidth + (xd - e.pageX)
+                                                                    });                                                                    
+                                                            });
+                                                    } else {}
+                                                };
+                                                var mouseup = function() {
+                                                    _X(window).off({mouseup: mouseup, mousemove: mousemove});
+                                                };
+                                                _X(window).on({mousemove: mousemove, mouseup: mouseup});
+                                            } else {}                                            
                                         },
-                                    },
-                                }, {
-                                    classAdd: 'list_top_header_2, list_top_header, xui_header, xui_corner_all',
-                                    css: {
-                                        display: 'inline-block',
-                                        'text-align': 'center',
-                                    },
-                                    append: 'Date',
-                                }, {
-                                    classAdd: 'xui_default, xui_corner_all',
-                                    css: {
-                                        display: 'inline-block',
-                                        width: 3,
-                                        cursor: 'pointer',
-                                    },
-                                    append: '&nbsp;',
-                                    on: {
-                                        mouseenter: function() {
-                                            _X(this).classAdd('xui_hover');
-                                        },
-                                        mouseleave: function() {
-                                            _X(this).classRemove('xui_hover');
-                                        },
-                                        mousedown: function(e) {
-                                            that.ResizeListHeader(e, this, '.list_top_header_2', '.list_top_header_3', '.xcube_date', '.xcube_loc');
-                                        },
-                                    },
-                                }, {
-                                    classAdd: 'list_top_header_3, list_top_header, xui_header, xui_corner_all',
-                                    css: {
-                                        display: 'inline-block',
-                                        'text-align': 'center',
-                                    },
-                                    append: 'Path',
-                                }, {
-                                    classAdd: 'xui_default, xui_corner_all',
-                                    css: {
-                                        display: 'inline-block',
-                                        width: 3,
-                                        cursor: 'pointer',
-                                    },
-                                    append: '&nbsp;',
-                                    on: {
-                                        mouseenter: function() {
-                                            _X(this).classAdd('xui_hover');
-                                        },
-                                        mouseleave: function() {
-                                            _X(this).classRemove('xui_hover');
-                                        },
-                                        mousedown: function(e) {
-                                            that.ResizeListHeader(e, this, '.list_top_header_3', '.list_top_header_4', '.xcube_loc', '.xcube_size');
-                                        },
-                                    },
-                                }, {
-                                    classAdd: 'list_top_header_4, list_top_header, xui_header, xui_corner_all',
-                                    css: {
-                                        display: 'inline-block',
-                                        'text-align': 'center',
-                                    },
-                                    append: 'Size',
-                                },
-                            ],
-                        },
-                    ],
-                });
+                                    });
+                            }
+                        });
+                    });
                 ListMenuStyle({
                     to: _X('.exp_body_middle'),
                     array: _X.Xsearch({a: settings.array, s: 'folder'}),
