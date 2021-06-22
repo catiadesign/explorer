@@ -1357,33 +1357,35 @@
                     display: 'inline',
                     border: '1px solid transparent',
                     'box-shadow': '-1px 1px 2px #333',
+                })
+                .on({
+                    change: function() {
+                        var selected = _X(cls).Xval();
+                        settings.mod.sel = selected;
+                        if (settings.mod == SETTINGS.theme) {
+                            _X('#stylesheet').attr({href: '../css/xui/' + selected + '.css'});
+                        } else {}
+                        if (settings.mod == SETTINGS.viewStyle) {
+                            that.GetFilesFolders();
+                            _X('.folder_path').Xfind('children').classHave('xui_highlight')[0].click();
+                        } else {}
+                    },
+                    mouseenter: function() {
+                        _X(cls).classAdd('xui_hover');
+                        _X.AddTooltip({title: settings.mod.tooltip});
+                    },
+                    mouseleave: function() {
+                        _X(cls).classRemove('xui_hover');
+                        _X('.tooltip_class').Xremove();
+                    },
+                })
+                .init(function(that) {
+                    _X.Xeach(settings.mod.array, function(k, v) {
+                        _X('<option')
+                            .appendTo(that)
+                            .txt(v);
+                    });
                 });
-            _X.Xeach(settings.mod.array, function(k, v) {
-                _X('<option')
-                    .appendTo(cls)
-                    .txt(v);
-            });
-            _X(cls).on({
-                change: function() {
-                    var selected = _X(cls).Xval();
-                    settings.mod.sel = selected;
-                    if (settings.mod == SETTINGS.theme) {
-                        _X('#stylesheet').attr({href: '../css/xui/' + selected + '.css'});
-                    } else {}
-                    if (settings.mod == SETTINGS.viewStyle) {
-                        that.GetFilesFolders();
-                        _X('.folder_path').Xfind('children').classHave('xui_highlight')[0].click();
-                    } else {}
-                },
-                mouseenter: function() {
-                    _X(cls).classAdd('xui_hover');
-                    _X.AddTooltip({title: settings.mod.tooltip});
-                },
-                mouseleave: function() {
-                    _X(cls).classRemove('xui_hover');
-                    _X('.tooltip_class').Xremove();
-                },
-            });
             //Default Option Select
             _X(cls).Xval(settings.mod.sel);
         };        
@@ -1709,78 +1711,80 @@
                 .css({
                     width: '100%',
                     padding: 1,
+                })
+                .init(function(self) {
+                    _X.Xeach(splitpath, function(k, v) {
+                        _X('<div')
+                            .appendTo(self)
+                            .classAdd('xui_corner_all, format_text')
+                            .css({
+                                float: 'left',
+                                'box-sizing': 'border-box',
+                                cursor: 'pointer',
+                                border: '1px solid transparent',
+                                'box-shadow': '-1px 1px 2px #333',
+                                overflow: 'hidden',
+                            })
+                            .iconAdd({ico: 'folder', color: '#d6d6d6', size: 20})
+                            .append(' ' + v + '/')
+                            .on({
+                                mouseenter: function() {
+                                    _X(this).classAdd('xui_hover');
+                                    _X.AddTooltip({title: v});
+                                },
+                                mouseleave: function() {
+                                    _X(this).classRemove('xui_hover');
+                                    _X('.tooltip_class').Xremove();
+                                },
+                                click: function() {
+                                    SEARCHEXP.length = 0;
+                                    _X('.folder_path').Xfind('children').classRemove('xui_highlight');
+                                    _X(this).classAdd('xui_highlight');
+                                    var searchPath = path.substring(0, path.indexOf(v) + v.length);
+                                    var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
+                                    that.GetFilesFolders({array: array.items});
+                                    SELECTED.obj = array;
+                                    that.InfosRight();
+                                },
+                                contextmenu: function(e) {
+                                    var searchPath = path.substring(0, path.indexOf(v) + v.length);
+                                    var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
+                                    SELECTED.obj = array;
+                                    e.preventDefault();
+                                    e.stopImmediatePropagation();
+                                        var x = new _X.Window();
+                                        x.init({
+                                            windowType: x.type[3],
+                                            fontSize: 13,
+                                            width: 115,
+                                            height: 'auto',
+                                            open: false,
+                                            clasa: 'remove_on_mousedown',
+                                        });
+                                        x.right.MenuElements({
+                                            array: _X.Xsearch({s: 'rc7'}),
+                                            pushObj: false,
+                                            pushItem: false,
+                                            icoSize: 25,
+                                            click: 'mousedown',
+                                            color: false,
+                                        });
+                                        x.win.OpenWindow();
+                                        WIN.full.splice(WIN.key, 1);
+                                },
+                                dblclick: function() {
+                                    SEARCHEXP.length = 0;
+                                    var searchPath = path.substring(0, path.indexOf(v) + v.length);
+                                    var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
+                                    that.CreatePath(array);
+                                    that.GetFilesFolders({array: array.items});
+                                    that.InfosRight();
+                                    SELECTED.obj = array;
+                                    _X('.folder_path').Xfind('children').getElem('last')[0].click();
+                                },
+                            });
+                    });                    
                 });
-            _X.Xeach(splitpath, function(k, v) {
-                _X('<div')
-                    .appendTo('.folder_path')
-                    .classAdd('xui_corner_all, format_text')
-                    .css({
-                        float: 'left',
-                        'box-sizing': 'border-box',
-                        cursor: 'pointer',
-                        border: '1px solid transparent',
-                        'box-shadow': '-1px 1px 2px #333',
-                        overflow: 'hidden',
-                    })
-                    .iconAdd({ico: 'folder', color: '#d6d6d6', size: 20})
-                    .append(' ' + v + '/')
-                    .on({
-                        mouseenter: function() {
-                            _X(this).classAdd('xui_hover');
-                            _X.AddTooltip({title: v});
-                        },
-                        mouseleave: function() {
-                            _X(this).classRemove('xui_hover');
-                            _X('.tooltip_class').Xremove();
-                        },
-                        click: function() {
-                            SEARCHEXP.length = 0;
-                            _X('.folder_path').Xfind('children').classRemove('xui_highlight');
-                            _X(this).classAdd('xui_highlight');
-                            var searchPath = path.substring(0, path.indexOf(v) + v.length);
-                            var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
-                            that.GetFilesFolders({array: array.items});
-                            SELECTED.obj = array;
-                            that.InfosRight();
-                        },
-                        contextmenu: function(e) {
-                            var searchPath = path.substring(0, path.indexOf(v) + v.length);
-                            var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
-                            SELECTED.obj = array;
-                            e.preventDefault();
-                            e.stopImmediatePropagation();
-                                var x = new _X.Window();
-                                x.init({
-                                    windowType: x.type[3],
-                                    fontSize: 13,
-                                    width: 115,
-                                    height: 'auto',
-                                    open: false,
-                                    clasa: 'remove_on_mousedown',
-                                });
-                                x.right.MenuElements({
-                                    array: _X.Xsearch({s: 'rc7'}),
-                                    pushObj: false,
-                                    pushItem: false,
-                                    icoSize: 25,
-                                    click: 'mousedown',
-                                    color: false,
-                                });
-                                x.win.OpenWindow();
-                                WIN.full.splice(WIN.key, 1);
-                        },
-                        dblclick: function() {
-                            SEARCHEXP.length = 0;
-                            var searchPath = path.substring(0, path.indexOf(v) + v.length);
-                            var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
-                            that.CreatePath(array);
-                            that.GetFilesFolders({array: array.items});
-                            that.InfosRight();
-                            SELECTED.obj = array;
-                            _X('.folder_path').Xfind('children').getElem('last')[0].click();
-                        },
-                    });
-            });
             if (SEARCHEXP.length > 0) {
                 _X('.folder_path').Xfind('children').classRemove('xui_highlight');
                 _X('.folder_path').Xfind('children').getElem('last').classAdd('xui_highlight');
