@@ -1029,6 +1029,7 @@
                                                         left: v.left,
                                                         top: 0,
                                                         bottom: 0,
+                                                        cursor: 'pointer',
                                                     })
                                                     .iconAdd({ico: v.ico, color: '#d6d6d6', size: 40, css: {'margin-top': -8}})
                                                     .on({
@@ -1197,6 +1198,7 @@
                                             left: 0,
                                             top: 0,
                                             bottom: 0,
+                                            cursor: 'pointer',
                                         },
                                         on: {
                                             mouseenter: function() {
