@@ -752,6 +752,76 @@
     }
 
     //Create Website Base Grafik
+    /*
+    _X('<div')
+        .appendTo('body')
+        .classAdd('desktop_website')
+        .css({
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            border: 0,
+            overflow: 'hidden',
+            'z-index': 99,
+        })     
+        .init(function(that) {
+            //Header
+            _X('<div')
+                .appendTo(that)
+                .classAdd('xui_content, exp_header')
+                .css({
+                    position: 'relative',
+                    height: HeaderHeight,
+                    border: '0px solid transparent',
+                })     
+                .init(function(that) {
+              
+                });
+            //Body
+            _X('<div')
+                .appendTo(that)
+                .classAdd('exp_body')
+                .css({
+                    position: 'relative',
+                    height: 'calc(100% - ' + (HeaderHeight + FooterHeight) + 'px)',
+                    border: '0px solid transparent',
+                })     
+                .init(function(that) {
+              
+                });
+            //Footer
+            _X('<div')
+                .appendTo(that)
+                .classAdd('xui_content, exp_footer')
+                .css({
+                    position: 'relative',
+                    height: FooterHeight,
+                    border: '0px solid transparent',
+                })     
+                .init(function(that) {
+                    _X('<div')
+                        .appendTo(that)
+                        .classAdd('exp_footer_left')
+                        .css({
+                            position: 'absolute',
+                            left: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: 350,
+                        });
+                    _X('<div')
+                        .appendTo(that)
+                        .classAdd('exp_footer_right')
+                        .css({
+                            position: 'absolute',
+                            left: 350,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                        });
+                });
+        });
+    */
     _X.CreateTagElements({
         t: 'body',
         a: [
