@@ -875,8 +875,8 @@
                                     width: 200,
                                 })     
                                 .init(function(that) {
-                                    var a = {
-                                        ico1: {
+                                    var a = [
+                                        {
                                             left: 0,
                                             tooltip: 'Full Collapse',
                                             ico: 'navigate_before',
@@ -892,8 +892,7 @@
                                                     }
                                                 });
                                             },
-                                        },
-                                        ico2: {
+                                        }, {
                                             left: 40,
                                             tooltip: 'Collapse First Level',
                                             ico: 'keyboard_arrow_up',
@@ -912,8 +911,7 @@
                                                     }
                                                 });
                                             },
-                                        },
-                                        ico3: {
+                                        }, {
                                             left: 80,
                                             tooltip: 'Full Expand',
                                             ico: 'navigate_next',
@@ -929,8 +927,7 @@
                                                     }
                                                 });
                                             },
-                                        },
-                                        ico4: {
+                                        }, {
                                             left: 120,
                                             tooltip: 'Expand First Level',
                                             ico: 'keyboard_arrow_down',
@@ -953,7 +950,7 @@
                                                 }
                                             }
                                         },
-                                    };
+                                    ];
                                     _X.Xeach(a, function(k, v) {
                                         _X('<div')
                                             .appendTo(that)
