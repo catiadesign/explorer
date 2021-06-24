@@ -59,6 +59,22 @@
                 _X(id).Xremove();
             },
         }, {
+            search: '',
+            title: 'Downl. Link',
+            ico: 'cloud_download',
+            init: function() {
+                var obj = SELECTED.obj;
+                var x = new _X.Window();
+                x.init({
+                    windowType: x.type[2],
+                    width: 300,
+                    height: 'auto',
+                });
+                _X('<form')
+                    .appendTo(x.right)
+                    .attr({src: '/ace/index.php?path=' + obj.loc});
+            },
+        }, {
             search: 'rc7',
             title: 'View Code',
             ico: 'chrome_reader_mode',
