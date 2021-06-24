@@ -1,4 +1,4 @@
-//jshint maxerr: 2000
+//jshint maxerr: 3000
 
     WIN.globalDIV = 'body';
     WIN.taskbar = '.exp_footer_right';
@@ -752,7 +752,6 @@
     }
 
     //Create Website Base Grafik
-    /*
     _X('<div')
         .appendTo('body')
         .classAdd('desktop_website')
@@ -775,7 +774,238 @@
                     border: '0px solid transparent',
                 })     
                 .init(function(that) {
-              
+                    _X('<div')
+                        .appendTo(that)
+                        .classAdd('exp_header_1')
+                        .css({
+                            position: 'relative',
+                            height: 25,
+                            overflow: 'hidden',
+                        })     
+                        .init(function(that) {
+                            if (sessionID === undefined || sessionID === '') {
+                                _X('<div')
+                                    .appendTo(that)
+                                    .classAdd('xui_corner_all, xui_content')
+                                    .css({
+                                        width: 100,
+                                        padding: 1,
+                                        margin: 1,
+                                        'box-sizing': 'border-box',
+                                        'text-align': 'center',
+                                        cursor: 'pointer',
+                                    })
+                                    .append('Login')
+                                    .on({
+                                        mouseenter: function() {
+                                            _X(this).classAdd('xui_hover').css({color: 'red'});
+                                        },
+                                        mouseleave: function() {
+                                            _X(this).classRemove('xui_hover').css({color: ''});
+                                        },
+                                        click: function() {
+                                            if (_X('.thiswindow').classBool('login_window') === false) {
+                                                LoginForm();
+                                            }
+                                        },
+                                    });
+                            } else {
+                                LogoutForm(that);
+                                _X('<div')
+                                    .appendTo(that)
+                                    .classAdd('xui_corner_all, xui_content')
+                                    .css({
+                                        width: 100,
+                                        padding: 1,
+                                        margin: 1,
+                                        'box-sizing': 'border-box',
+                                        float: 'left',  
+                                        'text-align': 'center',
+                                        cursor: 'pointer',
+                                    })
+                                    .append('Settings')
+                                    .on({
+                                        mouseenter: function() {
+                                            _X(this).classAdd('xui_hover').css({color: 'red'});
+                                        },
+                                        mouseleave: function() {
+                                            _X(this).classRemove('xui_hover').css({color: ''});
+                                        },
+                                        click: function() {
+                                            if (_X('.thiswindow').classBool('settings_window') === false) {
+                                                SettingsForm();
+                                            }
+                                        },
+                                    });
+                            }                                
+                    });
+                    _X('<div')
+                        .appendTo(that)
+                        .classAdd('exp_header_2')
+                        .css({
+                            position: 'relative',
+                            height: 30,
+                            overflow: 'hidden',
+                        })     
+                        .init(function(that) {
+                            var x = new ExplorerDisplay();
+                            x.SettingsSelectList({to: that, mod: SETTINGS.theme});
+                            x.SettingsSelectList({to: that, mod: SETTINGS.effect});
+                            x.SettingsSelectList({to: that, mod: SETTINGS.autosearch});
+                            x.SettingsSelectList({to: that, mod: SETTINGS.searchlimit});
+                            x.SettingsSelectList({to: that, mod: SETTINGS.threeDicon});
+                            x.SettingsSelectList({to: that, mod: SETTINGS.viewStyle});                      
+                        });
+                    _X('<div')
+                        .appendTo(that)
+                        .classAdd('exp_header_3')
+                        .css({
+                            position: 'relative',
+                            height: 25,
+                        })     
+                        .init(function(that) {
+                            _X('<div')
+                                .appendTo(that)
+                                .classAdd('exp_header_3_left')
+                                .css({
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    width: 200,
+                                })     
+                                .init(function(that) {
+                                    var a = {
+                                        ico1: {
+                                            left: 0,
+                                            tooltip: 'Full Collapse',
+                                            ico: 'navigate_before',
+                                            init: function() {
+                                                var temp = _X('.tree_name')
+                                                    .classHave('xui_highlight')
+                                                    .parent('.tree_body')
+                                                    .Xfind('children')
+                                                    .Xfind('.tree_collapse');
+                                                _X.Xeach(temp, function(k, v) {
+                                                    if (_X(v).Xfind('i').txt() === 'remove') {
+                                                        v.click();
+                                                    }
+                                                });
+                                            },
+                                        },
+                                        ico2: {
+                                            left: 40,
+                                            tooltip: 'Collapse First Level',
+                                            ico: 'keyboard_arrow_up',
+                                            init: function() {
+                                                var temp = _X('.tree_name')
+                                                    .classHave('xui_highlight')
+                                                    .parent('.tree_body')
+                                                    .Xfind('children')
+                                                    .classHave('tree_body')
+                                                    .Xfind('children')
+                                                    .classHave('tree_info')
+                                                    .Xfind('.tree_collapse');
+                                                _X.Xeach(temp, function(k, v) {
+                                                    if (_X(v).Xfind('i').txt() === 'remove') {
+                                                        v.click();
+                                                    }
+                                                });
+                                            },
+                                        },
+                                        ico3: {
+                                            left: 80,
+                                            tooltip: 'Full Expand',
+                                            ico: 'navigate_next',
+                                            init: function() {
+                                                var temp = _X('.tree_name')
+                                                    .classHave('xui_highlight')
+                                                    .parent('.tree_body')
+                                                    .Xfind('children')
+                                                    .Xfind('.tree_collapse');
+                                                _X.Xeach(temp, function(k, v) {
+                                                    if (_X(v).Xfind('i').txt() === 'add') {
+                                                        v.click();
+                                                    }
+                                                });
+                                            },
+                                        },
+                                        ico4: {
+                                            left: 120,
+                                            tooltip: 'Expand First Level',
+                                            ico: 'keyboard_arrow_down',
+                                            init: function() {
+                                                if (_X('.tree_name').classHave('xui_highlight').parent('.tree_body').Xfind('children').classHave('tree_body').cssBool(['display', 'none']) === true) {
+                                                    var temp = _X('.tree_name')
+                                                        .classHave('xui_highlight')
+                                                        .parent('.tree_body')
+                                                        .Xfind('children')
+                                                        .classHave('tree_body')
+                                                        .Xfind('children')
+                                                        .classHave('tree_info')
+                                                        .Xfind('.tree_collapse');
+                                                    _X.Xeach(temp, function(k, v) {
+                                                        if (_X(v).Xfind('i').txt() === 'remove') {
+                                                            v.click();
+                                                        }
+                                                    });
+                                                    _X('.tree_name').classHave('xui_highlight').parent().Xfind('.tree_collapse')[0].click();
+                                                }
+                                            }
+                                        },
+                                    };
+                                    _X.Xeach(a, function(k, v) {
+                                        _X('<div')
+                                            .appendTo(that)
+                                            .classAdd('xui_corner_all')
+                                            .css({
+                                                position: 'absolute',
+                                                left: v.left,
+                                                top: 0,
+                                                bottom: 0,
+                                                cursor: 'pointer',
+                                            })
+                                            .iconAdd({ico: v.ico, color: '#d6d6d6', size: 40, css: {'margin-top': -8}})
+                                            .on({
+                                                mouseenter: function() {
+                                                    _X(this).classAdd('xui_hover');
+                                                    _X.AddTooltip({title: v.tooltip});
+                                                },
+                                                mouseleave: function() {
+                                                    _X(this).classRemove('xui_hover');
+                                                    _X('.tooltip_class').Xremove();
+                                                },
+                                                click: function() {
+                                                    v.init();
+                                                },
+                                            });
+                                    });                              
+                                });
+                            _X('<div')
+                                .appendTo(that)
+                                .classAdd('exp_header_3_middle')
+                                .css({
+                                    position: 'absolute',
+                                    left: 170,
+                                    right: 200,
+                                    top: 0,
+                                    bottom: 0,
+                                });
+                            _X('<div')
+                                .appendTo(that)
+                                .classAdd('exp_header_3_right')
+                                .css({
+                                    position: 'absolute',
+                                    width: 200,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                })     
+                                .init(function(that) {
+                                    var x = new ExplorerDisplay();
+                                    x.SearchFilesFolders();                             
+                                });
+                        });
                 });
             //Body
             _X('<div')
@@ -787,7 +1017,182 @@
                     border: '0px solid transparent',
                 })     
                 .init(function(that) {
-              
+                    _X('<div')
+                        .appendTo(that)                
+                        .classAdd('exp_body_left, xui_content')
+                        .css({
+                            position: 'absolute',
+                            width: BodyLeftWidth,
+                            top: 0,
+                            left: 0,
+                            bottom: 0,
+                            overflow: 'auto',
+                            border: '0px solid transparent',
+                        });
+                    _X('<div')
+                        .appendTo(that)  
+                        .classAdd('exp_body_resize, xui_header, xui_corner_all')
+                        .css({
+                            position: 'absolute',
+                            left: BodyLeftWidth,
+                            width: BodyMiddleWidthResize,
+                            top: 0,
+                            bottom: 0,
+                            cursor: 'pointer',
+                        })
+                        .on({
+                            mousedown: function(e) {
+                                if (e.which === 1) {
+                                    var xd = e.pageX;
+                                    var widthLeft = _X('.exp_body_left').position('width', 'offset');
+                                    var left = _X('.exp_body_resize').position('left', 'offset');
+                                    var mousemove = function(e) {
+                                        if (e.pageX > 50 && e.pageX < window.innerWidth - 50) {
+                                            _X('.exp_body_left').css({width: widthLeft + (e.pageX - xd)});
+                                            _X('.exp_body_resize').css({left: left + (e.pageX - xd)});
+                                            _X('.exp_body_middle').css({left: left + BodyMiddleWidthResize + 2 + (e.pageX - xd)});
+                                        } else {}
+                                        var x = new ExplorerDisplay();
+                                        x.ListStyleResize();
+                                    };
+                                    var mouseup = function() {
+                                        _X(window).off({mouseup: mouseup, mousemove: mousemove});
+                                    };
+                                    _X(window).on({mousemove: mousemove, mouseup: mouseup});
+                                } else {}
+                            },
+                            mouseenter: function() {
+                                _X(this).classAdd('xui_hover');
+                            },
+                            mouseleave: function() {
+                                _X(this).classRemove('xui_hover');
+                            },
+                            dblclick: function() {
+                                if (_X('.exp_body_left').css('width') > 10) {
+                                    _X('.exp_body_left').css({width: 0});
+                                    _X('.exp_body_resize').css({left: 0});
+                                    _X('.exp_body_middle').css({left: BodyMiddleWidthResize});
+                                } else {
+                                    _X('.exp_body_left').css({width: BodyLeftWidth});
+                                    _X('.exp_body_resize').css({left: BodyLeftWidth, width: BodyMiddleWidthResize});
+                                    _X('.exp_body_middle').css({left: BodyLeftWidth + BodyMiddleWidthResize + 2});
+                                }
+                                var x = new ExplorerDisplay();
+                                x.ListStyleResize();
+                            },
+                        });
+                    _X('<div')
+                        .appendTo(that)  
+                        .classAdd('exp_body_middle, xui_content')
+                        .css({
+                            position: 'absolute',
+                            left: BodyLeftWidth + BodyMiddleWidthResize + 2,
+                            top: 0,
+                            right: BodyRightWidth,
+                            bottom: 0,
+                            'overflow-x': 'hidden',
+                            'overflow-y': 'auto',
+                            border: '0px solid transparent',
+                        })
+                        .on({
+                            mousedown: function(e) {
+                                if (e.which === 1 && SETTINGS.viewStyle.sel == 'icons') {
+                                    var y = new _X.IconsMoveSelect();
+                                    y.init();
+                                }
+                            },
+                            scroll: function() {
+                                var x = new ExplorerDisplay();
+                                var elem = _X('.exp_body_middle').Xfind('.xcube').length;
+                                if (_X(this)[0].scrollTop + _X(this).position('height', 'offset') >= _X(this)[0].scrollHeight) {
+                                    var newlimit = elem + SETTINGS.searchlimit.sel;
+                                    //console.log(elem, newlimit);
+                                    if (SEARCHEXP.length > 0) {
+                                        x.GetFilesFolders({array: SEARCHEXP.slice(elem, newlimit), defaultEmpty: false});
+                                    }
+                                    x.FooterInformation();
+                                }
+                            },
+                        });
+                    _X('<div')
+                        .appendTo(that)  
+                        .classAdd('exp_body_right, xui_default')
+                        .css({
+                            position: 'absolute',
+                            width: BodyRightWidth,
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            'overflow-x': 'hidden',
+                            'overflow-y': 'auto',
+                            border: '0px solid transparent',
+                        })
+                        .init(function(that) {
+                            _X('<div')
+                                .appendTo(that)  
+                                .classAdd('exp_body_right_resize, xui_header, xui_corner_all')
+                                .css({
+                                    position: 'absolute',
+                                    width: 7,
+                                    left: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    cursor: 'pointer',
+                                })
+                                .on({
+                                    mouseenter: function() {
+                                        _X(this).classAdd('xui_hover');
+                                    },
+                                    mouseleave: function() {
+                                        _X(this).classRemove('xui_hover');
+                                    },
+                                    click: function() {
+                                        if (_X('.exp_body_right').css('width') > 10) {
+                                            _X('.exp_body_right').css({width: 10});
+                                            _X(this).parent().Xfind('.exp_body_right_element').Xhide();
+                                            _X('.exp_body_middle').css({right: 10});
+                                        } else {
+                                            _X('.exp_body_right').css({width: BodyRightWidth});
+                                            _X(this).parent().Xfind('.exp_body_right_element').Xshow();
+                                            _X('.exp_body_middle').css({right: BodyRightWidth});
+                                        }
+                                        var x = new ExplorerDisplay();
+                                        x.ListStyleResize();
+                                    },
+                                });
+                            _X('<div')
+                                .appendTo(that)  
+                                .classAdd('exp_body_right_element, xui_corner_all')
+                                .css({
+                                    position: 'absolute',
+                                    left: 10,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                })
+                                .init(function(that) {
+                                    _X('<div')
+                                        .appendTo(that)  
+                                        .classAdd('exp_body_right_element_top, xui_corner_all')
+                                        .css({
+                                            position: 'absolute',
+                                            left: 0,
+                                            right: 0,
+                                            top: 0,
+                                            bottom: 200,
+                                        });
+                                    _X('<div')
+                                        .appendTo(that)  
+                                        .classAdd('exp_body_right_element_bottom, xui_corner_all')
+                                        .css({
+                                            position: 'absolute',
+                                            left: 0,
+                                            right: 0,
+                                            height: 200,
+                                            bottom: 0,
+                                        });
+                                });                             
+                        });
                 });
             //Footer
             _X('<div')
@@ -821,473 +1226,6 @@
                         });
                 });
         });
-    */
-    _X.CreateTagElements({
-        t: 'body',
-        a: [
-            {
-                classAdd: 'desktop_website',
-                css: {
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    border: 0,
-                    overflow: 'hidden',
-                    'z-index': 99,
-                },
-                items: [
-                    {
-                        classAdd: 'xui_content, exp_header',
-                        css: {
-                            position: 'relative',
-                            height: HeaderHeight,
-                            border: '0px solid transparent',
-                        },
-                        items: [
-                            {
-                                classAdd: 'exp_header_1',
-                                css: {
-                                    position: 'relative',
-                                    height: 25,
-                                    overflow: 'hidden',
-                                },
-                                init: function(that) {
-                                    if (sessionID === undefined || sessionID === '') {
-                                        _X('<div')
-                                            .appendTo(that)
-                                            .classAdd('xui_corner_all, xui_content')
-                                            .css({
-                                                width: 100,
-                                                padding: 1,
-                                                margin: 1,
-                                                'box-sizing': 'border-box',
-                                                'text-align': 'center',
-                                                cursor: 'pointer',
-                                            })
-                                            .append('Login')
-                                            .on({
-                                                mouseenter: function() {
-                                                    _X(this).classAdd('xui_hover').css({color: 'red'});
-                                                },
-                                                mouseleave: function() {
-                                                    _X(this).classRemove('xui_hover').css({color: ''});
-                                                },
-                                                click: function() {
-                                                    if (_X('.thiswindow').classBool('login_window') === false) {
-                                                        LoginForm();
-                                                    }
-                                                },
-                                            });
-                                    } else {
-                                        LogoutForm(that);
-                                        _X('<div')
-                                            .appendTo(that)
-                                            .classAdd('xui_corner_all, xui_content')
-                                            .css({
-                                                width: 100,
-                                                padding: 1,
-                                                margin: 1,
-                                                'box-sizing': 'border-box',
-                                                float: 'left',  
-                                                'text-align': 'center',
-                                                cursor: 'pointer',
-                                            })
-                                            .append('Settings')
-                                            .on({
-                                                mouseenter: function() {
-                                                    _X(this).classAdd('xui_hover').css({color: 'red'});
-                                                },
-                                                mouseleave: function() {
-                                                    _X(this).classRemove('xui_hover').css({color: ''});
-                                                },
-                                                click: function() {
-                                                    if (_X('.thiswindow').classBool('settings_window') === false) {
-                                                        SettingsForm();
-                                                    }
-                                                },
-                                            });
-                                    }
-                                },
-                            }, {
-                                classAdd: 'exp_header_2',
-                                css: {
-                                    position: 'relative',
-                                    height: 30,
-                                    overflow: 'hidden',
-                                },
-                                init: function(that) {
-                                    var x = new ExplorerDisplay();
-                                    x.SettingsSelectList({to: that, mod: SETTINGS.theme});
-                                    x.SettingsSelectList({to: that, mod: SETTINGS.effect});
-                                    x.SettingsSelectList({to: that, mod: SETTINGS.autosearch});
-                                    x.SettingsSelectList({to: that, mod: SETTINGS.searchlimit});
-                                    x.SettingsSelectList({to: that, mod: SETTINGS.threeDicon});
-                                    x.SettingsSelectList({to: that, mod: SETTINGS.viewStyle});
-                                },
-                            },{
-                                classAdd: 'exp_header_3',
-                                css: {
-                                    position: 'relative',
-                                    height: 25,
-                                },
-                                items: [
-                                    {
-                                        classAdd: 'exp_header_3_left',
-                                        css: {
-                                            position: 'absolute',
-                                            left: 0,
-                                            top: 0,
-                                            bottom: 0,
-                                            width: 200,
-                                        },
-                                        init: function(that) {
-                                            var temp = {
-                                                ico1: {
-                                                    left: 0,
-                                                    tooltip: 'Full Collapse',
-                                                    ico: 'navigate_before',
-                                                    init: function() {
-                                                        var temp = _X('.tree_name')
-                                                            .classHave('xui_highlight')
-                                                            .parent('.tree_body')
-                                                            .Xfind('children')
-                                                            .Xfind('.tree_collapse');
-                                                        _X.Xeach(temp, function(k, v) {
-                                                            if (_X(v).Xfind('i').txt() === 'remove') {
-                                                                v.click();
-                                                            }
-                                                        });
-                                                    },
-                                                },
-                                                ico2: {
-                                                    left: 40,
-                                                    tooltip: 'Collapse First Level',
-                                                    ico: 'keyboard_arrow_up',
-                                                    init: function() {
-                                                        var temp = _X('.tree_name')
-                                                            .classHave('xui_highlight')
-                                                            .parent('.tree_body')
-                                                            .Xfind('children')
-                                                            .classHave('tree_body')
-                                                            .Xfind('children')
-                                                            .classHave('tree_info')
-                                                            .Xfind('.tree_collapse');
-                                                        _X.Xeach(temp, function(k, v) {
-                                                            if (_X(v).Xfind('i').txt() === 'remove') {
-                                                                v.click();
-                                                            }
-                                                        });
-                                                    },
-                                                },
-                                                ico3: {
-                                                    left: 80,
-                                                    tooltip: 'Full Expand',
-                                                    ico: 'navigate_next',
-                                                    init: function() {
-                                                        var temp = _X('.tree_name')
-                                                            .classHave('xui_highlight')
-                                                            .parent('.tree_body')
-                                                            .Xfind('children')
-                                                            .Xfind('.tree_collapse');
-                                                        _X.Xeach(temp, function(k, v) {
-                                                            if (_X(v).Xfind('i').txt() === 'add') {
-                                                                v.click();
-                                                            }
-                                                        });
-                                                    },
-                                                },
-                                                ico4: {
-                                                    left: 120,
-                                                    tooltip: 'Expand First Level',
-                                                    ico: 'keyboard_arrow_down',
-                                                    init: function() {
-                                                        if (_X('.tree_name').classHave('xui_highlight').parent('.tree_body').Xfind('children').classHave('tree_body').cssBool(['display', 'none']) === true) {
-                                                            var temp = _X('.tree_name')
-                                                                .classHave('xui_highlight')
-                                                                .parent('.tree_body')
-                                                                .Xfind('children')
-                                                                .classHave('tree_body')
-                                                                .Xfind('children')
-                                                                .classHave('tree_info')
-                                                                .Xfind('.tree_collapse');
-                                                            _X.Xeach(temp, function(k, v) {
-                                                                if (_X(v).Xfind('i').txt() === 'remove') {
-                                                                    v.click();
-                                                                }
-                                                            });
-                                                            _X('.tree_name').classHave('xui_highlight').parent().Xfind('.tree_collapse')[0].click();
-                                                        }
-                                                    }
-                                                },
-                                            };
-                                            _X.Xeach(temp, function(k, v) {
-                                                _X('<div')
-                                                    .appendTo(that)
-                                                    .classAdd('xui_corner_all')
-                                                    .css({
-                                                        position: 'absolute',
-                                                        left: v.left,
-                                                        top: 0,
-                                                        bottom: 0,
-                                                        cursor: 'pointer',
-                                                    })
-                                                    .iconAdd({ico: v.ico, color: '#d6d6d6', size: 40, css: {'margin-top': -8}})
-                                                    .on({
-                                                        mouseenter: function() {
-                                                            _X(this).classAdd('xui_hover');
-                                                            _X.AddTooltip({title: v.tooltip});
-                                                        },
-                                                        mouseleave: function() {
-                                                            _X(this).classRemove('xui_hover');
-                                                            _X('.tooltip_class').Xremove();
-                                                        },
-                                                        click: function() {
-                                                            v.init();
-                                                        },
-                                                    });
-                                            });
-                                        },
-                                    }, {
-                                        classAdd: 'exp_header_3_middle',
-                                        css: {
-                                            position: 'absolute',
-                                            left: 170,
-                                            right: 200,
-                                            top: 0,
-                                            bottom: 0,
-                                        },
-                                    }, {
-                                        classAdd: 'exp_header_3_right',
-                                        css: {
-                                            position: 'absolute',
-                                            width: 200,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0,
-                                        },
-                                        init: function() {
-                                            var x = new ExplorerDisplay();
-                                            x.SearchFilesFolders();
-                                        },
-                                    },
-                                ],
-                            },
-                        ],
-                    }, {
-                        classAdd: 'exp_body',
-                        css: {
-                            position: 'relative',
-                            height: 'calc(100% - ' + (HeaderHeight + FooterHeight) + 'px)',
-                            border: '0px solid transparent',
-                        },
-                        items: [
-                            {
-                                classAdd: 'exp_body_left, xui_content',
-                                css: {
-                                    position: 'absolute',
-                                    width: BodyLeftWidth,
-                                    top: 0,
-                                    left: 0,
-                                    bottom: 0,
-                                    overflow: 'auto',
-                                    border: '0px solid transparent',
-                                },
-                            }, {
-                                classAdd: 'exp_body_resize, xui_header, xui_corner_all',
-                                css: {
-                                    position: 'absolute',
-                                    left: BodyLeftWidth,
-                                    width: BodyMiddleWidthResize,
-                                    top: 0,
-                                    bottom: 0,
-                                    cursor: 'pointer',
-                                },
-                                on: {
-                                    mousedown: function(e) {
-                                        if (e.which === 1) {
-                                            var xd = e.pageX;
-                                            var widthLeft = _X('.exp_body_left').position('width', 'offset');
-                                            var left = _X('.exp_body_resize').position('left', 'offset');
-                                            var mousemove = function(e) {
-                                                if (e.pageX > 50 && e.pageX < window.innerWidth - 50) {
-                                                    _X('.exp_body_left').css({width: widthLeft + (e.pageX - xd)});
-                                                    _X('.exp_body_resize').css({left: left + (e.pageX - xd)});
-                                                    _X('.exp_body_middle').css({left: left + BodyMiddleWidthResize + 2 + (e.pageX - xd)});
-                                                } else {}
-                                                var x = new ExplorerDisplay();
-                                                x.ListStyleResize();
-                                            };
-                                            var mouseup = function() {
-                                                _X(window).off({mouseup: mouseup, mousemove: mousemove});
-                                            };
-                                            _X(window).on({mousemove: mousemove, mouseup: mouseup});
-                                        } else {}
-                                    },
-                                    mouseenter: function() {
-                                        _X(this).classAdd('xui_hover');
-                                    },
-                                    mouseleave: function() {
-                                        _X(this).classRemove('xui_hover');
-                                    },
-                                    dblclick: function() {
-                                        if (_X('.exp_body_left').css('width') > 10) {
-                                            _X('.exp_body_left').css({width: 0});
-                                            _X('.exp_body_resize').css({left: 0});
-                                            _X('.exp_body_middle').css({left: BodyMiddleWidthResize});
-                                        } else {
-                                            _X('.exp_body_left').css({width: BodyLeftWidth});
-                                            _X('.exp_body_resize').css({left: BodyLeftWidth, width: BodyMiddleWidthResize});
-                                            _X('.exp_body_middle').css({left: BodyLeftWidth + BodyMiddleWidthResize + 2});
-                                        }
-                                        var x = new ExplorerDisplay();
-                                        x.ListStyleResize();
-                                    },
-                                },
-                            }, {
-                                classAdd: 'exp_body_middle, xui_content',
-                                css: {
-                                    position: 'absolute',
-                                    left: BodyLeftWidth + BodyMiddleWidthResize + 2,
-                                    top: 0,
-                                    right: BodyRightWidth,
-                                    bottom: 0,
-                                    'overflow-x': 'hidden',
-                                    'overflow-y': 'auto',
-                                    border: '0px solid transparent',
-                                },
-                                on: {
-                                    mousedown: function(e) {
-                                        if (e.which === 1 && SETTINGS.viewStyle.sel == 'icons') {
-                                            var y = new _X.IconsMoveSelect();
-                                            y.init();
-                                        }
-                                    },
-                                    scroll: function() {
-                                        var x = new ExplorerDisplay();
-                                        var elem = _X('.exp_body_middle').Xfind('.xcube').length;
-                                        if (_X(this)[0].scrollTop + _X(this).position('height', 'offset') >= _X(this)[0].scrollHeight) {
-                                            var newlimit = elem + SETTINGS.searchlimit.sel;
-                                            //console.log(elem, newlimit);
-                                            if (SEARCHEXP.length > 0) {
-                                                x.GetFilesFolders({array: SEARCHEXP.slice(elem, newlimit), defaultEmpty: false});
-                                            }
-                                            x.FooterInformation();
-                                        }
-                                    },
-                                },
-                            }, {
-                                classAdd: 'exp_body_right, xui_default',
-                                css: {
-                                    position: 'absolute',
-                                    width: BodyRightWidth,
-                                    top: 0,
-                                    right: 0,
-                                    bottom: 0,
-                                    'overflow-x': 'hidden',
-                                    'overflow-y': 'auto',
-                                    border: '0px solid transparent',
-                                },
-                                init: function(that) {
-                                },
-                                items: [
-                                    {
-                                        classAdd: 'exp_body_right_resize, xui_header, xui_corner_all',
-                                        css: {
-                                            position: 'absolute',
-                                            width: 7,
-                                            left: 0,
-                                            top: 0,
-                                            bottom: 0,
-                                            cursor: 'pointer',
-                                        },
-                                        on: {
-                                            mouseenter: function() {
-                                                _X(this).classAdd('xui_hover');
-                                            },
-                                            mouseleave: function() {
-                                                _X(this).classRemove('xui_hover');
-                                            },
-                                            click: function() {
-                                                if (_X('.exp_body_right').css('width') > 10) {
-                                                    _X('.exp_body_right').css({width: 10});
-                                                    _X(this).parent().Xfind('.exp_body_right_element').Xhide();
-                                                    _X('.exp_body_middle').css({right: 10});
-                                                } else {
-                                                    _X('.exp_body_right').css({width: BodyRightWidth});
-                                                    _X(this).parent().Xfind('.exp_body_right_element').Xshow();
-                                                    _X('.exp_body_middle').css({right: BodyRightWidth});
-                                                }
-                                                var x = new ExplorerDisplay();
-                                                x.ListStyleResize();
-                                            },
-                                        },
-                                    }, {
-                                        classAdd: 'exp_body_right_element, xui_corner_all',
-                                        css: {
-                                            position: 'absolute',
-                                            left: 10,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0,
-                                        },
-                                        items: [
-                                            {
-                                                classAdd: 'exp_body_right_element_top, xui_corner_all',
-                                                css: {
-                                                    position: 'absolute',
-                                                    left: 0,
-                                                    right: 0,
-                                                    top: 0,
-                                                    bottom: 200,
-                                                },
-                                            }, {
-                                                classAdd: 'exp_body_right_element_bottom, xui_corner_all',
-                                                css: {
-                                                    position: 'absolute',
-                                                    left: 0,
-                                                    right: 0,
-                                                    height: 200,
-                                                    bottom: 0,
-                                                },
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
-                        ],
-                    }, {
-                        classAdd: 'exp_footer, xui_content',
-                        css: {
-                            position: 'relative',
-                            height: FooterHeight,
-                            border: '0px solid transparent',
-                        },
-                        items: [
-                            {
-                                classAdd: 'exp_footer_left',
-                                css: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 0,
-                                    bottom: 0,
-                                    width: 350,
-                                },
-                            }, {
-                                classAdd: 'exp_footer_right',
-                                css: {
-                                    position: 'absolute',
-                                    left: 350,
-                                    right: 0,
-                                    top: 0,
-                                    bottom: 0,
-                                },
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    });
 
     function ListMenuStyle(options) {
         var defaults = {
