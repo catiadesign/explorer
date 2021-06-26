@@ -41,7 +41,7 @@
     
     DefaultSearchLocation = [
         {
-            search: 'rc7',
+            search: 'rc7 rc8',
             title: 'Download',
             ico: 'cloud_download',
             init: function() {
@@ -1315,7 +1315,7 @@
                     _X('<div')
                         .appendTo(that)
                         .iconAdd({ico: v.ico, color: v.color, size: s.icoSize})
-                        .append(_X.AddSpace(1) + v.title)
+                        .append('&nbsp' + v.title)
                         .classAdd('format_text, xcube_title')
                         .css({
                             display: 'inline-block',
@@ -1325,7 +1325,7 @@
                     //Date
                     _X('<div')
                         .appendTo(that)
-                        .append(_X.AddSpace(1) + v.date)
+                        .append(v.date)
                         .classAdd('format_text, xcube_date')
                         .css({
                             display: 'inline-block',
@@ -1336,7 +1336,7 @@
                     //Location
                     _X('<div')
                         .appendTo(that)
-                        .append(_X.AddSpace(1) + v.loc)
+                        .append(v.loc)
                         .classAdd('format_text, xcube_loc')
                         .css({
                             display: 'inline-block',
@@ -1347,7 +1347,7 @@
                     //Size
                     _X('<div')
                         .appendTo(that)
-                        .append(_X.AddSpace(1) + v.size)
+                        .append(v.size + '&nbsp')
                         .classAdd('format_text, xcube_size')
                         .css({
                             display: 'inline-block',
@@ -1785,7 +1785,7 @@
                                             clasa: 'remove_on_mousedown',
                                         });
                                         x.right.MenuElements({
-                                            array: _X.Xsearch({s: 'rc7'}),
+                                            array: _X.Xsearch({s: 'rc8'}),
                                             pushObj: false,
                                             pushItem: false,
                                             icoSize: 25,
