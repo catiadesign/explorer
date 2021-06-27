@@ -1621,16 +1621,21 @@
                                     click: function(e) {
                                         if (v.name == 'Size') {
                                             var x = new ExplorerDisplay();
-                                            x.CreatePath();
-                                            var a = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: x.splitpath.join('/')})[0].items;
+                                            var newarray = [];
+                                            var a = [];
                                             var sizeSort = [];
+                                            x.CreatePath();
+                                            if (SEARCHEXP.length > 0) {
+                                                a = SEARCHEXP;
+                                            } else {
+                                                a = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: x.splitpath.join('/')})[0].items;
+                                            }
                                             _X.Xeach(a, function(k, v) {
                                                 sizeSort.push(v.sizeUnformatted);
                                             });
                                             sizeSort.sort(function(a, b) {
                                                 return a - b;
                                             });
-                                            var newarray = [];
                                             _X.Xeach(sizeSort, function(k1, v1) {
                                                 _X.Xeach(a, function(k2, v2) {
                                                     if (v1 == v2.sizeUnformatted) {
@@ -1639,6 +1644,7 @@
                                                 });                                                
                                             });
                                             x.GetFilesFolders({array: newarray});
+                                            x.FooterInformation();
                                         }
                                     },                                    
                                 });
