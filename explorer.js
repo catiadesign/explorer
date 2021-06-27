@@ -1274,10 +1274,14 @@
                 }])                
                 .on({
                     mouseenter: function() {
-                        _X(this).classAdd('xui_hover');
+                        _X(this)
+                            .classAdd('xui_hover')
+                            .css({'box-shadow': 'rgb(51, 51, 51) 1px 1px 2px'});
                     },
                     mouseleave: function() {
-                        _X(this).classRemove('xui_hover');
+                        _X(this)
+                            .classRemove('xui_hover')
+                            .css({'box-shadow': ''});
                     },
                     mousedown: function() {
                         _X.ReturnElements({item: this, obj: v, pushItem: s.pushItem, pushObj: s.pushObj});
@@ -1362,6 +1366,7 @@
 
     function ExplorerDisplay() {
         var that = this;
+        var self = this;
         this.SettingsSelectList = function(options) {
             var that = this;
             var defaults = {
@@ -1610,7 +1615,34 @@
                                     display: 'inline-block',
                                     'text-align': 'center',
                                 })
-                                .append(v.name);
+                                .append(v.name)
+                                .on({
+                                    click: function(e) {
+                                        if (v.name == 'Size') {
+                                            var x = new ExplorerDisplay();
+                                            x.CreatePath();
+                                            var a = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: x.splitpath.join('/')})[0].items;
+                                            var sizeSort = [];
+                                            _X.Xeach(a, function(k, v) {
+                                                var n = v.sizeUnformatted;
+                                                sizeSort.push(n)
+                                            });
+                                            sizeSort.sort(function(a, b) {
+                                              return a - b;
+                                            });
+                                            console.log(sizeSort);
+                                            var newarray = [];
+                                            _X.Xeach(sizeSort, function(k1, v1) {
+                                                _X.Xeach(a, function(k2, v2) {
+                                                    if (v1 == v2.sizeUnformatted) {
+                                                        newarray.push(v2);
+                                                    }
+                                                });                                                
+                                            });
+                                            x.GetFilesFolders({array: newarray});
+                                        }
+                                    },                                    
+                                });
                             if (v.header2.length > 0) {
                                 _X('<div')
                                     .appendTo(that)
@@ -1720,13 +1752,14 @@
             _X('.folder_path').Xfind('children').css({width: (width / elemLength - 1)});
         };
         
+        this.path;
+        this.splitpath;
+        
         this.CreatePath = function(obj) {
-            var path;
-            var splitpath;
-            if (obj === undefined) {path = SELECTED.obj.loc;}
-            else {path = obj.loc}
-            if (path.indexOf('.') > -1) {splitpath = path.split('/').slice(1, -1);}
-            else {splitpath = path.split('/').slice(1);}
+            if (obj === undefined) {that.path = SELECTED.obj.loc;}
+            else {that.path = obj.loc}
+            if (that.path.indexOf('.') > -1) {that.splitpath = that.path.split('/').slice(1, -1);}
+            else {that.splitpath = that.path.split('/').slice(1);}
             _X('.folder_path').Xremove();
             _X('<div')
                 .appendTo('.exp_header_3_middle')
@@ -1736,7 +1769,7 @@
                     padding: 1,
                 })
                 .init(function(self) {
-                    _X.Xeach(splitpath, function(k, v) {
+                    _X.Xeach(that.splitpath, function(k, v) {
                         _X('<div')
                             .appendTo(self)
                             .classAdd('xui_corner_all, format_text')
@@ -1763,14 +1796,14 @@
                                     SEARCHEXP.length = 0;
                                     _X('.folder_path').Xfind('children').classRemove('xui_highlight');
                                     _X(this).classAdd('xui_highlight');
-                                    var searchPath = path.substring(0, path.indexOf(v) + v.length);
+                                    var searchPath = that.path.substring(0, that.path.indexOf(v) + v.length);
                                     var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
                                     that.GetFilesFolders({array: array.items});
                                     SELECTED.obj = array;
                                     that.InfosRight();
                                 },
                                 contextmenu: function(e) {
-                                    var searchPath = path.substring(0, path.indexOf(v) + v.length);
+                                    var searchPath = that.path.substring(0, that.path.indexOf(v) + v.length);
                                     var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
                                     SELECTED.obj = array;
                                     e.preventDefault();
@@ -1797,7 +1830,7 @@
                                 },
                                 dblclick: function() {
                                     SEARCHEXP.length = 0;
-                                    var searchPath = path.substring(0, path.indexOf(v) + v.length);
+                                    var searchPath = that.path.substring(0, that.path.indexOf(v) + v.length);
                                     var array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: searchPath})[0];
                                     that.CreatePath(array);
                                     that.GetFilesFolders({array: array.items});
