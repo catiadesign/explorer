@@ -1618,9 +1618,11 @@
                                 })
                                 .append(v.name)
                                 .on({
+                                    mousedown: function() {
+                                        //_X(this).classAdd('A');
+                                    },
                                     click: function(e) {
                                         if (v.name == 'Size') {
-                                            var check = 'c';
                                             var x = new ExplorerDisplay();
                                             x.CreatePath();
                                             var a = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: x.splitpath.join('/')})[0].items;
@@ -1628,18 +1630,9 @@
                                             _X.Xeach(a, function(k, v) {
                                                 sizeSort.push(v.sizeUnformatted);
                                             });
-                                            if (check == 'd') {
-                                                check = 'c';
-                                                sizeSort.sort(function(a, b) {
-                                                  return a - b;
-                                                });
-                                            } else if (check == 'c') {
-                                                check = 'd';
-                                                sizeSort.sort(function(a, b) {
-                                                  return b - a;
-                                                });                                                
-                                            }
-                                            console.log(check);
+                                            sizeSort.sort(function(a, b) {
+                                              return a - b;
+                                            });
                                             var newarray = [];
                                             _X.Xeach(sizeSort, function(k1, v1) {
                                                 _X.Xeach(a, function(k2, v2) {
