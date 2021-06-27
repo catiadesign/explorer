@@ -1618,9 +1618,6 @@
                                 })
                                 .append(v.name)
                                 .on({
-                                    mousedown: function() {
-                                        //_X(this).classAdd('A');
-                                    },
                                     click: function(e) {
                                         if (v.name == 'Size') {
                                             var x = new ExplorerDisplay();
@@ -1631,7 +1628,7 @@
                                                 sizeSort.push(v.sizeUnformatted);
                                             });
                                             sizeSort.sort(function(a, b) {
-                                              return a - b;
+                                                return a - b;
                                             });
                                             var newarray = [];
                                             _X.Xeach(sizeSort, function(k1, v1) {
@@ -1803,6 +1800,7 @@
                                     that.GetFilesFolders({array: array.items});
                                     SELECTED.obj = array;
                                     that.InfosRight();
+                                    that.FooterInformation();
                                 },
                                 contextmenu: function(e) {
                                     var searchPath = that.path.substring(0, that.path.indexOf(v) + v.length);
