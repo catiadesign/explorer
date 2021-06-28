@@ -1619,33 +1619,35 @@
                                 .append(v.name)
                                 .on({
                                     click: function(e) {
+                                        var x = new ExplorerDisplay();
+                                        var array = [];
+                                        x.CreatePath();
+                                        if (SEARCHEXP.length > 0) {
+                                            array = SEARCHEXP;
+                                        } else {
+                                            array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: x.splitpath.join('/')})[0].items;
+                                        }                                        
                                         if (v.name == 'Size') {
-                                            var x = new ExplorerDisplay();
-                                            var newarray = [];
-                                            var a = [];
-                                            var sizeSort = [];
-                                            x.CreatePath();
-                                            if (SEARCHEXP.length > 0) {
-                                                a = SEARCHEXP;
-                                            } else {
-                                                a = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: x.splitpath.join('/')})[0].items;
-                                            }
-                                            _X.Xeach(a, function(k, v) {
-                                                sizeSort.push(v.sizeUnformatted);
+                                            array.sort(function(a, b) {
+                                                return a.sizeUnformatted - b.sizeUnformatted;
                                             });
-                                            sizeSort.sort(function(a, b) {
-                                                return a - b;
-                                            });
-                                            _X.Xeach(sizeSort, function(k1, v1) {
-                                                _X.Xeach(a, function(k2, v2) {
-                                                    if (v1 == v2.sizeUnformatted) {
-                                                        newarray.push(v2);
-                                                    }
-                                                });                                                
-                                            });
-                                            x.GetFilesFolders({array: newarray});
-                                            x.FooterInformation();
                                         }
+                                        if (v.name == 'Title') {
+                                            array.sort(function(a, b) {
+                                                var nameA = a.title.toUpperCase(); // ignore upper and lowercase
+                                                var nameB = b.title.toUpperCase(); // ignore upper and lowercase
+                                                if (nameA < nameB) {
+                                                    return -1;
+                                                }
+                                                if (nameA > nameB) {
+                                                    return 1;
+                                                }
+                                                //names must be equal
+                                                return 0;
+                                            });
+                                        }
+                                        x.GetFilesFolders({array: array});
+                                        x.FooterInformation();                                        
                                     },                                    
                                 });
                             if (v.header2.length > 0) {
