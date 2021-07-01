@@ -115,7 +115,7 @@
                 width: Radius,
                 height: Radius,
                 'border-radius': '50%',
-                animation: 'website_circle_load 2s linear infinite',                
+                animation: 'website_circle_load 2s linear infinite',
             })
             .init(function(that) {
                 _X('<div')
@@ -128,7 +128,7 @@
                         height: Radius / 3,
                         animation: 'website_circle_load 1s linear infinite',
                         'background-image': 'linear-gradient(red, yellow)',
-                        'border-radius': '50%',                    
+                        'border-radius': '50%',
                     });
                 _X('<div')
                     .appendTo(that)    
@@ -138,7 +138,7 @@
                         top: Radius / 2,
                         width: Radius / 3,
                         height: Radius / Radius,
-                        animation: 'website_circle_load 1s linear infinite',                  
+                        animation: 'website_circle_load 1s linear infinite',
                     })
                     .init(function(that) {
                         _X('<div')
@@ -147,7 +147,7 @@
                                 width: Radius / 3,
                                 height: Radius / 3,
                                 'background-image': 'linear-gradient(red, yellow)',
-                                'border-radius': '50%',                
+                                'border-radius': '50%',
                             });
                     });
                 _X('<div')
@@ -158,7 +158,7 @@
                         top: Radius / 2,
                         width: Radius / Radius,
                         height: Radius / 3,
-                        animation: 'website_circle_load 1s linear infinite',                 
+                        animation: 'website_circle_load 1s linear infinite',
                     })
                     .init(function(that) {
                         _X('<div')
@@ -167,7 +167,7 @@
                                 width: Radius / 3,
                                 height: Radius / 3,
                                 'background-image': 'linear-gradient(red, yellow)',
-                                'border-radius': '50%',              
+                                'border-radius': '50%',
                             });
                     });
             });
@@ -379,7 +379,7 @@
                                                 },
                                             },
                                         }, {
-                                            elem: '<hr',                                            
+                                            elem: '<hr',
                                         }, {
                                             elem: '<input',
                                             attr: {
@@ -413,7 +413,7 @@
                                                         send: data,
                                                     });
                                                 },
-                                            },                                            
+                                            },
                                         }, {
                                             elem: '<hr',
                                         }, {
@@ -627,7 +627,7 @@
                 x.right[0].innerHTML = r.response;
             }
         }; 
-        r.send(null);        
+        r.send(null);
         */
         _X.CreateTagElements({
             t: x.right,
@@ -853,7 +853,7 @@
                                             }
                                         },
                                     });
-                            }                                
+                            }
                     });
                     _X('<div')
                         .appendTo(that)
@@ -870,7 +870,7 @@
                             x.SettingsSelectList({to: that, mod: SETTINGS.autosearch});
                             x.SettingsSelectList({to: that, mod: SETTINGS.searchlimit});
                             x.SettingsSelectList({to: that, mod: SETTINGS.threeDicon});
-                            x.SettingsSelectList({to: that, mod: SETTINGS.viewStyle});                      
+                            x.SettingsSelectList({to: that, mod: SETTINGS.viewStyle});
                         });
                     _X('<div')
                         .appendTo(that)
@@ -992,7 +992,7 @@
                                                     v.init();
                                                 },
                                             });
-                                    });                              
+                                    });
                                 });
                             _X('<div')
                                 .appendTo(that)
@@ -1016,7 +1016,7 @@
                                 })     
                                 .init(function(that) {
                                     var x = new ExplorerDisplay();
-                                    x.SearchFilesFolders();                             
+                                    x.SearchFilesFolders();
                                 });
                         });
                 });
@@ -1031,7 +1031,7 @@
                 })     
                 .init(function(that) {
                     _X('<div')
-                        .appendTo(that)                
+                        .appendTo(that)
                         .classAdd('exp_body_left, xui_content')
                         .css({
                             position: 'absolute',
@@ -1043,7 +1043,7 @@
                             border: '0px solid transparent',
                         });
                     _X('<div')
-                        .appendTo(that)  
+                        .appendTo(that)
                         .classAdd('exp_body_resize, xui_header, xui_corner_all')
                         .css({
                             position: 'absolute',
@@ -1095,7 +1095,7 @@
                             },
                         });
                     _X('<div')
-                        .appendTo(that)  
+                        .appendTo(that)
                         .classAdd('exp_body_middle, xui_content')
                         .css({
                             position: 'absolute',
@@ -1204,7 +1204,7 @@
                                             height: 200,
                                             bottom: 0,
                                         });
-                                });                             
+                                });
                         });
                 });
             //Footer
@@ -1215,7 +1215,7 @@
                     position: 'relative',
                     height: FooterHeight,
                     border: '0px solid transparent',
-                })     
+                })
                 .init(function(that) {
                     _X('<div')
                         .appendTo(that)
@@ -1271,7 +1271,7 @@
                 .on(s.on)
                 .on([s.click, function() {
                     v.init();
-                }])                
+                }])
                 .on({
                     mouseenter: function() {
                         _X(this)
@@ -1359,7 +1359,7 @@
                             'vertical-align': 'middle',
                             color: '#969696',
                         });
-                });                
+                });
         });
         _X(s.to).Xfind('.xcube ').Xfind('children').css({width: (_X(s.to).position('width', 'scroll') - 8) / 4});
     }
@@ -1446,7 +1446,7 @@
                         'Size:': obj.size,
                     };
                     _X.Xeach(a, function(k, v) {
-                        if (v !== undefined) {                            
+                        if (v !== undefined) {
                             _X('<div')
                                 .appendTo(that)
                                 .css({color: 'red'})
@@ -1464,7 +1464,7 @@
                                 })
                                 .append(v);   
                         }
-                    });                                        
+                    });
                 });
         };
         
@@ -1488,7 +1488,7 @@
                                 .append(k)
                                 .append(v);
                         }
-                    });                    
+                    });
                 });
         };
 
@@ -1532,9 +1532,9 @@
                                         that.GetFilesFolders({array: SEARCHEXP.slice(0, SETTINGS.searchlimit.sel)});
                                         that.FooterInformation();
                                     } else {}
-                                }                                
+                                }
                             },
-                        });                        
+                        });
                 });
         };
 
@@ -1626,11 +1626,6 @@
                                             array = SEARCHEXP;
                                         } else {
                                             array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: x.splitpath.join('/')})[0].items;
-                                        }                                        
-                                        if (v.name == 'Size') {
-                                            array.sort(function(a, b) {
-                                                return a.sizeUnformatted - b.sizeUnformatted;
-                                            });
                                         }
                                         if (v.name == 'Title') {
                                             array.sort(function(a, b) {
@@ -1646,9 +1641,42 @@
                                                 return 0;
                                             });
                                         }
+                                        if (v.name == 'Date') {
+                                            array.sort(function(a, b) {
+                                                var nameA = a.date.toUpperCase(); // ignore upper and lowercase
+                                                var nameB = b.date.toUpperCase(); // ignore upper and lowercase
+                                                if (nameA < nameB) {
+                                                    return -1;
+                                                }
+                                                if (nameA > nameB) {
+                                                    return 1;
+                                                }
+                                                //names must be equal
+                                                return 0;
+                                            });
+                                        }
+                                        if (v.name == 'Path') {
+                                            array.sort(function(a, b) {
+                                                var nameA = a.loc.toUpperCase(); // ignore upper and lowercase
+                                                var nameB = b.loc.toUpperCase(); // ignore upper and lowercase
+                                                if (nameA < nameB) {
+                                                    return -1;
+                                                }
+                                                if (nameA > nameB) {
+                                                    return 1;
+                                                }
+                                                //names must be equal
+                                                return 0;
+                                            });
+                                        }
+                                        if (v.name == 'Size') {
+                                            array.sort(function(a, b) {
+                                                return a.sizeUnformatted - b.sizeUnformatted;
+                                            });
+                                        }
                                         x.GetFilesFolders({array: array});
-                                        x.FooterInformation();                                        
-                                    },                                    
+                                        x.FooterInformation();
+                                    },
                                 });
                             if (v.header2.length > 0) {
                                 _X('<div')
@@ -1703,7 +1731,7 @@
                                                                     .css({
                                                                         left: elem2moveleft + (xd - e.pageX),
                                                                         width: elem2movewidth + (xd - e.pageX)
-                                                                    });                                                                    
+                                                                    });
                                                             });
                                                     } else {}
                                                 };
@@ -1711,7 +1739,7 @@
                                                     _X(window).off({mouseup: mouseup, mousemove: mousemove});
                                                 };
                                                 _X(window).on({mousemove: mousemove, mouseup: mouseup});
-                                            } else {}                                            
+                                            } else {}
                                         },
                                     });
                             }
@@ -1847,7 +1875,7 @@
                                     _X('.folder_path').Xfind('children').getElem('last')[0].click();
                                 },
                             });
-                    });                    
+                    });
                 });
             if (SEARCHEXP.length > 0) {
                 _X('.folder_path').Xfind('children').classRemove('xui_highlight');
@@ -1931,7 +1959,7 @@
                                             });
                                     } else {
                                         _X(that).parent().css({'margin-left': 32});
-                                    }                                    
+                                    }
                                 });
                             _X('<div')
                                 .appendTo(that)
@@ -2002,12 +2030,12 @@
                                         if (_X(this).parent().Xfind('.tree_collapse')[0] !== undefined) {
                                             _X(this).parent().Xfind('.tree_collapse')[0].click();
                                         }
-                                    },                                    
+                                    },
                                 })
                                 .init(function(that) {
                                     ScanElementsCreateTree(v.items, that.parent('.tree_body'));
                                 });
-                        });                    
+                        });
                 });
         }
         function ScanElementsCreateTree(array, appendto) {
@@ -2066,5 +2094,3 @@
             e.preventDefault();
         },
     });
-
-    
