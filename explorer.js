@@ -1240,9 +1240,9 @@
                 });
         });
 
-    function ListMenuStyle(options) {
+    _X.prototype.ListMenuStyle = function(options) {
+        var self = this;
         var defaults = {
-            to: '',
             array: [],
             pushObj: true,
             pushItem: true,
@@ -1256,7 +1256,7 @@
         var s = _X.JoinObj(defaults, options);
         _X.Xeach(s.array, function(k, v) {
             _X('<div')
-                .appendTo(s.to)
+                .appendTo(self)
                 .classAdd('xcube, xui_corner_all')
                 .classAdd(s.clasa)
                 .css(s.css)
@@ -1361,8 +1361,8 @@
                         });
                 });
         });
-        _X(s.to).Xfind('.xcube ').Xfind('children').css({width: (_X(s.to).position('width', 'scroll') - 8) / 4});
-    }
+        //_X(self).Xfind('.xcube ').Xfind('children').css({width: (_X(self).position('width', 'scroll') - 8) / 4});        
+    };
 
     function ExplorerDisplay() {
         var that = this;
@@ -1592,190 +1592,188 @@
                     },
                 });
             } else {
-                _X('<div')
-                    .appendTo('.exp_body_middle')
-                    .css({
-                        position: 'fixed',
-                        width: '100%',
-                        'margin-top': -18,
-                        height: 15, 
-                    })
-                    .init(function(that) {
-                        var a = [
-                            {name: 'Title', header1: '1', header2: '2', elem1: 'title', elem2: 'date'},
-                            {name: 'Date', header1: '2', header2: '3', elem1: 'date', elem2: 'loc'},
-                            {name: 'Path', header1: '3', header2: '4', elem1: 'loc', elem2: 'size'},
-                            {name: 'Size', header1: '4', header2: '', elem1: 'size', elem2: ''},
-                        ];
-                        _X.Xeach(a, function(k, v) {
-                            _X('<div')
-                                .appendTo(that)
-                                .classAdd('list_top_header_' + v.header1 + ', list_top_header, xui_header, xui_corner_all')
-                                .css({
-                                    display: 'inline-block',
-                                    'text-align': 'center',
-                                    cursor: 'pointer',
-                                })
-                                .append(v.name)
-                                .on({
-                                    mouseenter: function() {
-                                        _X(this).classAdd('xui_hover');
-                                    },
-                                    mouseleave: function() {
-                                        _X(this).classRemove('xui_hover');
-                                    },                                    
-                                    click: function(e) {
-                                        var x = new ExplorerDisplay();
-                                        var array = [];
-                                        x.CreatePath();
-                                        if (SEARCHEXP.length > 0) {
-                                            array = SEARCHEXP;
-                                        } else {
-                                            array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: x.splitpath.join('/')})[0].items;
-                                        }
-                                        if (v.name == 'Title') {
-                                            array.sort(function(a, b) {
-                                                var nameA = a.title.toUpperCase(); // ignore upper and lowercase
-                                                var nameB = b.title.toUpperCase(); // ignore upper and lowercase
-                                                if (nameA < nameB) {
-                                                    return -1;
+                _X('.exp_body_middle')
+                    .css({'padding-top': 18})
+                    .init(function(self) {
+                        _X('<div')
+                            .appendTo(self)
+                            .css({
+                                position: 'fixed',
+                                width: '100%',
+                                'margin-top': -18,
+                                height: 15, 
+                            })
+                            .init(function(that) {
+                                var a = [
+                                    {name: 'Title', header1: '1', header2: '2', elem1: 'title', elem2: 'date'},
+                                    {name: 'Date', header1: '2', header2: '3', elem1: 'date', elem2: 'loc'},
+                                    {name: 'Path', header1: '3', header2: '4', elem1: 'loc', elem2: 'size'},
+                                    {name: 'Size', header1: '4', header2: '', elem1: 'size', elem2: ''},
+                                ];
+                                _X.Xeach(a, function(k, v) {
+                                    _X('<div')
+                                        .appendTo(that)
+                                        .classAdd('list_top_header_' + v.header1 + ', list_top_header, xui_header, xui_corner_all')
+                                        .css({
+                                            display: 'inline-block',
+                                            'text-align': 'center',
+                                            cursor: 'pointer',
+                                        })
+                                        .append(v.name)
+                                        .on({
+                                            mouseenter: function() {
+                                                _X(this).classAdd('xui_hover');
+                                            },
+                                            mouseleave: function() {
+                                                _X(this).classRemove('xui_hover');
+                                            },                                    
+                                            click: function(e) {
+                                                var x = new ExplorerDisplay();
+                                                var array = [];
+                                                x.CreatePath();
+                                                if (SEARCHEXP.length > 0) {
+                                                    array = SEARCHEXP;
+                                                } else {
+                                                    array = _X.Xsearch({d: 'max', a: FILES, l: 'loc', s: x.splitpath.join('/')})[0].items;
                                                 }
-                                                if (nameA > nameB) {
-                                                    return 1;
+                                                if (v.name == 'Title') {
+                                                    array.sort(function(a, b) {
+                                                        var nameA = a.title.toUpperCase();
+                                                        var nameB = b.title.toUpperCase();
+                                                        if (nameA < nameB) {
+                                                            return -1;
+                                                        }
+                                                        if (nameA > nameB) {
+                                                            return 1;
+                                                        }
+                                                        return 0;
+                                                    });
                                                 }
-                                                //names must be equal
-                                                return 0;
-                                            });
-                                        }
-                                        if (v.name == 'Date') {
-                                            array.sort(function(a, b) {
-                                                var nameA = a.date.toUpperCase(); // ignore upper and lowercase
-                                                var nameB = b.date.toUpperCase(); // ignore upper and lowercase
-                                                if (nameA < nameB) {
-                                                    return -1;
+                                                if (v.name == 'Date') {
+                                                    array.sort(function(a, b) {
+                                                        var nameA = a.date.toUpperCase();
+                                                        var nameB = b.date.toUpperCase();
+                                                        if (nameA < nameB) {
+                                                            return -1;
+                                                        }
+                                                        if (nameA > nameB) {
+                                                            return 1;
+                                                        }
+                                                        return 0;
+                                                    });
                                                 }
-                                                if (nameA > nameB) {
-                                                    return 1;
+                                                if (v.name == 'Path') {
+                                                    array.sort(function(a, b) {
+                                                        var nameA = a.loc.toUpperCase();
+                                                        var nameB = b.loc.toUpperCase();
+                                                        if (nameA < nameB) {
+                                                            return -1;
+                                                        }
+                                                        if (nameA > nameB) {
+                                                            return 1;
+                                                        }
+                                                        return 0;
+                                                    });
                                                 }
-                                                //names must be equal
-                                                return 0;
-                                            });
-                                        }
-                                        if (v.name == 'Path') {
-                                            array.sort(function(a, b) {
-                                                var nameA = a.loc.toUpperCase(); // ignore upper and lowercase
-                                                var nameB = b.loc.toUpperCase(); // ignore upper and lowercase
-                                                if (nameA < nameB) {
-                                                    return -1;
+                                                if (v.name == 'Size') {
+                                                    array.sort(function(a, b) {
+                                                        return a.sizeUnformatted - b.sizeUnformatted;
+                                                    });
                                                 }
-                                                if (nameA > nameB) {
-                                                    return 1;
-                                                }
-                                                //names must be equal
-                                                return 0;
-                                            });
-                                        }
-                                        if (v.name == 'Size') {
-                                            array.sort(function(a, b) {
-                                                return a.sizeUnformatted - b.sizeUnformatted;
-                                            });
-                                        }
-                                        x.GetFilesFolders({array: array});
-                                        x.FooterInformation();
-                                    },
-                                });
-                            if (v.header2.length > 0) {
-                                _X('<div')
-                                    .appendTo(that)
-                                    .classAdd('xui_default, xui_corner_all')
-                                    .css({
-                                        display: 'inline-block',
-                                        'text-align': 'center',
-                                        cursor: 'pointer',
-                                    })
-                                    .append('&nbsp')
-                                    .on({
-                                        mouseenter: function() {
-                                            _X(this).classAdd('xui_hover');
-                                        },
-                                        mouseleave: function() {
-                                            _X(this).classRemove('xui_hover');
-                                        },
-                                        mousedown: function(e) {
-                                            if (e.which === 1) {
-                                                var xd = e.pageX;
-                                                var elem1width = _X('.list_top_header_' + v.header1).position('width', 'box');
-                                                var elem2left = _X(this).position('left', 'box');
-                                                var elem2width = _X(this).position('width', 'box');
-                                                var elem3width = _X('.list_top_header_' + v.header2).position('width', 'box') - 4;
-                                                //
-                                                var elem1movewidth = _X('.exp_body_middle ').Xfind('.xcube_' + v.elem1).getElem('first').position('width', 'box') + 2;
-                                                var elem2moveleft = _X('.exp_body_middle ').Xfind('.xcube_' + v.elem2).getElem('first').position('left', 'box') - 2;
-                                                var elem2movewidth = _X('.exp_body_middle ').Xfind('.xcube_' + v.elem2).getElem('first').position('width', 'box') - 2;
-                                                var mousemove = function(e) {
-                                                    if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
-                                                        _X('.list_top_header_' + v.header1)
-                                                            .css({
-                                                                width: elem1width + (e.pageX - xd)
-                                                            });
-                                                        _X(this).css({left: elem2left + (e.pageX - xd)});
-                                                        _X('.list_top_header_' + v.header2)
-                                                            .css({
-                                                                left: elem2left + elem2width + (xd - e.pageX),
-                                                                width: elem3width + (xd - e.pageX)
-                                                            });
+                                                x.GetFilesFolders({array: array});
+                                                x.FooterInformation();
+                                            },
+                                        });
+                                    if (v.header2.length > 0) {
+                                        _X('<div')
+                                            .appendTo(that)
+                                            .classAdd('xui_default, xui_corner_all')
+                                            .css({
+                                                display: 'inline-block',
+                                                'text-align': 'center',
+                                                cursor: 'pointer',
+                                            })
+                                            .append('&nbsp')
+                                            .on({
+                                                mouseenter: function() {
+                                                    _X(this).classAdd('xui_hover');
+                                                },
+                                                mouseleave: function() {
+                                                    _X(this).classRemove('xui_hover');
+                                                },
+                                                mousedown: function(e) {
+                                                    if (e.which === 1) {
+                                                        var xd = e.pageX;
+                                                        var elem1width = _X('.list_top_header_' + v.header1).position('width', 'box');
+                                                        var elem2left = _X(this).position('left', 'box');
+                                                        var elem2width = _X(this).position('width', 'box');
+                                                        var elem3width = _X('.list_top_header_' + v.header2).position('width', 'box') - 4;
                                                         //
-                                                        _X('.exp_body_middle')
-                                                            .init(function(that) {
-                                                                _X(that)
-                                                                    .Xfind('.xcube_' + v.elem1)
+                                                        var elem1movewidth = _X('.exp_body_middle ').Xfind('.xcube_' + v.elem1).getElem('first').position('width', 'box') + 2;
+                                                        var elem2moveleft = _X('.exp_body_middle ').Xfind('.xcube_' + v.elem2).getElem('first').position('left', 'box') - 2;
+                                                        var elem2movewidth = _X('.exp_body_middle ').Xfind('.xcube_' + v.elem2).getElem('first').position('width', 'box') - 2;
+                                                        var mousemove = function(e) {
+                                                            if (e.pageX > elem2left - elem1width + 10 && e.pageX < elem2left + elem3width - 10) {
+                                                                _X('.list_top_header_' + v.header1)
                                                                     .css({
-                                                                        width: elem1movewidth + (e.pageX - xd)
+                                                                        width: elem1width + (e.pageX - xd)
                                                                     });
-                                                                _X(that)
-                                                                    .Xfind('.xcube_' + v.elem2)
+                                                                _X(this).css({left: elem2left + (e.pageX - xd)});
+                                                                _X('.list_top_header_' + v.header2)
                                                                     .css({
-                                                                        left: elem2moveleft + (xd - e.pageX),
-                                                                        width: elem2movewidth + (xd - e.pageX)
+                                                                        left: elem2left + elem2width + (xd - e.pageX),
+                                                                        width: elem3width + (xd - e.pageX)
                                                                     });
-                                                            });
+                                                                //
+                                                                _X('.exp_body_middle')
+                                                                    .init(function(that) {
+                                                                        _X(that)
+                                                                            .Xfind('.xcube_' + v.elem1)
+                                                                            .css({
+                                                                                width: elem1movewidth + (e.pageX - xd)
+                                                                            });
+                                                                        _X(that)
+                                                                            .Xfind('.xcube_' + v.elem2)
+                                                                            .css({
+                                                                                left: elem2moveleft + (xd - e.pageX),
+                                                                                width: elem2movewidth + (xd - e.pageX)
+                                                                            });
+                                                                    });
+                                                            } else {}
+                                                        };
+                                                        var mouseup = function() {
+                                                            _X(window).off({mouseup: mouseup, mousemove: mousemove});
+                                                        };
+                                                        _X(window).on({mousemove: mousemove, mouseup: mouseup});
                                                     } else {}
-                                                };
-                                                var mouseup = function() {
-                                                    _X(window).off({mouseup: mouseup, mousemove: mousemove});
-                                                };
-                                                _X(window).on({mousemove: mousemove, mouseup: mouseup});
-                                            } else {}
-                                        },
-                                    });
-                            }
+                                                },
+                                            });
+                                    }
+                                });
+                            });                        
+                        _X(self).ListMenuStyle({
+                            array: _X.Xsearch({a: settings.array, s: 'folder'}),
+                            menuRC: _X.Xsearch({s: 'rc7'}),
+                            on: {
+                                click: function() {
+                                    if (SEARCHEXP.length > 0) {that.CreatePath()}
+                                    that.InfosRight();
+                                    that.FooterInformation();
+                                },
+                            },
                         });
+                        _X(self).ListMenuStyle({
+                            array: _X.Xsearch({a: settings.array, s: 'file'}),
+                            menuRC: _X.Xsearch({s: 'rc7'}),
+                            on: {
+                                click: function() {
+                                    if (SEARCHEXP.length > 0) {that.CreatePath()}
+                                    that.InfosRight();
+                                    that.FooterInformation();
+                                },
+                            },
+                        });                        
                     });
-                ListMenuStyle({
-                    to: _X('.exp_body_middle'),
-                    array: _X.Xsearch({a: settings.array, s: 'folder'}),
-                    menuRC: _X.Xsearch({s: 'rc7'}),
-                    on: {
-                        click: function() {
-                            if (SEARCHEXP.length > 0) {that.CreatePath()}
-                            that.InfosRight();
-                            that.FooterInformation();
-                        },
-                    },
-                });
-                ListMenuStyle({
-                    to: _X('.exp_body_middle'),
-                    array: _X.Xsearch({a: settings.array, s: 'file'}),
-                    menuRC: _X.Xsearch({s: 'rc7'}),
-                    on: {
-                        click: function() {
-                            if (SEARCHEXP.length > 0) {that.CreatePath()}
-                            that.InfosRight();
-                            that.FooterInformation();
-                        },
-                    },
-                });
-                _X('.exp_body_middle').css({'padding-top': 18});
                 that.ListStyleResize();
             }
         };
