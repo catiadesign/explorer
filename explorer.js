@@ -1618,6 +1618,12 @@
                                 })
                                 .append(v.name)
                                 .on({
+                                    mouseenter: function() {
+                                        _X(this).classAdd('xui_hover');
+                                    },
+                                    mouseleave: function() {
+                                        _X(this).classRemove('xui_hover');
+                                    },                                    
                                     click: function(e) {
                                         var x = new ExplorerDisplay();
                                         var array = [];
