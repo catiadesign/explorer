@@ -41,7 +41,7 @@
     
     DefaultSearchLocation = [
         {
-            search: 'rc7 rc8',
+            search: 'rc6 rc7 rc8',
             title: 'Download',
             ico: 'cloud_download',
             init: function() {
@@ -59,7 +59,7 @@
                 _X(id).Xremove();
             },
         }, {
-            search: '',
+            search: 'rc6',
             title: 'Downl. Link',
             ico: 'cloud_download',
             init: function() {
@@ -70,12 +70,38 @@
                     width: 300,
                     height: 'auto',
                 });
-                _X('<form')
-                    .appendTo(x.right)
-                    .attr({src: '/ace/index.php?path=' + obj.loc});
+                x.right.init(function(that) {
+                    var rand = Math.floor(Math.random() * (999999999 - 1 + 1) + 1);
+                    _X('<form')
+                        .appendTo(that)
+                        .attr({
+                            method: 'get',
+                            name: 'form_download_link',
+                            onsubmit: ValidateForm('files_link.php?file_link=' + obj.loc + '&file_nummer=' + rand),
+                        })
+                        .init(function(that) {
+                            _X('<div')
+                                .appendTo(that)
+                                .css({
+                                    'text-align': 'center',
+                                })
+                                .append('24 Hours Link !');
+                            _X('<input')
+                                .appendTo(that)
+                                .attr({
+                                    type: 'text',
+                                    maxlength: 200,
+                                    value: 'http://www.catiadesign.org/explorer/files_link.php?download=' + rand,
+                                })
+                                .css({
+                                    width: '100%',
+                                    'box-sizing': 'border-box',
+                                });                              
+                        });
+                });
             },
         }, {
-            search: 'rc7',
+            search: 'rc6 rc7',
             title: 'View Code',
             ico: 'chrome_reader_mode',
             loc: '',
@@ -91,7 +117,7 @@
                     .css({width: '100%', height: '100%'});
             },
         }, {
-            search: 'rc7',
+            search: 'rc6 rc7',
             title: 'Open',
             ico: 'open_in_new',
             init: function() {
@@ -172,6 +198,17 @@
                     });
             });
     })();
+
+    function ValidateForm(link) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', link, true);
+        xhr.send();
+        xhr.onload = function() {
+            if (this.readyState !== 4 || this.status !== 200) return;
+            console.log(link);
+        };
+        return false;
+    }
 
     function LogoutForm(that) {
         _X.CreateTagElements({
@@ -1575,7 +1612,7 @@
                     array: _X.Xsearch({a: settings.array, s: 'file'}),
                     size: 65,
                     css: {float: 'left'},
-                    menuRC: _X.Xsearch({s: 'rc7'}),
+                    menuRC: _X.Xsearch({s: 'rc6'}),
                     tooltip: false,
                     drag: true,
                     cube: SETTINGS.threeDicon.sel,
@@ -1764,7 +1801,7 @@
                         });
                         _X(self).ListMenuStyle({
                             array: _X.Xsearch({a: settings.array, s: 'file'}),
-                            menuRC: _X.Xsearch({s: 'rc7'}),
+                            menuRC: _X.Xsearch({s: 'rc6'}),
                             on: {
                                 click: function() {
                                     if (SEARCHEXP.length > 0) {that.CreatePath()}
