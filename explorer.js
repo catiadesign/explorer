@@ -60,8 +60,8 @@
             },
         }, {
             search: 'rc6',
-            title: 'Downl. Link',
-            ico: 'cloud_download',
+            title: 'Link',
+            ico: 'link',
             init: function() {
                 var obj = SELECTED.obj;
                 var x = new _X.Window();
@@ -73,42 +73,54 @@
                 x.right.init(function(that) {
                     var rand = Math.floor(Math.random() * (999999999 - 1 + 1) + 1);
                     var cls = _X.ClassVirtual();
+                    ValidateForm('files_link.php?file_link=' + obj.loc + '&file_nummer=' + rand);
                     _X('<div')
                         .appendTo(that)
                         .css({
                             'text-align': 'center',
-                            padding: 2,
+                            padding: 5,
                         })
-                        .append('24 Hours Link !');                    
-                    _X('<form')
+                        .append('24 Hours Link !');
+                    _X('<div')
                         .appendTo(that)
-                        .attr({
-                            method: 'get',
-                            onsubmit: ValidateForm('files_link.php?file_link=' + obj.loc + '&file_nummer=' + rand),
+                        .css({
+                            padding: 5,
+                        })
+                        .init(function(that) {
+                            _X('<input')
+                                .appendTo(that)
+                                .classAdd(cls.replace('.', ''))
+                                .attr({
+                                    type: 'text',
+                                    maxlength: 200,
+                                    value: 'http://www.catiadesign.org/explorer/files_link.php?download=' + rand,
+                                })
+                                .css({
+                                    width: '100%',
+                                    'box-sizing': 'border-box',
+                                });                            
                         });
-                    _X('<input')
-                        .appendTo(that)
-                        .classAdd(cls.replace('.', ''))
-                        .attr({
-                            type: 'text',
-                            maxlength: 200,
-                            value: 'http://www.catiadesign.org/explorer/files_link.php?download=' + rand,
-                        })
-                        .css({
-                            width: '100%',
-                            'box-sizing': 'border-box',
-                        });                        
-                    _X('<button')
+                    _X('<div')
                         .appendTo(that)
                         .css({
-                            width: '100%',
-                            'text-align': 'center',
+                            padding: 5,
                         })
-                        .append('Copy Link')
-                        .on({
-                            click: function() {
-                                CopyLink(cls);
-                            },
+                        .init(function(that) {                        
+                            _X('<button')
+                                .appendTo(that)
+                                .attr({
+                                    type: 'button',
+                                })
+                                .css({
+                                    width: '100%',
+                                    'text-align': 'center',
+                                })
+                                .append('Copy Link')
+                                .on({
+                                    click: function() {
+                                        CopyLink(cls);
+                                    },
+                                });
                         });
                 });
             },
@@ -226,7 +238,6 @@
         xhr.onload = function() {
             if (this.readyState !== 4 || this.status !== 200) return;
         };
-        return false;
     }
 
     function LogoutForm(that) {
