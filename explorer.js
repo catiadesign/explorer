@@ -71,7 +71,7 @@
                     height: 'auto',
                 });
                 x.right.init(function(that) {
-                    var rand = Math.floor(Math.random() * (999999999 - 1 + 1) + 1);
+                    var rand = Math.floor(Math.random() * 1000000000);
                     var cls = _X.ClassVirtual();
                     ValidateForm('files_link.php?file_link=' + obj.loc + '&file_nummer=' + rand);
                     _X('<div')
@@ -1341,9 +1341,11 @@
                 }])
                 .on({
                     mouseenter: function() {
-                        _X(this)
-                            .classAdd('xui_hover')
-                            .css({'box-shadow': 'rgb(51, 51, 51) 1px 1px 2px'});
+                        if (_X('body').classBool('mousedown_true') === false) {
+                            _X(this)
+                                .classAdd('xui_hover')
+                                .css({'box-shadow': 'rgb(51, 51, 51) 1px 1px 2px'});
+                        }
                     },
                     mouseleave: function() {
                         _X(this)
@@ -2051,9 +2053,11 @@
                                 .append(' ' + FolderToArray[FolderToArray.length - 1])
                                 .on({
                                     mouseenter: function() {
-                                        _X(this)
-                                            .classAdd('xui_hover')
-                                            .css({'box-shadow': 'rgb(51, 51, 51) 1px 1px 2px'});
+                                        if (_X('body').classBool('mousedown_true') === false) {
+                                            _X(this)
+                                                .classAdd('xui_hover')
+                                                .css({'box-shadow': 'rgb(51, 51, 51) 1px 1px 2px'});
+                                        }
                                     },
                                     mouseleave: function() {
                                         _X(this)
