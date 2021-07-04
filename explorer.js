@@ -76,6 +76,7 @@
                         .appendTo(that)
                         .css({
                             'text-align': 'center',
+                            padding: 2,
                         })
                         .append('24 Hours Link !');                    
                     _X('<form')
@@ -98,15 +99,16 @@
                         });                        
                     _X('<button')
                         .appendTo(that)
-                        .attr({
-                            id: 'link_copy',
-                        })
                         .css({
                             width: '100%',
                             'text-align': 'center',
                         })
-                        .append('Copy Link');
-                    document.getElementById('link_copy').onclick = CopyLink;    
+                        .append('Copy Link')
+                        .on({
+                            click: function() {
+                                CopyLink();
+                            },
+                        });
                 });
             },
         }, {
@@ -223,6 +225,7 @@
         xhr.onload = function() {
             if (this.readyState !== 4 || this.status !== 200) return;
         };
+        return false;
     }
 
     function LogoutForm(that) {
