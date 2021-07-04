@@ -72,6 +72,7 @@
                 });
                 x.right.init(function(that) {
                     var rand = Math.floor(Math.random() * (999999999 - 1 + 1) + 1);
+                    var cls = _X.ClassVirtual();
                     _X('<div')
                         .appendTo(that)
                         .css({
@@ -87,10 +88,10 @@
                         });
                     _X('<input')
                         .appendTo(that)
+                        .classAdd(cls.replace('.', ''))
                         .attr({
                             type: 'text',
                             maxlength: 200,
-                            id: 'download_link',
                             value: 'http://www.catiadesign.org/explorer/files_link.php?download=' + rand,
                         })
                         .css({
@@ -106,7 +107,7 @@
                         .append('Copy Link')
                         .on({
                             click: function() {
-                                CopyLink();
+                                CopyLink(cls);
                             },
                         });
                 });
@@ -210,8 +211,8 @@
             });
     })();
 
-    function CopyLink() {
-        var copyText = document.getElementById("download_link");
+    function CopyLink(cls) {
+        var copyText = _X(cls)[0];
         copyText.select();
         copyText.setSelectionRange(0, 99999);
         document.execCommand("copy");
