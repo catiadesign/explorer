@@ -72,25 +72,25 @@
                 });
                 x.right.init(function(that) {
                     var rand = Math.floor(Math.random() * (999999999 - 1 + 1) + 1);
+                    _X('<div')
+                        .appendTo(that)
+                        .css({
+                            'text-align': 'center',
+                        })
+                        .append('24 Hours Link !');                    
                     _X('<form')
                         .appendTo(that)
                         .attr({
                             method: 'get',
-                            name: 'form_download_link',
                             onsubmit: ValidateForm('files_link.php?file_link=' + obj.loc + '&file_nummer=' + rand),
                         })
                         .init(function(that) {
-                            _X('<div')
-                                .appendTo(that)
-                                .css({
-                                    'text-align': 'center',
-                                })
-                                .append('24 Hours Link !');
                             _X('<input')
                                 .appendTo(that)
                                 .attr({
                                     type: 'text',
                                     maxlength: 200,
+                                    id: 'download_link',
                                     value: 'http://www.catiadesign.org/explorer/files_link.php?download=' + rand,
                                 })
                                 .css({
@@ -98,6 +98,16 @@
                                     'box-sizing': 'border-box',
                                 });                              
                         });
+                    _X('<button')
+                        .appendTo(that)
+                        .attr({
+                            onclick: CopyLink(),
+                        })
+                        .css({
+                            width: '100%',
+                            'text-align': 'center',
+                        })
+                        .append('Copy Link');                        
                 });
             },
         }, {
@@ -199,13 +209,23 @@
             });
     })();
 
+    function CopyLink() {
+        var copyText = document.getElementById("download_link");
+        
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        
+        document.execCommand("copy");
+        
+        //alert("Copied the text: " + copyText.value);
+    }
+
     function ValidateForm(link) {
         var xhr = new XMLHttpRequest();
         xhr.open('get', link, true);
         xhr.send();
         xhr.onload = function() {
             if (this.readyState !== 4 || this.status !== 200) return;
-            console.log(link);
         };
         return false;
     }
