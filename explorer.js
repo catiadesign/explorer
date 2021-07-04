@@ -83,31 +83,30 @@
                         .attr({
                             method: 'get',
                             onsubmit: ValidateForm('files_link.php?file_link=' + obj.loc + '&file_nummer=' + rand),
-                        })
-                        .init(function(that) {
-                            _X('<input')
-                                .appendTo(that)
-                                .attr({
-                                    type: 'text',
-                                    maxlength: 200,
-                                    id: 'download_link',
-                                    value: 'http://www.catiadesign.org/explorer/files_link.php?download=' + rand,
-                                })
-                                .css({
-                                    width: '100%',
-                                    'box-sizing': 'border-box',
-                                });                              
                         });
+                    _X('<input')
+                        .appendTo(that)
+                        .attr({
+                            type: 'text',
+                            maxlength: 200,
+                            id: 'download_link',
+                            value: 'http://www.catiadesign.org/explorer/files_link.php?download=' + rand,
+                        })
+                        .css({
+                            width: '100%',
+                            'box-sizing': 'border-box',
+                        });                        
                     _X('<button')
                         .appendTo(that)
                         .attr({
-                            onclick: CopyLink(),
+                            id: 'link_copy',
                         })
                         .css({
                             width: '100%',
                             'text-align': 'center',
                         })
-                        .append('Copy Link');                        
+                        .append('Copy Link');
+                    document.getElementById('link_copy').onclick = CopyLink;    
                 });
             },
         }, {
@@ -211,13 +210,10 @@
 
     function CopyLink() {
         var copyText = document.getElementById("download_link");
-        
         copyText.select();
         copyText.setSelectionRange(0, 99999);
-        
         document.execCommand("copy");
-        
-        //alert("Copied the text: " + copyText.value);
+        //console.log(copyText.value);
     }
 
     function ValidateForm(link) {
@@ -227,7 +223,6 @@
         xhr.onload = function() {
             if (this.readyState !== 4 || this.status !== 200) return;
         };
-        return false;
     }
 
     function LogoutForm(that) {
