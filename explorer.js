@@ -73,7 +73,15 @@
                 x.right.init(function(that) {
                     var rand = Math.floor(Math.random() * 1000000000);
                     var cls = _X.ClassVirtual();
-                    ValidateForm('files_link.php?file_link=' + obj.loc + '&file_nummer=' + rand);
+                    
+                    var link = 'files_link.php?file_link=' + obj.loc + '&file_nummer=' + rand;
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('get', link, true);
+                    xhr.send();
+                    xhr.onload = function() {
+                        if (this.readyState !== 4 || this.status !== 200) return;
+                    };
+                    
                     _X('<div')
                         .appendTo(that)
                         .css({
@@ -118,7 +126,11 @@
                                 .append('Copy Link')
                                 .on({
                                     click: function() {
-                                        CopyLink(cls);
+                                        var copyText = _X(cls)[0];
+                                        copyText.select();
+                                        copyText.setSelectionRange(0, 99999);
+                                        document.execCommand("copy");
+                                        //console.log(copyText.value);
                                     },
                                 });
                         });
@@ -222,23 +234,6 @@
                     });
             });
     })();
-
-    function CopyLink(cls) {
-        var copyText = _X(cls)[0];
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        //console.log(copyText.value);
-    }
-
-    function ValidateForm(link) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('get', link, true);
-        xhr.send();
-        xhr.onload = function() {
-            if (this.readyState !== 4 || this.status !== 200) return;
-        };
-    }
 
     function LogoutForm(that) {
         _X.CreateTagElements({
