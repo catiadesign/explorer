@@ -1298,6 +1298,17 @@
                             right: 0,
                             top: 0,
                             bottom: 0,
+                        })
+                        .init(function(that) {
+                            _X('<div')
+                                .appendTo(that)
+                                .css({
+                                    'text-align': 'right',
+                                    'font-size': 10,
+                                    'padding': 3,
+                                    color: '#969696',
+                                })                            
+                                .append('design by Adrian');
                         });
                 });
         });
