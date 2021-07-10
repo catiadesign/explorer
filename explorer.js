@@ -1,7 +1,7 @@
 //jshint maxerr: 3000
 
     WIN.globalDIV = 'body';
-    WIN.taskbar = '.exp_footer_right';
+    WIN.taskbar = '.exp_footer_middle';
     WIN.body = '.desktop_website';
     WIN.icons = '.exp_body_middle ';
     WIN.adsense = '../pages/adsense_vertical_120x600.html';
@@ -1283,21 +1283,23 @@
                         .appendTo(that)
                         .classAdd('exp_footer_left')
                         .css({
-                            position: 'absolute',
-                            left: 0,
-                            top: 0,
-                            bottom: 0,
+                            float: 'left',
                             width: 350,
                         });
                     _X('<div')
                         .appendTo(that)
-                        .classAdd('exp_footer_right')
+                        .classAdd('exp_footer_middle')
                         .css({
                             position: 'absolute',
                             left: 350,
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
+                            right: 100,
+                            top: -10,
+                        });                        
+                    _X('<div')
+                        .appendTo(that)
+                        .css({
+                            float: 'right',
+                            width: 100,
                         })
                         .init(function(that) {
                             _X('<div')
