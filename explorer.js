@@ -1294,24 +1294,19 @@
                             left: 350,
                             right: 100,
                             top: -10,
+                            'z-index': 3000,
                         });                        
                     _X('<div')
                         .appendTo(that)
                         .css({
                             float: 'right',
                             width: 100,
+                            'text-align': 'right',
+                            'font-size': 10,
+                            'padding': 3,
+                            color: '#969696',                            
                         })
-                        .init(function(that) {
-                            _X('<div')
-                                .appendTo(that)
-                                .css({
-                                    'text-align': 'right',
-                                    'font-size': 10,
-                                    'padding': 3,
-                                    color: '#969696',
-                                })                            
-                                .append('design by Adrian');
-                        });
+                        .append('design by Adrian');
                 });
         });
 
